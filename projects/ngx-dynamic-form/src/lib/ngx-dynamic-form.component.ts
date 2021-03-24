@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { SampleForm } from 'src/app/sample.form';
 import { iNgxFormGroup } from './interfaces/ngx-form-group.interface';
 import { iNgxForm } from './interfaces/ngx-form.interface';
+declare var $: any;
 
 @Component({
   selector: 'ngx-dynamic-form',
@@ -22,7 +23,8 @@ export class NgxDynamicFormComponent implements AfterViewInit {
     this.form$.subscribe((form: iNgxForm) => { 
       form.formGroup ? this.initForm(form.formGroup) : console.log('Please provide valid form group');
       this.formDetails = form;
-    })
+    });
+  
   }
 
    // initalising the form with basic validator
@@ -34,7 +36,7 @@ export class NgxDynamicFormComponent implements AfterViewInit {
       (form: iNgxFormGroup) => {
           group[form.formControlName] = 
             new FormControl(
-              { value: form.value, disabled: form.disabled }, 
+              { value: form.value ? form.value: '', disabled: form.disabled }, 
               [ 
                 form.required ? Validators.required : Validators.nullValidator,
                 this.regexValidator(new RegExp(form.validation.pattern), { [form.validation.patternName] : form.validation.message })

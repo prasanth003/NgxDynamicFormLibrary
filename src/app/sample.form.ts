@@ -35,7 +35,65 @@ export const SampleForm: iNgxForm = {
             validation: {message: 'Email Id is not valid.', pattern: '^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$', patternName: 'email'},
             column: 6,
             hint: 'Outlook email is not acceptable.'
-        }
+        },
+        {
+            disabled: false,
+            fieldType: 'select',
+            formControlName: 'dropdown',
+            label: 'Gender',
+            required: true,
+            column: 6,
+            validation: {message: '', pattern: '', patternName: ''},
+            placeholder: 'Choose your gender',
+            options: [
+                {
+                    value: 'male',
+                    displayValue: 'Male'
+                },
+                {
+                    value: 'female',
+                    displayValue: 'Female'
+                }
+            ]
+        },
+        {
+            disabled: false,
+            fieldType: 'multiselect',
+            formControlName: 'documents',
+            label: 'Documents',
+            required: true,
+            column: 6,
+            validation: {message: '', pattern: '', patternName: ''},
+            placeholder: 'Choose one or more documents which you have',
+            options: [
+                {
+                    value: 'aadhar',
+                    displayValue: 'Aadhar Card'
+                },
+                {
+                    value: 'pan',
+                    displayValue: 'PAN Card'
+                },
+                {
+                    value: 'passport',
+                    displayValue: 'Passport'
+                }
+            ]
+        },
+        {
+            disabled: false,
+            fieldType: 'textarea',
+            formControlName: 'description',
+            inputType: 'text',
+            label: 'Description',
+            placeholder: 'Enter your description here...',
+            required: false,
+            column: 12,
+            validation: {message: '', pattern: '', patternName: ''},
+            maxLength: 200,
+            displayMaxLength: true
+        },
+
     ],
     style: {
         formStyle: 'bootstrap',

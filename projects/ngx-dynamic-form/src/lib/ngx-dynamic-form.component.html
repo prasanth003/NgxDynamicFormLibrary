@@ -1,11 +1,11 @@
 <form #ngForm="ngForm" [formGroup]="dynamicFormGroup" class="needs-validation" (ngSubmit)="submit()" *ngIf="(form$ | async) as form">
     
-    <!-- Form Group Starts -->
-    <div class="row">
+    <!-- Bootstrap Form Group Starts -->
+    <div class="row" *ngIf="form.style.formStyle === 'bootstrap'">
 
         <div class="col-md-{{ field.column }}" *ngFor="let field of form.formGroup; let i = index">
             
-            <div class="form-group" *ngIf="field.fieldType === 'input'">
+            <div class="form-group" [ngSwitch]="field.fieldType">
                 <label [for]="field.formControlName">{{ field.label }} <span *ngIf="field.required">*</span></label>
             
                 <div class="input-group w-100">
@@ -15,8 +15,9 @@
                         <span class="input-group-text"> {{ prefix }} </span>
                     </div>
 
-                    <!-- Input Group -->
+                    <!-- Input Group Start -->
                     <input 
+                        *ngSwitchCase="'input'"
                         class="form-control" 
                         [placeholder]="field.placeholder" 
                         [formControlName]="field.formControlName" 
@@ -25,9 +26,84 @@
                         [disabled]="field.disabled"
                         [required]="field.required"
                         [class]="field.customClass"
-                        [maxLength]="field.maxLength"
+                        [maxLength]="field.maxLength ? field.maxLength : 100000"
                         (keyup)="onInputChange($event, field.formControlName, i)"
                     >
+                    <!-- Input Group End -->
+
+                    <!-- Text Area Start -->
+                    <textarea 
+                        *ngSwitchCase="'textarea'"
+                        class="form-control"
+                        [placeholder]="field.placeholder" 
+                        [formControlName]="field.formControlName"
+                        [id]="field.formControlName"
+                        [disabled]="field.disabled"
+                        [required]="field.required"
+                        [class]="field.customClass"
+                        [maxLength]="field.maxLength ? field.maxLength : 100000"
+                        (keyup)="onInputChange($event, field.formControlName, i)"
+                    ></textarea>
+                    <!-- Text Area Ends -->
+
+                    <!-- Select Group Starts -->
+                    <select 
+                        *ngSwitchCase="'select'"
+                        class="form-control"
+                        [formControlName]="field.formControlName"
+                        [id]="field.formControlName"
+                        [disabled]="field.disabled"
+                        [required]="field.required"
+                        [class]="field.customClass"
+                    >
+                        <option selected disabled value="" *ngIf="field.placeholder">
+                            {{ field.placeholder }}
+                        </option>
+
+                        <option [value]="opt.value" [disabled]="opt.disabled" *ngFor="let opt of field.options">
+                            {{ opt.displayValue }}
+                        </option>
+
+                        <option  value="null" disabled *ngIf="field.options && field.options.length === 0">
+                            No options available
+                        </option>
+
+                        <option  value="null" disabled *ngIf="!field.options">
+                            No options available
+                        </option>
+
+                    </select>
+                    <!-- Select Group End -->
+
+                    <!-- Multi Select Group Starts -->
+                    <select 
+                        *ngSwitchCase="'multiselect'"
+                        class="form-control multi-select"
+                        [formControlName]="field.formControlName"
+                        [id]="field.formControlName"
+                        [disabled]="field.disabled"
+                        [required]="field.required"
+                        [class]="field.customClass"
+                        multiple="multiple"
+                    >
+                        <option selected disabled value="" *ngIf="field.placeholder">
+                            {{ field.placeholder }}
+                        </option>
+
+                        <option [value]="opt.value" [disabled]="opt.disabled" *ngFor="let opt of field.options">
+                            {{ opt.displayValue }}
+                        </option>
+
+                        <option  value="null" disabled *ngIf="field.options && field.options.length === 0">
+                            No options available
+                        </option>
+
+                        <option  value="null" disabled *ngIf="!field.options">
+                            No options available
+                        </option>
+                        
+                    </select>
+                    <!-- Multi Select Group End -->
 
                     <!-- Suffix -->
                     <div class="input-group-append" *ngIf="field.suffix as suffix">
@@ -58,14 +134,21 @@
         </div>
 
     </div>
-    <!-- Form Group Ends -->
+    <!-- Bootstrap Form Group Ends -->
+
+    <!-- Material Form Group Starts -->
+    <div class="row" *ngIf="form.style.formStyle === 'material'">
+
+        <div class="col-md-{{ field.column }}" *ngFor="let field of form.formGroup; let i = index">
+            
+            <h6>I am Material Form Group</h6>
+
+        </div>
+
+    </div>
+    <!-- Material Form Group Ends -->
 
     <!-- Button -->
     <button type="submit" class="btn" [class]="form.style.buttonStyle.class">{{ form.style.buttonStyle.buttonName }}</button>
 </form>
 
-<pre  class="mt-5">
-    <code>
-        {{ (form$ | async) | json }}
-    </code>
-</pre>

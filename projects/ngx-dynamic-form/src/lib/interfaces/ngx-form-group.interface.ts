@@ -1,9 +1,9 @@
 export interface iNgxFormGroup {
     formControlName: string;
-    fieldType: 'input' | 'dropdown' | 'multiselect' | 'autocomplete' | 'textarea' | 'date' | 'dateRange';
+    fieldType: 'input' | 'select' | 'multiselect' | 'autocomplete' | 'textarea' | 'date' | 'dateRange';
     inputType?: 'text' | 'number' | 'password';
     label: string;
-    placeholder: string;
+    placeholder?: string;
     value?: string | any;
     disabled: boolean;
     required: boolean;
@@ -16,6 +16,7 @@ export interface iNgxFormGroup {
     suffix?: string;
     maxLength?: number;
     displayMaxLength?: boolean;
+    options?: iFormOptions[];
 }
 
 
@@ -23,4 +24,12 @@ interface iFormValidation {
     pattern: RegExp | string;
     patternName: string;
     message: string;
+}
+
+export interface iFormOptions {
+    displayValue: string;
+    value: string;
+    image?: string;
+    disabled?: boolean;
+    selected?: boolean;
 }
