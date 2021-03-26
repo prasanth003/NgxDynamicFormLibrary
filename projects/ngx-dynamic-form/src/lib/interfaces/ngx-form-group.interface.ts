@@ -1,6 +1,6 @@
 export interface iNgxFormGroup {
     formControlName: string;
-    fieldType: 'input' | 'select' | 'multiselect' | 'autocomplete' | 'textarea' | 'date' | 'dateRange';
+    fieldType: 'input' | 'select' | 'multiselect' | 'autocomplete' | 'textarea' | 'date' | 'dateRange' | 'checkbox' | 'radioButton';
     inputType?: 'text' | 'number' | 'password';
     label: string;
     placeholder?: string;
@@ -17,6 +17,9 @@ export interface iNgxFormGroup {
     maxLength?: number;
     displayMaxLength?: boolean;
     options?: iFormOptions[];
+    checkBox?: iCheckboxs;
+    radioButtons?: iCheckboxs;
+    autoComplete?: boolean;
 }
 
 
@@ -31,5 +34,16 @@ export interface iFormOptions {
     value: string;
     image?: string;
     disabled?: boolean;
+    selected?: boolean;
+}
+
+export interface iCheckboxs {
+    style: 'inline' | 'stacked';
+    options: iCheckboxOptions[];
+}
+
+interface iCheckboxOptions {
+    checkboxValue: string;
+    disabled: boolean;
     selected?: boolean;
 }

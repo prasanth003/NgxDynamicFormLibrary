@@ -10,7 +10,7 @@ export const SampleForm: iNgxForm = {
             placeholder: 'Enter your first name.',
             required: true,
             validation: {message: '', pattern: '', patternName: ''},
-            column: 6,
+            column: 4,
             maxLength: 15,
             displayMaxLength: true
         },
@@ -22,7 +22,7 @@ export const SampleForm: iNgxForm = {
             placeholder: 'Enter your last name.',
             required: false,
             validation: {message: '', pattern: '', patternName: ''},
-            column: 6
+            column: 4
         },
         {
             disabled: false,
@@ -33,7 +33,7 @@ export const SampleForm: iNgxForm = {
             placeholder: 'Enter your email id',
             required: true,
             validation: {message: 'Email Id is not valid.', pattern: '^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$', patternName: 'email'},
-            column: 6,
+            column: 4,
             hint: 'Outlook email is not acceptable.'
         },
         {
@@ -55,6 +55,17 @@ export const SampleForm: iNgxForm = {
                     displayValue: 'Female'
                 }
             ]
+        },
+        {
+            disabled: false,
+            fieldType: 'input',
+            inputType: 'password',
+            formControlName: 'securtKey',
+            label: 'Key',
+            required: true,
+            column: 6,
+            validation: {message: '', pattern: '', patternName: ''},
+            placeholder: 'Enter your key'
         },
         {
             disabled: false,
@@ -82,6 +93,34 @@ export const SampleForm: iNgxForm = {
         },
         {
             disabled: false,
+            fieldType: 'radioButton',
+            formControlName: 'radios',
+            inputType: 'text',
+            label: 'Radio Group',
+            required: false,
+            column: 6,
+            validation: {message: '', pattern: '', patternName: ''},
+            radioButtons: {
+                style: 'inline',
+                options: [
+                    {
+                        checkboxValue: 'I am First',
+                        disabled: true,
+                        selected: true
+                    },
+                    {
+                        checkboxValue: 'I am Second',
+                        disabled: false
+                    },
+                    {
+                        checkboxValue: 'I am Third',
+                        disabled: false
+                    }
+                ]
+            }
+        },
+        {
+            disabled: false,
             fieldType: 'textarea',
             formControlName: 'description',
             inputType: 'text',
@@ -93,12 +132,33 @@ export const SampleForm: iNgxForm = {
             maxLength: 200,
             displayMaxLength: true
         },
+        {
+            disabled: false,
+            fieldType: 'checkbox',
+            formControlName: 'checkboxs',
+            inputType: 'text',
+            label: '',
+            required: true,
+            requiredErrorMessage: 'You must check this option',
+            column: 12,
+            validation: {message: '', pattern: '', patternName: ''},
+            checkBox: {
+                style: 'inline',
+                options: [
+                    {
+                        checkboxValue: 'Accept all terms & conditions',
+                        disabled: true,
+                        selected: true
+                    }
+                ]
+            }
+        },
 
     ],
     style: {
         formStyle: 'bootstrap',
         buttonStyle: {
-            buttonName: 'Save',
+            buttonName: 'Save Details',
             class: 'btn-primary'
         }
     }

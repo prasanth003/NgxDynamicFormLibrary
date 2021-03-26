@@ -6,7 +6,7 @@
         <div class="col-md-{{ field.column }}" *ngFor="let field of form.formGroup; let i = index">
             
             <div class="form-group" [ngSwitch]="field.fieldType">
-                <label [for]="field.formControlName">{{ field.label }} <span *ngIf="field.required">*</span></label>
+                <label [for]="field.formControlName" *ngIf="field.label">{{ field.label }} <span *ngIf="field.required" style="color: #dc3545;">*</span></label>
             
                 <div class="input-group w-100">
                     
@@ -16,7 +16,8 @@
                     </div>
 
                     <!-- Input Group Start -->
-                    <input 
+                    <input
+                        [autocomplete]="field.autoComplete ? 'on' : 'new-password'"
                         *ngSwitchCase="'input'"
                         class="form-control" 
                         [placeholder]="field.placeholder" 
@@ -78,13 +79,17 @@
                     <!-- Multi Select Group Starts -->
                     <select 
                         *ngSwitchCase="'multiselect'"
-                        class="form-control multi-select"
                         [formControlName]="field.formControlName"
                         [id]="field.formControlName"
                         [disabled]="field.disabled"
                         [required]="field.required"
                         [class]="field.customClass"
-                        multiple="multiple"
+                        class="form-control selectpicker multi-select-field" 
+                        multiple 
+                        data-live-search="true" 
+                        data-selected-text-format="count>3" 
+                        data-all="false"
+                        (change)="onSelectionChange($event)"
                     >
                         <option selected disabled value="" *ngIf="field.placeholder">
                             {{ field.placeholder }}
@@ -104,6 +109,52 @@
                         
                     </select>
                     <!-- Multi Select Group End -->
+
+                    <!-- Checkbox Starts -->
+
+                    <span *ngSwitchCase="'checkbox'" >
+                        <span *ngIf="field.checkBox as boxes">
+                            <div class="form-check" *ngFor="let chekbox of boxes.options; let i = index" [ngClass]="{'form-check-inline': boxes.style === 'inline'}">
+                                <input 
+                                    class="form-check-input"
+                                    [class]="field.customClass"
+                                    type="checkbox" 
+                                    [formControlName]="field.formControlName"
+                                    [id]="field.formControlName + i"
+                                    [value]="chekbox.checkboxValue"
+                                    [name]="field.formControlName"
+                                    [required]="field.required"
+                                >
+                                <label class="form-check-label" [for]="field.formControlName + i">
+                                  {{ chekbox.checkboxValue }}
+                                </label>
+                              </div>
+                        </span>
+                    </span>
+
+                    <!-- Checkbox End -->
+
+                    <!-- Radio Button Starts -->
+                    <span *ngSwitchCase="'radioButton'" >
+                        <span *ngIf="field.radioButtons as radio">
+                            <div class="form-check" *ngFor="let buttons of radio.options; let i = index" [ngClass]="{'form-check-inline': radio.style === 'inline'}">
+                                <input 
+                                    class="form-check-input"
+                                    [class]="field.customClass"
+                                    type="radio" 
+                                    [formControlName]="field.formControlName"
+                                    [id]="field.formControlName + i"
+                                    [value]="buttons.checkboxValue"
+                                    [name]="field.formControlName"
+                                    [required]="field.required"
+                                >
+                                <label class="form-check-label" [for]="field.formControlName + i">
+                                  {{ buttons.checkboxValue }}
+                                </label>
+                              </div>
+                        </span>
+                    </span>
+                    <!-- Radio Button Ends -->
 
                     <!-- Suffix -->
                     <div class="input-group-append" *ngIf="field.suffix as suffix">
@@ -152,3 +203,9 @@
     <button type="submit" class="btn" [class]="form.style.buttonStyle.class">{{ form.style.buttonStyle.buttonName }}</button>
 </form>
 
+
+<div class="custom-file mb-3">
+    <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+    <div class="invalid-feedback">Example invalid custom file feedback</div>
+  </div>

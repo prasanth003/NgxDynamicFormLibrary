@@ -1,3 +1,12 @@
+@import 'https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/css/bootstrap-select.min.css';
+
 .error-field {
     color: #dc3545 !important ;
+}
+
+::ng-deep {
+    .form-group .bootstrap-select, .form-horizontal .bootstrap-select, .form-inline .bootstrap-select {
+        border: 1px solid #ced4da !important;
+        background-color: transparent !important;
+    }
 }
