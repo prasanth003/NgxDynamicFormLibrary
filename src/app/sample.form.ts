@@ -121,6 +121,23 @@ export const SampleForm: iNgxForm = {
         },
         {
             disabled: false,
+            fieldType: 'file',
+            formControlName: 'resume',
+            label: 'Resume',
+            placeholder: 'Upload your resume',
+            required: false,
+            column: 6,
+            validation: {message: '', pattern: '', patternName: ''},
+            hint: 'Only pdf, doc and rtf files supported. File size should be less than 2 Mb',
+            fileTypeValidation: {
+                allowedType: '.pdf,.doc,.rtf',
+                maxFileSize: 40000,
+                errorMessage: 'File type is not valid'
+            },
+            multipleFile: false
+        },
+        {
+            disabled: false,
             fieldType: 'textarea',
             formControlName: 'description',
             inputType: 'text',

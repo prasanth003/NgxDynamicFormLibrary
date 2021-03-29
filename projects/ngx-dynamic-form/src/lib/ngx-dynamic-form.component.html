@@ -156,6 +156,41 @@
                     </span>
                     <!-- Radio Button Ends -->
 
+                    <!-- File Upload Start -->
+                    <div *ngSwitchCase="'file'"  class="custom-file">
+                       
+                        <input 
+                            type="file" 
+                            class="custom-file-input"
+                            [formControlName]="field.formControlName" 
+                            [id]="field.formControlName"
+                            [disabled]="field.disabled"
+                            [required]="field.required"
+                            [class]="field.customClass"
+                            [accept]="field.fileTypeValidation ? field.fileTypeValidation.allowedType : '*'"
+                            (change)="onFileChange($event, i)"
+                            [multiple]="field.multipleFile"
+                        >
+                        <label class="custom-file-label" [for]="field.formControlName">{{ field.placeholder }}</label>
+
+                        
+                        <div class="file-layout" *ngFor="let file of filesToUpload; let index = index">
+                            <div class="file-details">
+                                <div class="file-name">{{ file.fileName }}</div>
+                                <div class="file-stats">
+                                    <span class="value">{{ file.fileSize }}</span>
+                                    <div class="dot"></div>
+                                    <span class="value">{{ file.fileType }}</span>
+                                </div>
+                            </div>
+                            <div class="file-action">
+                                <button class="btn delete-btn" (click)="deleteFile(index)">Delete</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- File Upload End -->
+
                     <!-- Suffix -->
                     <div class="input-group-append" *ngIf="field.suffix as suffix">
                         <span class="input-group-text"> {{ suffix }} </span>
@@ -202,10 +237,3 @@
     <!-- Button -->
     <button type="submit" class="btn" [class]="form.style.buttonStyle.class">{{ form.style.buttonStyle.buttonName }}</button>
 </form>
-
-
-<div class="custom-file mb-3">
-    <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-    <div class="invalid-feedback">Example invalid custom file feedback</div>
-  </div>

@@ -1,6 +1,6 @@
 export interface iNgxFormGroup {
     formControlName: string;
-    fieldType: 'input' | 'select' | 'multiselect' | 'autocomplete' | 'textarea' | 'date' | 'dateRange' | 'checkbox' | 'radioButton';
+    fieldType: 'input' | 'select' | 'multiselect' | 'autocomplete' | 'textarea' | 'date' | 'dateRange' | 'checkbox' | 'radioButton' | 'file';
     inputType?: 'text' | 'number' | 'password';
     label: string;
     placeholder?: string;
@@ -20,6 +20,8 @@ export interface iNgxFormGroup {
     checkBox?: iCheckboxs;
     radioButtons?: iCheckboxs;
     autoComplete?: boolean;
+    fileTypeValidation?: iFileValidation;
+    multipleFile?: boolean;
 }
 
 
@@ -46,4 +48,17 @@ interface iCheckboxOptions {
     checkboxValue: string;
     disabled: boolean;
     selected?: boolean;
+}
+
+export interface FileToUpload {
+    fileName: string;
+    fileSize: string;
+    fileType: string;
+    file: any;
+}
+
+interface iFileValidation {
+    allowedType: string;
+    maxFileSize?: number;
+    errorMessage?: string;
 }
