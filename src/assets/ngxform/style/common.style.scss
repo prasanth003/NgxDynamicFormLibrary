@@ -1,0 +1,69 @@
+@import "variables.scss";
+
+body {
+  font-family: $font-family-normal !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: $font-family-bold;
+  margin-bottom: 0 !important;
+}
+
+h5.page-heading {
+  font-family: $font-family-bold;
+  color: $text-color;
+}
+
+.title {
+  font-size: $font-size-h2;
+  font-weight: 600;
+  color: $text-color;
+  letter-spacing: 1px;
+}
+
+.card-heading {
+  font-size: $font-size-large;
+  font-family: $font-family-medium;
+  font-weight: 500;
+  text-transform: capitalize;
+  color: $text-color;
+}
+
+.sub-title {
+  font-family: $font-family-normal;
+  font-size: $font-size-h3;
+  font-weight: 600;
+  color: $text-color;
+  letter-spacing: 1px;
+}
+
+.sub-content {
+  color: $text-color;
+  font-size: $font-size-base;
+  opacity: 0.9;
+}
+
+.disable-text-select {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+body {
+  background: linear-gradient(90deg, rgba(120,246,222,0.2) 0%, rgba(0,101,49,0.2) 100%);
+
+}

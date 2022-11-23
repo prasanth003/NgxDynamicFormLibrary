@@ -1,0 +1,17 @@
+
+.ui {
+    border: 0.5px solid #ccc;
+    border-top: none;
+    padding: 20px;
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.editor-container {
+    overflow: hidden;
+    height: 400px;
+    .editor {
+        height: 400px;
+    }
+}

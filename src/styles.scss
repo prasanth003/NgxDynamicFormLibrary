@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@import '/src/assets/ngxform/style/common.style.scss';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+html, body { height: 100%; }
+
+.description {
+    margin-top: 20px;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+}

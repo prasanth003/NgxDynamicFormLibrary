@@ -12,23 +12,7 @@ import { SampleForm } from './sample.form';
 export class AppComponent {
   
   public title: string = 'NGX Dynamic Form';
-  public editorOptions = {theme: 'vs-dark', language: 'json'};
-  public code: any = JSON.stringify(SampleForm);
   
-  public form: Subject<iNgxForm> = new Subject();
-  
-  constructor() {
-    setTimeout(() => {
-      this.form.next(SampleForm);
-    }, 10);
-  }
-
-  public initEditor(editor: any): void {
-    if (editor) {
-      setTimeout(() => {
-        editor.getAction('editor.action.formatDocument').run();
-      }, 100);
-    }
-  }
+  constructor() { }
 
 }

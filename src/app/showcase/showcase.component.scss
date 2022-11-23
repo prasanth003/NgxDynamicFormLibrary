@@ -1,0 +1,25 @@
+.container-fluid {
+    overflow: hidden;
+    padding: 20px;
+
+    .guide {
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px 0 rgba(239, 239, 239, 0.2);
+    }
+}
+
+::ng-deep {
+    .mdc-tab {
+        justify-content: flex-start !important;
+        padding: auto 0px !important;
+    }
+
+    .mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs>.mat-mdc-tab-header .mat-mdc-tab {
+        flex-grow: initial !important;
+    }
+
+    .mat-mdc-tab-labels { 
+        border-bottom: 0.5px solid #ccc;
+    }
+}
