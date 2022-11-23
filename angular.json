@@ -1,37 +1,34 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": "d0a77c77-eea9-476c-af01-757b59cea36a"
-  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "NgxDynamicFormLibrary": {
+    "formlibrary": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
         }
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "ngx-form",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/NgxDynamicFormLibrary",
+            "outputPath": "dist/formlibrary",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              { "glob": "**/*", "input": "node_modules/monaco-editor", "output": "assets/monaco-editor" }
             ],
             "styles": [
               "src/styles.scss",
@@ -45,19 +42,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -69,34 +53,47 @@
                   "maximumWarning": "2kb",
                   "maximumError": "4kb"
                 }
-              ]
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "NgxDynamicFormLibrary:build"
-          },
           "configurations": {
             "production": {
-              "browserTarget": "NgxDynamicFormLibrary:build:production"
+              "browserTarget": "formlibrary:build:production"
+            },
+            "development": {
+              "browserTarget": "formlibrary:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "NgxDynamicFormLibrary:build"
+            "browserTarget": "formlibrary:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -106,74 +103,44 @@
             ],
             "scripts": []
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "NgxDynamicFormLibrary:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "NgxDynamicFormLibrary:serve:production"
-            }
-          }
         }
       }
     },
-    "NgxDynamicForm": {
+    "ngx-dynamic-form": {
       "projectType": "library",
       "root": "projects/ngx-dynamic-form",
       "sourceRoot": "projects/ngx-dynamic-form/src",
-      "prefix": "NgxForm",
+      "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/ngx-dynamic-form/tsconfig.lib.json",
             "project": "projects/ngx-dynamic-form/ng-package.json"
           },
           "configurations": {
             "production": {
               "tsConfig": "projects/ngx-dynamic-form/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-dynamic-form/tsconfig.lib.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-dynamic-form/src/test.ts",
             "tsConfig": "projects/ngx-dynamic-form/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-dynamic-form/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ngx-dynamic-form/tsconfig.lib.json",
-              "projects/ngx-dynamic-form/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
             ]
           }
         }
       }
     }
   },
-  "defaultProject": "NgxDynamicFormLibrary"
+  "cli": {
+    "analytics": false
+  }
 }

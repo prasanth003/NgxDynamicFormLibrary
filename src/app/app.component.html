@@ -1,3 +1,13 @@
-<div class="container mt-5">
-    <ngx-dynamic-form [form$]="form"></ngx-dynamic-form>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8">
+      <ngx-dynamic-form [form$]="form"></ngx-dynamic-form>
+    </div>
+    <div class="col-md-4">
+      <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="code" (onInit)="initEditor($event)"></ngx-monaco-editor>
+    </div>
+  </div>
 </div>
+
+
+

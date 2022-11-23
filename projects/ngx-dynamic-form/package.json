@@ -2,13 +2,10 @@
   "name": "ngx-dynamic-form",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^11.1.2",
-    "@angular/core": "^11.1.2"
+    "@angular/common": "^15.0.0",
+    "@angular/core": "^15.0.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0",
-    "bootstrap": "^4.6.0",
-    "jquery": "^3.6.0",
-    "popper.js": "^1.16.1"
+    "tslib": "^2.3.0"
   }
 }

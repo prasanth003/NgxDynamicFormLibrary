@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { from, Observable } from 'rxjs';
 import { SampleForm } from 'src/app/sample.form';
@@ -73,11 +73,11 @@ export class NgxDynamicFormComponent implements AfterViewInit {
   }
 
   public onInputChange(event: any, name: string, index: number): void {
-    this.formDetails.formGroup[index].value = event.target.value;
+    if (this.formDetails) this.formDetails.formGroup[index].value = event.target.value;
   }
 
   public onSelectionChange(event: any): void {
-    // console.log('ev', event.value);
+    console.log('selected values', event.value);
   }
 
   // on file select or change
@@ -85,7 +85,7 @@ export class NgxDynamicFormComponent implements AfterViewInit {
     const files: FileList = event.target.files;
     from(files).forEach((file: File) => {
 
-      if (this.formDetails.formGroup[index].fileTypeValidation) {
+      if (this.formDetails && this.formDetails.formGroup[index].fileTypeValidation) {
 
         if (validateFile(file.name, this.formDetails.formGroup[index].fileTypeValidation?.allowedType)) {
 
@@ -107,7 +107,7 @@ export class NgxDynamicFormComponent implements AfterViewInit {
         }
 
       } else {
-        this.addFile(file, this.formDetails.formGroup[index].multipleFile);
+        this.addFile(file, this.formDetails ? this.formDetails.formGroup[index].multipleFile: null as any);
       }
 
     });
