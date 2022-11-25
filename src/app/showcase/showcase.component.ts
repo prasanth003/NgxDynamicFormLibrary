@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-showcase',
@@ -17,8 +18,13 @@ export class ShowcaseComponent {
     const availableHeight: number = window.innerHeight - (navbarHeight + spacing);
     this.guideHeight = availableHeight;
   }
-  constructor() { 
+  constructor(
+    private router: Router
+  ) { 
     this.onResize();
   }
 
+  public goto(): void {
+    this.router.navigate(['/editor'])
+  }
 }

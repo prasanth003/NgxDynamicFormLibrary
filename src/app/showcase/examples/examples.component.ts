@@ -13,7 +13,7 @@ export class ExamplesComponent implements OnChanges {
   
   @Input() example: iExample = null as any;
 
-  public editorOptions = {theme: 'vs-light', language: 'json'};
+  public editorOptions = {theme: 'vs-dark', language: 'json'};
   public code: string = '';
   public form: Subject<iNgxForm> = new Subject();
 
@@ -36,7 +36,7 @@ export class ExamplesComponent implements OnChanges {
 
   public onTabChanged(event: MatTabChangeEvent): void {
     this.code = JSON.stringify(this.example.form);
-    this.editorOptions = {theme: 'vs-light', language: 'json'};
+    this.editorOptions = {theme: 'vs-dark', language: 'json'};
   }
 
 }

@@ -1,4 +1,52 @@
-<div class="container-fluid">
+<div class="container-fluid" [style.height]="(height - 48) + 'px'">
+    
     <h5 class="page-heading">Getting started with NGX Dynamic Form Group</h5>
     <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus voluptas hic ratione quod ipsum, repellat fugiat maiores aut animi perferendis architecto! Illo deleniti nemo pariatur nobis, id rem mollitia dignissimos?</p>
+    <br>
+
+    <h5 class="page-heading">Installation</h5>
+    <p class="description">You can add this library to your Angular project with following command</p>
+    
+    <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+
+    <br>
+
+    <h5 class="page-heading">Setup</h5>
+    
+    <p class="description">
+        It’s recommended to import the Dynamic Forms in the module which declares the component using <code>code</code>. This library doesn’t need anything in the root Application Module, unless you declare components that use dyn-forms there.
+    </p>
+    
+    <ngx-monaco-editor style="height: 150px;" class="editor" [options]="tsOptions" [(ngModel)]="importModule"></ngx-monaco-editor>
+
+    <br>
+
+    <h5 class="page-heading">Usage</h5>
+
+    <p class="description">
+        With the previous setup you’re able to use the dyn-form component:
+    </p>
+
+    <ngx-monaco-editor style="height: 60px;" class="editor" [options]="htmlEditor" [(ngModel)]="usage"></ngx-monaco-editor>
+
+    <br>
+
+    <p class="description">
+        where the form is the usual <code>FormGroup</code> used in Reactive Forms and the config can be built with a factory function provided by the <code>ui-package:</code>
+    </p>
+    
+    <ngx-monaco-editor style="height: 270px;" class="editor" [options]="tsOptions" [(ngModel)]="tsUsage"></ngx-monaco-editor>
+
+    <br>
+
+    <h5 class="page-heading">Modes</h5>
+
+    <p class="description">
+        The vision of the library is also to reuse the form to display the data after it’s edited; this is equivalent to say that the form have different modes like edit and display (for instance).
+
+The configuration is defined for a default mode, and we can override some values for a different mode. Let’s consider a form to edit by default, and after it’s submitted it changes to display. We could have this kind of control configuration:
+    </p>
+
+    <ngx-monaco-editor style="height: 270px;" class="editor" [options]="tsOptions" [(ngModel)]="tsUsage"></ngx-monaco-editor>
+
 </div>

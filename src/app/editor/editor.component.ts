@@ -10,7 +10,7 @@ import { SampleForm } from '../sample.form';
 })
 export class EditorComponent {
 
-  public editorOptions = {theme: 'vs-light', language: 'json'};
+  public editorOptions = {theme: 'vs-dark', language: 'json'};
   public code: string = JSON.stringify(SampleForm);
   public form: Subject<iNgxForm> = new Subject();
 
