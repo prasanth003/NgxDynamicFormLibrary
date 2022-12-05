@@ -1,7 +1,10 @@
+import { MatFormFieldAppearance } from "@angular/material/form-field";
+
 export interface iNgxFormGroup {
     formControlName: string;
     fieldType: 'input' | 'select' | 'multiselect' | 'autocomplete' | 'textarea' | 'date' | 'dateRange' | 'checkbox' | 'radioButton' | 'file';
     inputType?: 'text' | 'number' | 'password';
+    appearance?: MatFormFieldAppearance; 
     label: string;
     placeholder?: string;
     value?: string | any;

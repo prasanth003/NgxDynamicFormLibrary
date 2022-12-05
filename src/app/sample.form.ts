@@ -17,7 +17,7 @@ export const SampleForm: iNgxForm = {
         {
             disabled: false,
             fieldType: 'input',
-            formControlName: 'name',
+            formControlName: 'lastname',
             label: 'Last Name',
             placeholder: 'Enter your last name.',
             required: false,

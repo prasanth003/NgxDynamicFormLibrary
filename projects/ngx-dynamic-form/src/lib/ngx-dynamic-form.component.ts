@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { from, Observable } from 'rxjs';
+import { from, map, Observable } from 'rxjs';
 import { SampleForm } from 'src/app/sample.form';
 import { humanFileSize } from './helpers/filesizeconverter';
 import { validateFile } from './helpers/fileValidator';
@@ -13,7 +13,7 @@ declare var $: any;
   templateUrl: './ngx-dynamic-form.component.html',
   styleUrls: ['./ngx-dynamic-form.component.scss']
 })
-export class NgxDynamicFormComponent implements AfterViewInit {
+export class NgxDynamicFormComponent implements OnChanges {
 
   @Input() form$: Observable<iNgxForm> = new Observable();
   public dynamicFormGroup: FormGroup = new FormGroup({});
@@ -21,21 +21,29 @@ export class NgxDynamicFormComponent implements AfterViewInit {
   public filesToUpload: FileToUpload[] = [];
 
   constructor() {
-    this.loadScript();
-  }
-
-  public ngAfterViewInit(): void {
-
-    this.form$.subscribe((form: iNgxForm) => {
-      form.formGroup ? this.initForm(form.formGroup) : console.log('Please provide valid form group');
-      this.formDetails = form;
-    });
-
-    setTimeout(() => {
-      $('.selectpicker').selectpicker();
-    }, 5000);
 
   }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes && changes['form$'] && changes['form$'].currentValue) {
+
+      this.form$.subscribe((form: iNgxForm) => {
+        form.formGroup ? this.initForm(form.formGroup) : console.log('Please provide valid form group');
+        this.formDetails = form;
+      });
+
+    }
+  }
+
+  // public ngAfterViewInit(): void {
+  //   this.loadScript().then((didLoaded: boolean) => {
+  //     if (didLoaded) {
+  //       setTimeout(() => {
+  //         $('.selectpicker').selectpicker();
+  //       }, 10)
+  //     }
+  //   });
+  // }
 
   // initalising the form with basic validator
   private initForm(formGroup: iNgxFormGroup[]) {
@@ -83,33 +91,26 @@ export class NgxDynamicFormComponent implements AfterViewInit {
   // on file select or change
   public onFileChange(event: any, index: number): void {
     const files: FileList = event.target.files;
-    from(files).forEach((file: File) => {
 
-      if (this.formDetails && this.formDetails.formGroup[index].fileTypeValidation) {
+    const file = from(files).pipe(
+      map((file: File) => {
+        if (validateFile(file.name, this.formDetails.formGroup[index].fileTypeValidation?.allowedType)) return file;
+        throw new Error('Not a valid file');
+      })
+    );
 
-        if (validateFile(file.name, this.formDetails.formGroup[index].fileTypeValidation?.allowedType)) {
-
-          if (this.formDetails.formGroup[index].fileTypeValidation?.maxFileSize) {
-            let size: number | undefined = this.formDetails.formGroup[index].fileTypeValidation?.maxFileSize;
-            
-            if ( (size ? size : 1000000000000000000000000000000000) > file.size) {
-
-              this.addFile(file, this.formDetails.formGroup[index].multipleFile);
-            } else {
-              console.log('File is too large')
-            }
-          } else {
-            this.addFile(file, this.formDetails.formGroup[index].multipleFile);
-          }
-
+    file.subscribe({
+      next: (fileDetails: File) => {
+        const maxSize: number | undefined = this.formDetails.formGroup[index].fileTypeValidation?.maxFileSize;
+        if (maxSize) {
+          maxSize > fileDetails.size ? this.addFile(fileDetails, this.formDetails.formGroup[index].multipleFile) : console.log('large file size');
         } else {
-          console.log('Invalid File Format')
+          this.addFile(fileDetails, this.formDetails.formGroup[index].multipleFile);
         }
-
-      } else {
-        this.addFile(file, this.formDetails ? this.formDetails.formGroup[index].multipleFile: null as any);
+      },
+      error: (err: any) => {
+        console.log('error', err);
       }
-
     });
   }
 
@@ -145,14 +146,20 @@ export class NgxDynamicFormComponent implements AfterViewInit {
     form.classList.add('was-validated');
   }
 
-  private loadScript(): void {
+  private loadScript(): Promise<boolean> {
     const url: string[] = ['https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/js/bootstrap-select.min.js'];
-    url.forEach((libSoruce: string) => {
-      let node = document.createElement('script');
-      node.src = libSoruce;
-      node.type = 'text/javascript';
-      node.async = true;
-      document.getElementsByTagName('head')[0].appendChild(node);
+    return new Promise((resolve) => {
+      url.forEach((libSoruce: string) => {
+        let node = document.createElement('script');
+        node.src = libSoruce;
+        node.type = 'text/javascript';
+        node.async = true;
+        document.getElementsByTagName('head')[0].appendChild(node);
+        url.shift();
+
+        if (url && url.length === 0) return resolve(true);
+      
+      });
     });
   }
 }

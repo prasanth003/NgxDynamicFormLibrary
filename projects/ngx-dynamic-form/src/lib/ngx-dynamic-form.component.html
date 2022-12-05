@@ -22,12 +22,11 @@
                         class="form-control" 
                         [placeholder]="field.placeholder" 
                         [formControlName]="field.formControlName" 
-                        [type]="field.inputType"
+                        [type]="field && field.inputType ? field.inputType: 'text'"
                         [id]="field.formControlName"
-                        [disabled]="field.disabled"
                         [required]="field.required"
                         [class]="field.customClass"
-                        [maxLength]="field.maxLength ? field.maxLength : 100000"
+                        [maxLength]="field.maxLength ? field.maxLength : 1000000"
                         (keyup)="onInputChange($event, field.formControlName, i)"
                     >
                     <!-- Input Group End -->
@@ -39,7 +38,6 @@
                         [placeholder]="field.placeholder" 
                         [formControlName]="field.formControlName"
                         [id]="field.formControlName"
-                        [disabled]="field.disabled"
                         [required]="field.required"
                         [class]="field.customClass"
                         [maxLength]="field.maxLength ? field.maxLength : 100000"
@@ -53,7 +51,6 @@
                         class="form-control"
                         [formControlName]="field.formControlName"
                         [id]="field.formControlName"
-                        [disabled]="field.disabled"
                         [required]="field.required"
                         [class]="field.customClass"
                     >
@@ -81,7 +78,6 @@
                         *ngSwitchCase="'multiselect'"
                         [formControlName]="field.formControlName"
                         [id]="field.formControlName"
-                        [disabled]="field.disabled"
                         [required]="field.required"
                         [class]="field.customClass"
                         class="form-control selectpicker multi-select-field" 
@@ -164,7 +160,6 @@
                             class="custom-file-input"
                             [formControlName]="field.formControlName" 
                             [id]="field.formControlName"
-                            [disabled]="field.disabled"
                             [required]="field.required"
                             [class]="field.customClass"
                             [accept]="field.fileTypeValidation ? field.fileTypeValidation.allowedType : '*'"
@@ -226,8 +221,34 @@
     <div class="row" *ngIf="form.style.formStyle === 'material'">
 
         <div class="col-md-{{ field.column }}" *ngFor="let field of form.formGroup; let i = index">
-            
-            <h6>I am Material Form Group</h6>
+
+            <span  [ngSwitch]="field.fieldType">
+
+                <mat-form-field *ngSwitchCase="'input'" [appearance]="field && field.appearance ? field.appearance: 'outline'">
+                    <mat-label *ngIf="field.label">{{ field.label }}</mat-label>
+    
+                    <!-- Input Group Start -->
+                    <input
+                        matInput
+                        [autocomplete]="field.autoComplete ? 'on' : 'new-password'" 
+                        class="form-control" 
+                        [placeholder]="field.placeholder ? field.placeholder: ''" 
+                        [formControlName]="field.formControlName" 
+                        [type]="field && field.inputType ? field.inputType: 'text'"
+                        [id]="field.formControlName"
+                        [required]="field.required"
+                        [class]="field.customClass"
+                        [maxLength]="field.maxLength ? field.maxLength : 1000000"
+                        (keyup)="onInputChange($event, field.formControlName, i)"
+                    >
+                    <!-- Input Group End -->
+    
+                    <mat-hint>Hint</mat-hint>
+    
+    
+                </mat-form-field>
+    
+            </span>
 
         </div>
 

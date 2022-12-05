@@ -11,6 +11,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { FormsModule } from '@angular/forms';
 import { NgxDynamicFormModule } from 'projects/ngx-dynamic-form/src/public-api';
 import { ExampleSectionComponent } from './example-section/example-section.component';
+import { BrowserSupportComponent } from './features/browser-support/browser-support.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ExampleSectionComponent } from './example-section/example-section.compo
     ExamplesComponent,
     FeaturesComponent,
     InstallationDocumentComponent,
-    ExampleSectionComponent
+    ExampleSectionComponent,
+    BrowserSupportComponent,
   ],
   imports: [
     CommonModule,

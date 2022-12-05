@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { NgxDynamicFormComponent } from './ngx-dynamic-form.component';
 
 
@@ -10,7 +13,10 @@ import { NgxDynamicFormComponent } from './ngx-dynamic-form.component';
   imports: [
     ReactiveFormsModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule
   ],
   exports: [NgxDynamicFormComponent]
 })
