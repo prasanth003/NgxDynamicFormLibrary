@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { EditorRoutingModule } from './editor-routing.module';
 import { EditorComponent } from './editor.component';
 import { MaterialLibModule } from 'src/library/material.lib';
-import { MonacoEditorModule } from 'ngx-monaco-editor';
+// import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { FormsModule } from '@angular/forms';
 import { NgxDynamicFormModule } from 'projects/ngx-dynamic-form/src/public-api';
 
@@ -17,7 +17,7 @@ import { NgxDynamicFormModule } from 'projects/ngx-dynamic-form/src/public-api';
     CommonModule,
     EditorRoutingModule,
     MaterialLibModule,
-    MonacoEditorModule.forRoot(),
+    // MonacoEditorModule.forRoot(),
     FormsModule,
     NgxDynamicFormModule
   ]
