@@ -1,0 +1,25 @@
+<div class="container-fluid" [style.height]="(height - 48) + 'px'">
+
+
+    @for (example of examples; track example.name) {
+       
+        <h5 class="page-heading">{{ example.name }}</h5>
+
+        <p class="description">{{ example.description }}</p>
+
+        <mat-tab-group>
+            <mat-tab label="UI">
+                <div class="ui">
+                    <ngx-dynamic-form type="bootstrap" [form]="example.form"></ngx-dynamic-form>
+                </div>
+            </mat-tab>
+            <mat-tab label="Code">
+                <div class="editor-container">
+                    <ngx-monaco-editor class="editor" [options]="editorOptions" [ngModel]="getCode(example.form)"></ngx-monaco-editor>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+
+    }
+
+</div>
