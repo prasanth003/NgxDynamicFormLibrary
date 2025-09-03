@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
-  selector: 'lib-ngx-dynamic-form-antd',
-  imports: [],
-  template: `
-    <p>
-      ngx-dynamic-form-antd works!
-    </p>
-  `,
-  styles: ``
+  selector: 'ngx-dynamic-form-antd',
+  imports: [
+    NzButtonModule
+  ],
+  templateUrl: './ngx-dynamic-form-antd.html',
+  styleUrl: './ngx-dynamic-form-antd.scss'
 })
 export class NgxDynamicFormAntd {
 
