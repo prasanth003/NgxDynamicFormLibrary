@@ -1,5 +1,146 @@
-<button nz-button nzType="primary">Primary Button</button>
-    <button nz-button nzType="default">Default Button</button>
-    <button nz-button nzType="dashed">Dashed Button</button>
-    <button nz-button nzType="text">Text Button</button>
-    <a nz-button nzType="link">Link Button</a>
+<form #ngForm="ngForm" nz-form [formGroup]="dynamicFormGroup" (ngSubmit)="submit()">
+
+
+    <div nz-row nzGutter="8">
+
+        @for (field of form.formGroup; track field.formControlName; let i = $index) {
+
+        <div nz-col [ngClass]="field.customClass" [nzSpan]="field.column * 2">
+
+            <nz-form-item>
+
+                <nz-form-label [nzSpan]="24" [nzFor]="field.formControlName" [nzRequired]="field.required">{{
+                    field.label }}</nz-form-label>
+
+                <nz-form-control [nzSpan]="24" [nzErrorTip]="errorMessage">
+
+                    @switch (field.fieldType) {
+
+                        @case ('input') {
+
+                            <nz-input-group 
+                                [nzPrefix]="prefix" 
+                                [nzSuffix]="suffix" 
+                                [nzStatus]="hasError(field.formControlName, field.required ? 'required' : '') && hasError(field.formControlName, field.validation.patternName) ? 'error' : ''"
+                            >
+
+                                <input 
+                                    nz-input 
+                                    [placeholder]="field.placeholder"
+                                    [formControlName]="field.formControlName" 
+                                    [type]="field.inputType" 
+                                    [id]="field.formControlName"
+                                    [required]="field.required" 
+                                    [class]="field.customClass"
+                                    [maxLength]="field.maxLength ? field.maxLength : 100000"
+                                    (keyup)="onInputChange($event, field.formControlName, i)" 
+                                    [min]="field.minRange"
+                                    [max]="field.maxRange" 
+                                />
+
+                            </nz-input-group>
+
+                        } 
+                        @case ('select') {
+
+                            <nz-select  
+                                [formControlName]="field.formControlName"
+                                [id]="field.formControlName" 
+                                [required]="field.required" 
+                                [class]="field.customClass"
+                                [nzPlaceHolder]="field?.placeholder ?? ''"
+                                (ngModelChange)="onSelectionChange($event, field.formControlName)" 
+                                [nzShowSearch]="true"
+                                [nzAllowClear]="true" 
+                                style="width: 100%;"
+                            >
+
+                                @for (option of field.options; track option.value) {
+                                    <nz-option [nzLabel]="option.displayValue" [nzValue]="option.value"></nz-option>
+                                }
+
+                            </nz-select>
+
+                        }
+                        @case ('textarea') {
+
+                            <textarea 
+                                nz-input 
+                                [placeholder]="field.placeholder"
+                                [formControlName]="field.formControlName" 
+                                [id]="field.formControlName"
+                                [required]="field.required" 
+                                [class]="field.customClass"
+                                [maxLength]="field.maxLength ? field.maxLength : 100000"
+                                (keyup)="onInputChange($event, field.formControlName, i)"
+                                [nzAutosize]="{ minRows: 2, maxRows: 6 }"
+                            ></textarea>
+
+                        }
+                        @case ('multiselect') {
+                            <nz-select 
+                                [formControlName]="field.formControlName"
+                                [ngModel]="field && field.value ? field.value: []" 
+                                ngModelOptions="{standalone: true}"
+                                (ngModelChange)="onSelectionChange($event, field.formControlName)" [id]="field.formControlName"
+                                [required]="field.required" 
+                                [class]="field.customClass"
+                                [nzPlaceHolder]="field?.placeholder ?? ''" 
+                                [nzShowSearch]="true"
+                                [nzMaxTagCount]="field.maxTagCount ? field.maxTagCount: 3" 
+                                [nzAllowClear]="true"
+                                nzMode="multiple"
+                            >
+
+                                @for (option of field.options; track option.value) {
+                                    <nz-option [nzLabel]="option.displayValue" [nzValue]="option.value"></nz-option>   
+                                }
+
+                            </nz-select>
+                        }
+
+                    }
+
+                    <ng-template #prefix>
+
+                    </ng-template>
+
+                    <ng-template #suffix>
+
+
+                    </ng-template>
+
+
+                    <ng-template #errorMessage>
+
+                        @if (hasError(field.formControlName, field.required ? 'required' : '') && ngForm.submitted) {
+                        {{ field.requiredErrorMessage ? field.requiredErrorMessage : 'Please enter ' + field.label }}
+                        }
+
+                        @if (hasError(field.formControlName, field.validation.patternName)) {
+                        {{ field.validation.message }}
+                        }
+
+                    </ng-template>
+
+                    
+
+                </nz-form-control>
+
+
+            </nz-form-item>
+
+        </div>
+
+        }
+
+    </div>
+
+    <button type="submit" nz-button nzType="primary" [class]="form.style.buttonStyle.class">
+        {{ form.style.buttonStyle.buttonName }}
+    </button>
+
+</form>
+
+
+

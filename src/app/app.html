@@ -1,64 +1,27 @@
-<div class="container-fluid">
-
-    <div class="row g-2">
-
-        <div class="col-md-4">
-
-            <div class="breif" [style.height]="guideHeight + 'px'">
-                
-                <div class="product-brief">
-                    
-                    <h3>Want to create reactive forms in seconds?</h3>
-            
-                    <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus voluptas hic ratione
-                        quod
-                        ipsum, repellat fugiat maiores aut animi perferendis architecto! Illo deleniti nemo pariatur nobis, id
-                        rem
-                        mollitia dignissimos?
-                    </p>
-                    
-                    <button mat-button class="playground-button" (click)="goto()">
-                        Playground
-                        <mat-icon>arrow_forward</mat-icon>
-                    </button>
-
-                </div>
-
+<nz-layout>
     
-                <div class="about">
-                    <div class="profile">
-                        <img class="profile-image" src="./assets/ngxform/img/profile.JPG" alt="profile"/>
-                    </div>
-                    <div class="profile-details">
-                        <h6 class="page-heading">Do you like my work?</h6>
-                        <button mat-button>Hire me</button>
-                        <button mat-button>Support</button>
-                    </div>
-                </div>
+    <nz-header nzTheme="light">
+        <navbar></navbar>
+    </nz-header>
 
-            </div>
+    <nz-content class="outer-content pt-2">
+        
+        <nz-layout class="inner-layout" [style]="{'height': height() + 'px'}">
+            
+            @if (url() === 'docs') { 
+                <nz-sider nzWidth="250px" nzTheme="light">
+                    <sidebar></sidebar>
+                </nz-sider>
+            }
 
-        </div>
+            <nz-content class="inner-content p-3">
+                <router-outlet></router-outlet>
+            </nz-content>
+            
+        </nz-layout>
+        
+    </nz-content>
 
-        <div class="col-md-8">
-            <div class="guide" [style.height]="guideHeight + 'px'">
-                <mat-tab-group>
-                    <mat-tab label="Installation">
-                        <installation-document [height]="guideHeight"></installation-document>
-                    </mat-tab>
-                    <mat-tab label="Features">
-                        <features></features>
-                    </mat-tab>
-                    <mat-tab label="Examples">
-                        <examples [height]="guideHeight"></examples>
-                    </mat-tab>
-                </mat-tab-group>
-            </div>
-        </div>
+    <nz-footer class="text-center">Design & Implement By <a href="https://www.linkedin.com/in/prasanth-sekar-572446126/" target="_blank">Prasanth Sekar</a></nz-footer>
 
-    </div>
-
-
-</div>
-
-<!-- <ngx-dynamic-form [form$]="form"></ngx-dynamic-form> -->
+</nz-layout>

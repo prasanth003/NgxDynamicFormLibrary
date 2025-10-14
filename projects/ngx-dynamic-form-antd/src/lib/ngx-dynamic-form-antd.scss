@@ -1,0 +1,99 @@
+// @import '/src/assets/eots/style/variables.scss';
+
+.error-field {
+  color: #dc3545 !important;
+}
+
+label {
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: #000;
+}
+
+::ng-deep {
+
+  .ant-input,
+  .ant-select {
+    color: #000;
+  }
+
+  .ant-input::placeholder,
+  .ant-select::placeholder {
+    color: #999;
+    opacity: 1;
+    /* Firefox */
+  }
+
+  .ant-radio-wrapper {
+    color: #000;
+  }
+
+  .ant-radio-button-wrapper {
+    color: #000;
+  }
+
+}
+
+.custom-file {
+  display: contents;
+}
+
+.form-text {
+  color: #000;
+}
+
+
+.custom-file {
+  display: contents;
+}
+
+.file-layout {
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  width: 100%;
+  display: inline-block;
+  padding: 10px;
+  margin-top: 10px;
+
+  .file-details {
+    width: 80%;
+    float: left;
+
+    .file-name {
+      font-size: 14px;
+      color: #000 !important;
+    }
+
+    .file-stats {
+      display: inline-block;
+
+      .value {
+        font-size: 12px;
+        color: #999;
+        display: inline-block;
+      }
+
+      .dot {
+        background-color: #cccccc;
+        border-radius: 50%;
+        width: 7px;
+        height: 7px;
+        display: inline-block;
+        margin: 0px 10px;
+      }
+    }
+  }
+
+  .file-action {
+    width: 20%;
+    float: right;
+    text-align: right;
+
+    .delete-btn {
+      font-size: 14px;
+      color: #dc3545;
+      position: relative;
+      top: 5px;
+    }
+  }
+}

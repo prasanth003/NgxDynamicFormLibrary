@@ -3,6 +3,7 @@ export interface iNgxFormStyle {
     bootstrapStyles?: iBootstrapFormStyle;
     materialStyles?: iMaterialFormStyle;
     buttonStyle: iButtonStyle;
+    inputSize?: 'small' | 'medium' | 'large';
 }
 
 interface iBootstrapFormStyle {

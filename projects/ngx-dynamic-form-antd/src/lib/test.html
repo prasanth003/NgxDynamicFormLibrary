@@ -1,0 +1,233 @@
+        <div [ngClass]="field.customClass" style="margin-bottom: 10px;" class="col-md-{{ field.column }}"
+            *ngFor="let field of form.formGroup; let i = index">
+
+            <div class="form-group" [ngSwitch]="field.fieldType">
+
+                <label [for]="field.formControlName" *ngIf="field.label">{{ field.label }} <span *ngIf="field.required"
+                        style="color: #dc3545;">*</span></label>
+
+                <div class="input-group w-100">
+
+                    <!-- Prefix -->
+                    <div class="input-group-prepend" *ngIf="field.prefix as prefix">
+                        <span class="input-group-text"> {{ prefix }} </span>
+                    </div>
+
+                    <!-- Empty Space Start -->
+                    <div *ngSwitchCase="'space'"></div>
+                    <!-- Empty Space End -->
+
+                    <!-- Input Group Start -->
+                    <input nz-input *ngSwitchCase="'input'" [placeholder]="field.placeholder"
+                        [formControlName]="field.formControlName" [type]="field.inputType" [id]="field.formControlName"
+                        [required]="field.required" [class]="field.customClass"
+                        [maxLength]="field.maxLength ? field.maxLength : 100000"
+                        (keyup)="onInputChange($event, field.formControlName, i)" [min]="field.minRange"
+                        [max]="field.maxRange" />
+                    <!-- Input Group End -->
+
+                    <!-- Checkbox Button Starts -->
+                    <label nz-checkbox *ngSwitchCase="'checkbox'" [(ngModel)]="field.value"
+                        [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [required]="field.required" [class]="field.customClass"
+                        (ngModelChange)="onCheckBoxChanges($event, field.formControlName)">
+                        <!-- {{field?.checkBox?.options[0]?.label}} -->
+                    </label>
+                    <!-- Checkbox Button Ends -->
+
+                    <!-- Text Area Start -->
+                    <textarea *ngSwitchCase="'textarea'" nz-input [placeholder]="field.placeholder"
+                        [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [required]="field.required" [class]="field.customClass"
+                        [maxLength]="field.maxLength ? field.maxLength : 100000"
+                        (keyup)="onInputChange($event, field.formControlName, i)"
+                        [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+                    <!-- Text Area Ends -->
+
+                    <!-- Select Group Starts -->
+                    <nz-select *ngSwitchCase="'select'" [formControlName]="field.formControlName"
+                        [id]="field.formControlName" [required]="field.required" [class]="field.customClass"
+                        [nzPlaceHolder]="field?.placeholder ?? ''"
+                        (ngModelChange)="onSelectionChange($event, field.formControlName)" [nzShowSearch]="true"
+                        [nzAllowClear]="true" style="width: 100%;">
+                        <nz-option *ngFor="let option of field.options" [nzLabel]="option.displayValue"
+                            [nzValue]="option.value"></nz-option>
+                    </nz-select>
+                    <!-- Select Group End -->
+
+                    <!-- Multiselect Starts -->
+                    <nz-select *ngSwitchCase="'multiselect'" [formControlName]="field.formControlName"
+                        [ngModel]="field && field.value ? field.value: []" ngModelOptions="{standalone: true}"
+                        (ngModelChange)="onSelectionChange($event, field.formControlName)" [id]="field.formControlName"
+                        [required]="field.required" [class]="field.customClass"
+                        [nzPlaceHolder]="field?.placeholder ?? ''" [nzShowSearch]="true"
+                        [nzMaxTagCount]="field.maxTagCount ? field.maxTagCount: 3" [nzAllowClear]="true"
+                        nzMode="multiple" class="w-100">
+                        <nz-option *ngFor="let option of field.options" [nzLabel]="option.displayValue"
+                            [nzValue]="option.value"></nz-option>
+
+                    </nz-select>
+                    <!-- Multiselect End-->
+
+                    <!-- Auto Complete Starts -->
+                    <nz-select *ngSwitchCase="'autocomplete'" [formControlName]="field.formControlName"
+                        [(ngModel)]="field.value" ngModelOptions="{standalone: true}" [id]="field.formControlName"
+                        [required]="field.required" [class]="field.customClass"
+                        [nzPlaceHolder]="field?.placeholder ?? ''" [nzAllowClear]="true" [nzShowSearch]="true"
+                        class="w-100">
+                        <nz-option *ngFor="let option of field.options" [nzLabel]="option.displayValue"
+                            [nzValue]="option.value"></nz-option>
+
+                    </nz-select>
+                    <!-- Auto Complete End -->
+
+                    <!-- Tags Start -->
+                    <nz-select *ngSwitchCase="'tags'" [formControlName]="field.formControlName"
+                        [(ngModel)]="field.value" ngModelOptions="{standalone: true}" [id]="field.formControlName"
+                        [required]="field.required" [class]="field.customClass"
+                        [nzPlaceHolder]="field?.placeholder ?? ''" [nzAllowClear]="true" nzSize="default" nzMode="tags"
+                        class="w-100">
+                        <nz-option *ngFor="let option of previousValues" [nzLabel]="option.displayValue"
+                            [nzValue]="option.value">
+                        </nz-option>
+                    </nz-select>
+                    <!-- Tags End -->
+
+                    <!-- File Start -->
+                    <div *ngSwitchCase="'file'" class="custom-file">
+
+                        <input type="file" class="custom-file-input" nz-input [formControlName]="field.formControlName"
+                            [id]="field.formControlName" [required]="field.required" [class]="field.customClass"
+                            [accept]="field.fileTypeValidation ? field.fileTypeValidation.allowedType : '*'"
+                            (change)="onFileChange($event, i)" [multiple]="field.multipleFile">
+
+
+                        <!-- <div class="file-layout" *ngFor="let file of field?.fileToUpload; let index = index">
+                          <div class="file-details">
+                              <div class="file-name">{{ file.fileName }}</div>
+                              <div class="file-stats">
+                                  <span class="value">{{ file.fileSize }}</span>
+                                  <div class="dot"></div>
+                                  <span class="value">{{ file.fileType }}</span>
+                              </div>
+                          </div>
+                          <div class="file-action">
+                              <button class="btn delete-btn" (click)="deleteFile(index, field)">Delete</button>
+                          </div>
+                      </div> -->
+
+                    </div>
+                    <!-- File end -->
+
+                    <!-- Autocomplete with multiselect -->
+
+                    <!-- <multi-selection
+                      *ngSwitchCase="'multiselectSearch'"
+                      [field]="field"
+                  ></multi-selection> -->
+                    <!-- Multiselect with search ends -->
+
+                    <span *ngSwitchCase="'switch'">
+                        <nz-switch [(ngModel)]="field.value"
+                            (ngModelChange)="onSwitchChange($event, field.formControlName)"
+                            ngModelOptions="{standalone: true}" [formControlName]="field.formControlName"></nz-switch>
+                    </span>
+
+                    <!-- Radio Button Starts -->
+                    <nz-radio-group *ngSwitchCase="'radioButton'" [class]="field.customClass"
+                        [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [required]="field.required" (ngModelChange)="onRadioChange($event, field.formControlName)">
+                        <!-- Default Radio Style Starts -->
+                        <!-- <label
+                          [hidden]="field.radioStyle == 'modern'"
+                          nz-radio
+                          [nzValue]="option.value"
+                          *ngFor="let option of field.radioButtons;"
+                          [nzDisabled]="option.disabled"
+                      >
+                          {{ option.displayValue }}
+                      </label> -->
+                        <!-- Default Radio Style End -->
+
+                        <!-- Modern Radio Style Starts -->
+                        <!-- <label
+                          [hidden]="field.radioStyle == 'default'"
+                          nz-radio-button
+                          [nzValue]="option.value"
+                          *ngFor="let option of field.radioButtons;"
+                          [nzDisabled]="option.disabled"
+                      >
+                          {{ option.displayValue }}
+                      </label> -->
+                        <!-- Modern Radio Style End -->
+
+                    </nz-radio-group>
+
+                    <!-- Radio Button Ends -->
+
+                    <!-- Datepicker Start -->
+                    <!-- <nz-date-picker
+                      style="width: 100%;"
+                      *ngSwitchCase="'date'"
+                      [formControlName]="field.formControlName"
+                      [id]="field.formControlName"
+                      (ngModelChange)="onDatePickerChange($event, field.formControlName)"
+                      [required]="field.required"
+                      [nzDisabledDate]="disabledDate"
+                      nzShowTime
+                  ></nz-date-picker> -->
+                    <!-- Datepicker End -->
+
+                    <!-- Date range picker start -->
+                    <nz-range-picker style="width: 100%;" *ngSwitchCase="'dateRange'"
+                        [formControlName]="field.formControlName" [id]="field.formControlName"
+                        (ngModelChange)="onDatePickerChange($event, field.formControlName)"
+                        [required]="field.required"></nz-range-picker>
+                    <!-- Date range picker end -->
+
+
+                    <!-- Time Picker Starts -->
+                    <!-- <div style="width: 100%" *ngSwitchCase="'timePicker'">
+                      <custom-nz-time-picker
+                          [placeholder]="field.placeholder"
+                          [value]="field.value"
+                          (onTimeChange)="onTimePickerChange($event, field.formControlName)"
+                      ></custom-nz-time-picker>
+                  </div> -->
+                    <!-- Time Picker Ends -->
+
+                    <!-- Range Slider Start -->
+                    <!-- <nz-slider
+                      [nzMin]="field.minRange"
+                      [nzMax]="field.maxRange"
+                      style="width: 100%;"
+                      *ngSwitchCase="'rangeSlider'"
+                      [formControlName]="field.formControlName"
+                  ></nz-slider> -->
+                    <!-- Range slider end -->
+
+                    <!-- Suffix -->
+                    <div class="input-group-append" *ngIf="field.suffix as suffix">
+                        <span class="input-group-text"> {{ suffix }} </span>
+                    </div>
+
+                </div>
+
+            
+
+                <!-- Hint -->
+                <small class="form-text text-muted" *ngIf="field.hint as hint">{{ hint }}</small>
+
+                <!-- Hint With Box -->
+                <!-- <small [(ngModel)]="hint.value" [ngModelOptions]="{standalone: true}" (ngModelChange)="onHintCheckBoxChange($event, hint.field)" nz-checkbox class="form-text text-muted" *ngIf="field.hintWithCheckbox as hint" [hidden]="!hint.show">
+                  {{ hint.hint }}
+              </small> -->
+
+                <!-- Max Length -->
+                <small class="form-text text-muted float-right" *ngIf="field.displayMaxLength">
+                    {{ formDetails.formGroup[i].value ? formDetails.formGroup[i].value.length : 0 }} / {{
+                    field.maxLength }}
+                </small>
+            </div>
+
+        </div>

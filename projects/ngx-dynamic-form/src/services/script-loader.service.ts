@@ -7,7 +7,7 @@ export class ScriptLoaderService {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  loadScripts(urls: string[]): Promise<void> {
+  public loadScripts(urls: string[]): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return Promise.resolve(); // SSR-safe
 
     const promises = urls.map((url) => {

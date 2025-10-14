@@ -1,49 +1,52 @@
-import { Component, HostListener, signal } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { iNgxForm, NgxDynamicForm, SampleForm } from 'ngx-dynamic-form';
-import { Subject } from 'rxjs';
-import { InstallationDocument } from './installation-document/installation-document';
-import { Features } from './features/features';
-import { Example } from './example/example';
-import { MatTabsModule } from '@angular/material/tabs';
+import { Component, HostListener, OnInit, signal } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { Navbar } from './navbar/navbar';
+
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { Sidebar } from './sidebar/sidebar';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   imports: [
-    MatButtonModule,
-    MatIconModule,
-    MatTabsModule,
-    InstallationDocument,
-    Features,
-    Example
+    Navbar,
+    Sidebar,
+    RouterOutlet,
+    NzBreadCrumbModule,
+    NzIconModule,
+    NzLayoutModule,
+    NzMenuModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
+export class App implements OnInit { 
   
-  protected readonly title = signal('dynamic-form');
-  public guideHeight: number = 400;
+  public url = signal('docs');
+  public date: Date = new Date();
+  public height = signal(window.innerHeight);
 
-  @HostListener('window:resize')
-  public onResize(): void {
-    const navbarHeight: number = 20;
-    const spacing: number = 20;
-    const availableHeight: number = window.innerHeight - (navbarHeight + spacing);
-    this.guideHeight = availableHeight;
-  }
+  constructor(private router: Router) { }
 
-  public form: Subject<iNgxForm> = new Subject();
-
-  constructor() { 
-    setTimeout(() => {
-      this.form.next(SampleForm);
-    }, 10);
+  public ngOnInit(): void {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.url.set(event.urlAfterRedirects.split('?')[0].split('#')[0].split('/')[1]);
+      });
 
     this.onResize();
   }
 
-  public goto(): void {}
+  @HostListener('window:resize')
+  public onResize(): void {
+    const navbarHeight: number = 80;
+    const spacing: number = 38;
+    const availableHeight: number = window.innerHeight - (navbarHeight + spacing);
+    this.height.update(() => availableHeight);
+  }
 
 }

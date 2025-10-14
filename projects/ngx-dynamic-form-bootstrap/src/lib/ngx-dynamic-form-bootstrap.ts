@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { from, map, Observable } from 'rxjs';
-import { iNgxForm, SampleForm, iNgxFormGroup, validateFile, humanFileSize, ScriptLoaderService } from 'ngx-dynamic-form';
+import { from, map } from 'rxjs';
+import { iNgxForm, iNgxFormGroup, validateFile, humanFileSize, ScriptLoaderService } from 'ngx-dynamic-form';
 
 declare const $: any;
 
@@ -80,8 +80,8 @@ export class NgxDynamicFormBootstrap implements AfterViewInit, OnChanges {
         { value: form.value ?? '', disabled: !!form.disabled },
         this.getValidators(form)
       );
-    });
-
+    }); 
+    
     this.dynamicFormGroup = new FormGroup(group);
   }
 

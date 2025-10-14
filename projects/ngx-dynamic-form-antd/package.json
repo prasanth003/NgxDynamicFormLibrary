@@ -2,7 +2,7 @@
   "name": "ngx-dynamic-form-antd",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^20.2.0",
+   "@angular/common": "20.1.2",
     "@angular/core": "^20.2.0"
   },
   "dependencies": {

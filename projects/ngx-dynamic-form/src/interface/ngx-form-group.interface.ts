@@ -23,6 +23,13 @@ export interface iNgxFormGroup {
     autoComplete?: boolean;
     fileTypeValidation?: iFileValidation;
     multipleFile?: boolean;
+    inputSize?: 'small' | 'medium' | 'large';
+    minDate?: Date;
+    minRange?: number;
+    maxRange?: number;
+    maxTagCount?: number;
+    radioStyle?: 'modern' | 'default';
+    disabledDate?: Date;
 }
 
 

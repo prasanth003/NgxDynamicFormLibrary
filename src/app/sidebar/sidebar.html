@@ -1,0 +1,11 @@
+<ul nz-menu nzMode="inline" class="sider-menu">
+
+    @for (menu of menuItems; track menu.menu) {
+        @if (menu.isGroup) {
+            <li nz-menu-group [nzTitle]="menu.menu"></li>
+        } @else {
+            <li nz-menu-item [nzMatchRouter]="true" [routerLink]="[menu.path]">{{ menu.menu }}</li>
+        }
+    }
+
+</ul>

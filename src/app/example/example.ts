@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, effect, Input, signal } from '@angular/core';
 import { examples } from './example.content';
 import { iExample } from './example.interface';
 import { iNgxForm, NgxDynamicForm } from 'ngx-dynamic-form';
@@ -25,6 +25,11 @@ export class Example {
   @Input() public height: number = 400;
   public examples: iExample[] = examples;
 
+  public a = signal(0);
+  public b = signal(1);
+
+  public c = computed(() => this.a() + this.b());
+
   public editorOptions = {
     theme: 'vs-dark', 
     language: 'html', 
@@ -41,6 +46,14 @@ export class Example {
     roundedSelection: false
   }
   
+  constructor() {
+    console.log(this.c());
+    this.a.set(2);
+
+    effect(() => {
+      console.log(`Effect: ${this.c()}`);
+    }, { allowSignalWrites: true }  );
+  }
 
   public getCode(form: iNgxForm): string {
     return JSON.stringify(form, null, 4);
