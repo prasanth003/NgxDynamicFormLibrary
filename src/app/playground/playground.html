@@ -1,0 +1,25 @@
+<div class="container-fluid" [style.height]="(guideHeight - 48) + 'px'">
+<div class="row g-2">
+
+    <div class="col-md-6">
+
+        <ngx-monaco-editor 
+            [style.height]="guideHeight + 'px'" 
+            class="editor" 
+            [options]="editorOptions" 
+            [(ngModel)]="formInString"
+            (ngModelChange)="onCodeChange($event)"
+        ></ngx-monaco-editor>
+
+    </div>
+
+    <div class="col-md-6">
+
+        @if (form) {
+            <ngx-dynamic-form type="bootstrap" [form]="form"></ngx-dynamic-form>
+        }
+
+    </div>
+
+</div>
+</div>

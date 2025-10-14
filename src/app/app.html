@@ -1,0 +1,27 @@
+<nz-layout>
+    
+    <nz-header nzTheme="light">
+        <navbar></navbar>
+    </nz-header>
+
+    <nz-content class="outer-content pt-2">
+        
+        <nz-layout class="inner-layout" [style]="{'height': height() + 'px'}">
+            
+            @if (url() === 'docs') { 
+                <nz-sider nzWidth="250px" nzTheme="light">
+                    <sidebar></sidebar>
+                </nz-sider>
+            }
+
+            <nz-content class="inner-content p-3">
+                <router-outlet></router-outlet>
+            </nz-content>
+            
+        </nz-layout>
+        
+    </nz-content>
+
+    <nz-footer class="text-center">Design & Implement By <a href="https://www.linkedin.com/in/prasanth-sekar-572446126/" target="_blank">Prasanth Sekar</a></nz-footer>
+
+</nz-layout>

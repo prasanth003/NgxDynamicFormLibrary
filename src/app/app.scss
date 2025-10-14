@@ -1,0 +1,18 @@
+.ant-layout-header {
+    padding: 0 !important;
+}
+
+.ant-layout-footer {
+    padding: 15px !important;
+    background-color: #001529 !important;
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.ant-layout, .ant-layout-header {
+    background-color: #ffffff !important;
+}
+
+.inner-layout {
+    overflow-y: auto;
+}

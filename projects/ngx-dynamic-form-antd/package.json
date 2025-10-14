@@ -1,0 +1,13 @@
+{
+  "name": "ngx-dynamic-form-antd",
+  "version": "0.0.1",
+  "peerDependencies": {
+   "@angular/common": "20.1.2",
+    "@angular/core": "^20.2.0"
+  },
+  "dependencies": {
+    "ng-zorro-antd": "^20.2.1",
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
