@@ -3,5 +3,11 @@
   "dest": "../../dist/ngx-dynamic-form",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "assets": [
+    "collection.json",
+    "schematics/**/*",
+    "README.md",
+    "LICENSE"
+  ]
 }

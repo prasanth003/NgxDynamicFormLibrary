@@ -13,9 +13,9 @@
             <div class="bg-white shadow p-6 rounded border max-h-120 overflow-y-auto">
 
                 @if (example.formType === 'bootstrap') {
-                    <ngx-dynamic-form [form]="example.form"></ngx-dynamic-form>
+                    <!-- <ngx-dynamic-form [form]="example.form"></ngx-dynamic-form> -->
                 } @else if (example.formType === 'material') {
-                    <ngx-dynamic-form type="material" [form]="example.form"></ngx-dynamic-form>
+                    <!-- <ngx-dynamic-form type="material" [form]="example.form"></ngx-dynamic-form> -->
                 } @else if (example.formType === 'ant-design') {
                     <ngx-dynamic-form-antd [form]="example.form"></ngx-dynamic-form-antd>
                 } @else {

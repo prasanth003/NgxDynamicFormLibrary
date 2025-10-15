@@ -9,6 +9,10 @@
         border: 1px solid #ced4da !important;
         background-color: transparent !important;
     }
+
+    .btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
+        background-color: transparent !important;
+    }
 }
 
 .custom-file {

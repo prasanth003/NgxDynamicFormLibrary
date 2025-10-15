@@ -1,63 +1,202 @@
-# NgxDynamicForm
+# 🧩 @prasanthsekar003/ngx-dynamic-form
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
+> **Dynamic Form Engine for Angular** — Build fully configurable, themeable, and schema-driven forms from JSON without writing repetitive template code.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🚀 Why Use ngx-dynamic-form?
 
-```bash
-ng generate component component-name
-```
+Traditional Angular forms require developers to manually create input fields, validation, and layouts.  
+**ngx-dynamic-form** automates this by allowing you to define entire forms in JSON — including validations, file uploads, and conditional rendering — while maintaining consistent UI and theming across your app.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+With a **plugin-based architecture**, you can plug in your favorite UI library:
 
-```bash
-ng generate --help
-```
+- 🎨 **Material** — Angular Material-based components  
+- 🧱 **Bootstrap** — Bootstrap 5-based components  
+- 💠 **Ant Design (NG-ZORRO)** — Enterprise-grade UI components
 
-## Building
+---
 
-To build the library, run:
+## 🏗️ Package Structure
 
-```bash
-ng build ngx-dynamic-form
-```
+| Package | Description |
+|----------|--------------|
+| `@prasanthsekar003/ngx-dynamic-form` | **Core Engine** — Form builder logic, models, validation, file handling |
+| `@prasanthsekar003/ngx-dynamic-form-material` | Material Design theme |
+| `@prasanthsekar003/ngx-dynamic-form-bootstrap` | Bootstrap 5 theme |
+| `@prasanthsekar003/ngx-dynamic-form-antd` | NG-ZORRO (Ant Design) theme |
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
+---
 
-### Publishing the Library
+## 📦 Installation
 
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-   ```bash
-   cd dist/ngx-dynamic-form
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Install the **core package** first:
 
 ```bash
-ng test
+npm install @prasanthsekar003/ngx-dynamic-form
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Then choose **one** UI theme package based on your project:
 
 ```bash
-ng e2e
+# Material Design
+npm install @prasanthsekar003/ngx-dynamic-form-material
+
+# OR Bootstrap
+npm install @prasanthsekar003/ngx-dynamic-form-bootstrap
+
+# OR Ant Design (NG-ZORRO)
+npm install @prasanthsekar003/ngx-dynamic-form-antd
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+> 📝 **Note:** You only need **one** theme package per project.  
+> The rest are optional to avoid unnecessary dependencies.
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## ⚙️ Theme Registration
+
+After installing your preferred theme, **register it once** in your `app.config.ts` or `app.module.ts`.
+
+### Example (Material Theme)
+```ts
+import { provideDynamicFormTheme } from '@prasanthsekar003/ngx-dynamic-form';
+import { DynamicFormMaterialModule } from '@prasanthsekar003/ngx-dynamic-form-material';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideDynamicFormTheme({
+      theme: 'material',
+      module: DynamicFormMaterialModule
+    })
+  ]
+};
+```
+
+### Example (Bootstrap Theme)
+```ts
+import { provideDynamicFormTheme } from '@prasanthsekar003/ngx-dynamic-form';
+import { NgxDynamicFormBootstrap } from '@prasanthsekar003/ngx-dynamic-form-bootstrap';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideDynamicFormTheme({
+      theme: 'bootstrap',
+      module: NgxDynamicFormBootstrap
+    })
+  ]
+};
+```
+
+### Example (Ant Design Theme)
+```ts
+import { provideDynamicFormTheme } from '@prasanthsekar003/ngx-dynamic-form';
+import { DynamicFormAntdModule } from '@prasanthsekar003/ngx-dynamic-form-antd';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideDynamicFormTheme({
+      theme: 'antd',
+      module: DynamicFormAntdModule
+    })
+  ]
+};
+```
+
+---
+
+## 🧱 Basic Usage
+
+### Define a JSON Form Schema
+```ts
+formConfig: iNgxForm = {
+  formGroup: [
+    {
+      label: 'Full Name',
+      type: 'text',
+      formControlName: 'fullName',
+      required: true,
+      validation: { pattern: '^[a-zA-Z ]+$', message: 'Only alphabets allowed' }
+    },
+    {
+      label: 'Email Address',
+      type: 'email',
+      formControlName: 'email',
+      required: true
+    },
+    {
+      label: 'Profile Picture',
+      type: 'file',
+      formControlName: 'profilePic',
+      fileTypeValidation: { allowedType: ['jpg', 'png'], maxFileSize: 2048000 }
+    }
+  ]
+};
+```
+
+### Add Dynamic Form Component
+```html
+<ngx-dynamic-form [form]="formConfig"></ngx-dynamic-form>
+```
+
+The component automatically:
+- Generates form fields
+- Applies validation rules
+- Handles file uploads
+- Emits form state and value changes
+
+---
+
+## 🧩 Features
+
+✅ **Schema-driven:** Build forms directly from JSON  
+✅ **Multi-theme support:** Switch between Material, Bootstrap, and Ant Design  
+✅ **Reactive Forms:** Fully integrates with Angular’s `FormGroup` and validators  
+✅ **Custom Validators:** Add pattern, length, or custom functions  
+✅ **File Upload Support:** Handles file type and size validation  
+✅ **Reusable Modules:** Perfect for enterprise dashboards and Micro-Frontend apps  
+✅ **Lightweight & Modular:** Only installs the selected theme dependency  
+
+---
+
+## 🧠 Architecture Overview
+
+```text
+@prasanthsekar003/ngx-dynamic-form
+│
+├── core/
+│   ├── form-engine.ts
+│   ├── validators/
+│   ├── models/
+│   └── services/
+│
+└── themes/
+    ├── material/
+    ├── bootstrap/
+    └── antd/
+```
+
+Each theme implements the same form interface, enabling interchangeable UI rendering while sharing core logic.
+
+---
+
+## ⚡ Roadmap
+
+- [ ] Add Tailwind CSS theme support  
+- [ ] Form preview builder for designers  
+- [ ] Drag-and-drop form designer  
+- [ ] JSON-to-Form visual editor  
+
+---
+
+## 🧑‍💻 Author
+
+**Prasanth Sekar**  
+Senior Frontend Developer — Berlin, Germany  
+[LinkedIn](https://www.linkedin.com/in/prasanth-sekar-572446126/) • [GitHub](https://github.com/prasanth003)
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see [LICENSE](./LICENSE) for details.

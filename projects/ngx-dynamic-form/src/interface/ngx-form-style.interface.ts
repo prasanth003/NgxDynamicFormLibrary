@@ -1,3 +1,11 @@
+export interface NgxFormStyle {
+    button: {
+        name: string;
+        customClass?: string;
+    };
+    inputSize?: 'small' | 'medium' | 'large';
+}
+
 export interface iNgxFormStyle {
     formStyle: 'material' | 'bootstrap';
     bootstrapStyles?: iBootstrapFormStyle;

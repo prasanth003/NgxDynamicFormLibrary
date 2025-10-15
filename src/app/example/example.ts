@@ -1,7 +1,7 @@
 import { Component, computed, effect, Input, signal } from '@angular/core';
 import { examples } from './example.content';
 import { iExample } from './example.interface';
-import { iNgxForm, NgxDynamicForm } from 'ngx-dynamic-form';
+import { iNgxForm } from 'ngx-dynamic-form';
 import { CommonModule } from '@angular/common';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -14,8 +14,7 @@ import { Observable } from 'rxjs';
     CommonModule,
     MonacoEditorModule,
     MatTabsModule,
-    FormsModule,
-    NgxDynamicForm
+    FormsModule
   ],
   templateUrl: './example.html',
   styleUrl: './example.scss'

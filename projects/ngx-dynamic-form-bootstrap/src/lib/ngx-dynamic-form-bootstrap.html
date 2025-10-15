@@ -1,6 +1,5 @@
-<form #ngForm="ngForm" [formGroup]="dynamicFormGroup" class="needs-validation" (ngSubmit)="submit()">
+<form #ngForm="ngForm" [formGroup]="formGroup" class="needs-validation" (ngSubmit)="submit()">
     
-    <!-- Bootstrap Form Group Starts -->
     <div class="row">
 
         @for (field of form.formGroup; track field.formControlName; let i = $index) { 
@@ -33,15 +32,13 @@
 
                             @case ('input') {
                                 <input
-                                    [autocomplete]="field.autoComplete ? 'on' : 'new-password'"
                                     class="form-control" 
                                     [placeholder]="field.placeholder" 
                                     [formControlName]="field.formControlName" 
-                                    [type]="field && field.inputType ? field.inputType: 'text'"
+                                    [type]="field.inputType ?? 'text'"
                                     [id]="field.formControlName"
-                                    [required]="field.required"
+                                    [required]="field.required ?? false"
                                     [class]="field.customClass"
-                                    [maxLength]="field.maxLength ? field.maxLength : 1000000"
                                     (keyup)="onInputChange($event, field.formControlName, i)"
                                 >
                             }
@@ -51,9 +48,8 @@
                                     [placeholder]="field.placeholder" 
                                     [formControlName]="field.formControlName"
                                     [id]="field.formControlName"
-                                    [required]="field.required"
+                                    [required]="field.required ?? false"
                                     [class]="field.customClass"
-                                    [maxLength]="field.maxLength ? field.maxLength : 100000"
                                     (keyup)="onInputChange($event, field.formControlName, i)"
                                 ></textarea>
                             }
@@ -62,7 +58,7 @@
                                     class="form-control"
                                     [formControlName]="field.formControlName"
                                     [id]="field.formControlName"
-                                    [required]="field.required"
+                                    [required]="field.required ?? false"
                                     [class]="field.customClass"
                                 >
 
@@ -78,7 +74,8 @@
           
                                 </select>
                             }
-                            @case ('multiselect') {
+
+                            <!-- @case ('multiselect') {
                                 <select 
                                     #multiSelect
                                     [formControlName]="field.formControlName"
@@ -110,8 +107,9 @@
                                     }
                         
                                 </select>
-                            }
-                            @case ('checkbox') {
+                            } -->
+
+                            <!-- @case ('checkbox') {
       
                                 @if (field.checkBox && field.checkBox.options && field.checkBox.options.length > 0) { 
 
@@ -135,8 +133,9 @@
 
                                 }
   
-                            }
-                            @case ('radioButton') {
+                            } -->
+
+                            <!-- @case ('radioButton') {
 
                                 @if (field.radioButtons && field.radioButtons.options && field.radioButtons.options.length > 0) { 
 
@@ -159,8 +158,9 @@
                                     }
                                 }
 
-                            }
-                            @case ('file') {
+                            } -->
+
+                            <!-- @case ('file') {
                                 <div class="custom-file">
                        
                                     <input 
@@ -198,7 +198,7 @@
                                     }
 
                                 </div>
-                            }
+                            } -->
 
                             @default {
                                 <div>Unsupported field type</div>
@@ -213,9 +213,18 @@
 
                     </div>
 
-                    @if (hasError(field.formControlName, field.required ? 'required' : '') && ngForm.submitted) {
+                    @for (validation of field.validations; track validation.name) {
+                        @if ((isTouched(field.formControlName)  && hasError(field.formControlName, validation.name))) {
+                            <small class="form-text error-field text-muted">
+                                {{ validation.message }}
+                            </small> <br/>
+                        }
+
+                    }
+                    
+                    <!-- @if (hasError(field.formControlName, field.required ? 'required' : '') && ngForm.submitted) {
                         <small class="form-text error-field text-muted">
-                            {{ field.requiredErrorMessage ? field.requiredErrorMessage : 'Please enter ' + field.label }}
+                            {{ field. ? field.requiredErrorMessage : 'Please enter ' + field.label }}
                         </small>
                     }
 
@@ -223,17 +232,17 @@
                         <small class="form-text error-field text-muted">
                             {{ field.validation.message }}
                         </small>
-                    }
+                    } -->
 
                     @if (field.hint) { 
                         <small class="form-text text-muted">{{ field.hint }}</small>
                     }
 
-                    @if (field.displayMaxLength) { 
+                    <!-- @if (field.displayMaxLength) { 
                         <small class="form-text text-muted float-right">
                             {{ formDetails.formGroup[i].value ? formDetails.formGroup[i].value.length : 0 }} / {{ field.maxLength }}
                         </small>
-                    }
+                    } -->
 
 
                 </div>
@@ -243,9 +252,7 @@
         }
 
     </div>
-    <!-- Bootstrap Form Group Ends -->
 
-    <!-- Button -->
-    <button type="submit" class="btn" [class]="form.style.buttonStyle.class">{{ form.style.buttonStyle.buttonName }}</button>
+    <button type="submit" class="btn" [class]="form.style.button.customClass ?? ''">{{ form.style.button.name }}</button>
     
 </form>

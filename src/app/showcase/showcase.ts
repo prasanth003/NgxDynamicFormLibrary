@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { iExample } from '../example/example.interface';
 import { examples } from '../example/example.content';
-import { NgxDynamicForm } from "ngx-dynamic-form";
+// import { NgxDynamicForm } from "ngx-dynamic-form";
 import { NgxDynamicFormAntd } from 'ngx-dynamic-form-antd';
 
 @Component({
@@ -11,7 +11,7 @@ import { NgxDynamicFormAntd } from 'ngx-dynamic-form-antd';
   imports: [
     CommonModule,
     NzDividerModule,
-    NgxDynamicForm,
+    // NgxDynamicForm,
     NgxDynamicFormAntd
 ],
   templateUrl: './showcase.html',

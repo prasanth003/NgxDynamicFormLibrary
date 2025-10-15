@@ -1,11 +1,4 @@
-/*
- * Public API Surface of ngx-dynamic-form
- */
-
-export * from './lib/ngx-dynamic-form';
-
 export * from './assets/sample.form';
-
 
 /** Helpers */
 export * from './helpers/filesizeconverter';
@@ -18,3 +11,11 @@ export * from './interface/ngx-form-group.interface';
 
 /** Services */
 export * from './services/script-loader.service';
+export * from './services/form-engine.service';
+
+/** Core */
+export * from './interface/theme-plugin.interface';
+export * from './lib/provide-theme';
+export * from './lib/token';
+
+

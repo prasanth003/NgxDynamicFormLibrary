@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/ngx-dynamic-form/schematics",
+    "rootDir": "src/schematics",
+    "target": "ES2019",
+    "module": "CommonJS",
+    "declaration": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/schematics/**/*.ts"]
+}

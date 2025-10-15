@@ -9,6 +9,7 @@ import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
+import { provideDynamicFormTheme } from 'ngx-dynamic-form';
 
 registerLocaleData(en);
 
@@ -25,6 +26,7 @@ export const appConfig: ApplicationConfig = {
           console.log('Monaco Editor Loaded');
         }
       }
-    }, provideNzI18n(en_US), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient()
+    }, provideNzI18n(en_US), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient(),
+    provideDynamicFormTheme({ theme: 'bootstrap' })
   ]
 };

@@ -7,7 +7,8 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": ["jquery"]
+    "types": ["jquery"],
+    "typeRoots": ["node_modules/@types"]
   },
   "include": [
     "src/**/*.ts"

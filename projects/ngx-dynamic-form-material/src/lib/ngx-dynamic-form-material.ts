@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lib-ngx-dynamic-form-material',
+  selector: 'ngx-dynamic-form-material',
   imports: [],
   template: `
     <p>

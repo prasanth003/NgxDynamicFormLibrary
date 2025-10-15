@@ -2,13 +2,14 @@ import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { iNgxForm, NgxDynamicForm, SampleForm } from 'ngx-dynamic-form';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import { NgxDynamicFormBootstrap } from 'ngx-dynamic-form-bootstrap';
 
 @Component({
   selector: 'app-playground',
   imports: [
-    NgxDynamicForm,
     MonacoEditorModule,
-    FormsModule
+    FormsModule,
+    NgxDynamicFormBootstrap
   ],
   templateUrl: './playground.html',
   styleUrl: './playground.scss'
@@ -32,7 +33,54 @@ export class Playground {
   }
 
   public guideHeight: number = 400;
-  public form: iNgxForm = SampleForm;
+  
+  public form: NgxDynamicForm = {
+    formGroup: [
+      {
+        formControlName: 'firstName',
+        label: 'First Name',
+        fieldType: 'input',
+        inputType: 'text',
+        required: true,
+        placeholder: 'Enter your first name',
+        value: '',
+        disabled: false,
+        validations: [
+          {
+            name: 'required',
+            type: 'required',
+            message: 'First name is required'
+          },
+          {
+            name: 'string',
+            type: 'pattern',
+            pattern: '^[a-zA-Z]+$',
+            message: 'First name can only contain letters'
+          },
+          {
+            name: 'minLength',
+            type: 'minLength',
+            value: 2,
+            message: 'First name must be at least 2 characters long'
+          },
+          {
+            name: 'maxLength',
+            type: 'maxLength',
+            value: 10,
+            message: 'First name cannot be more than 10 characters long'
+          }
+        ],
+        hint: 'This is your given name'
+      }
+    ],
+    style: {
+      button: {
+        name: 'Submit',
+        customClass: 'btn-primary'
+      }
+    }
+  };
+  
   public formInString: string = JSON.stringify(this.form, null, 4);
 
   @HostListener('window:resize')
