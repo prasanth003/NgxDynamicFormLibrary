@@ -1,14 +1,5 @@
 // @import '/src/assets/eots/style/variables.scss';
 
-.error-field {
-  color: #dc3545 !important;
-}
-
-label {
-  margin-bottom: 5px;
-  font-size: 12px;
-  color: #000;
-}
 
 ::ng-deep {
 
@@ -32,6 +23,10 @@ label {
     color: #000;
   }
 
+  .ant-form-item-label {
+    padding-bottom: 0px !important;
+  }
+  
 }
 
 .custom-file {

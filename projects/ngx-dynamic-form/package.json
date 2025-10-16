@@ -1,24 +1,47 @@
 {
-  "name": "ngx-dynamic-form",
-  "version": "1.0.0_beta.1",
+  "name": "@prasanthsekar003/ngx-dynamic-form",
+  "version": "2.0.0",
   "author": "Prasanth Sekar",
   "description": "Dynamic form library for Angular — generate forms from JSON schema.",
   "license": "MIT",
-  "keywords": ["angular", "forms", "dynamic-form", "form-builder"],
+  "keywords": [
+    "angular",
+    "forms",
+    "dynamic-form",
+    "form-builder"
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/prasanthsek/dynamic-form-lib.git"
+    "url": "https://github.com/prasanth003/NgxDynamicFormLibrary.git"
   },
-  "homepage": "https://github.com/prasanthsek/dynamic-form-lib#readme",
+  "homepage": "https://github.com/prasanth003/NgxDynamicFormLibrary#readme",
   "bugs": {
-    "url": "https://github.com/prasanthsek/dynamic-form-lib/issues"
+    "url": "https://github.com/prasanth003/NgxDynamicFormLibrary/issues"
   },
   "peerDependencies": {
-   "@angular/common": "20.1.2",
-    "@angular/core": "^20.2.0"
+    "@angular/common": "20.1.2",
+    "@angular/core": "^20.1.2",
+    "@prasanthsekar003/ngx-dynamic-form-bootstrap": "*",
+    "@prasanthsekar003/ngx-dynamic-form-antd": "*",
+    "@prasanthsekar003/ngx-dynamic-form-material": "*"
+  },
+  "peerDependenciesMeta": {
+    "@prasanthsekar003/ngx-dynamic-form-bootstrap": {
+      "optional": true
+    },
+    "@prasanthsekar003/ngx-dynamic-form-material": {
+      "optional": true
+    },
+    "@prasanthsekar003/ngx-dynamic-form-antd": {
+      "optional": true
+    }
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "schematics": "./collection.json"
 }

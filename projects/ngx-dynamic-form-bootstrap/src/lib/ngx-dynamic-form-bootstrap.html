@@ -1,6 +1,5 @@
-<form #ngForm="ngForm" [formGroup]="dynamicFormGroup" class="needs-validation" (ngSubmit)="submit()">
+<form #ngForm="ngForm" [formGroup]="formGroup" class="needs-validation" (ngSubmit)="submit()">
     
-    <!-- Bootstrap Form Group Starts -->
     <div class="row">
 
         @for (field of form.formGroup; track field.formControlName; let i = $index) { 
@@ -33,15 +32,13 @@
 
                             @case ('input') {
                                 <input
-                                    [autocomplete]="field.autoComplete ? 'on' : 'new-password'"
                                     class="form-control" 
                                     [placeholder]="field.placeholder" 
                                     [formControlName]="field.formControlName" 
-                                    [type]="field && field.inputType ? field.inputType: 'text'"
+                                    [type]="field.inputType ?? 'text'"
                                     [id]="field.formControlName"
-                                    [required]="field.required"
+                                    [required]="field.required ?? false"
                                     [class]="field.customClass"
-                                    [maxLength]="field.maxLength ? field.maxLength : 1000000"
                                     (keyup)="onInputChange($event, field.formControlName, i)"
                                 >
                             }
@@ -51,9 +48,8 @@
                                     [placeholder]="field.placeholder" 
                                     [formControlName]="field.formControlName"
                                     [id]="field.formControlName"
-                                    [required]="field.required"
+                                    [required]="field.required ?? false"
                                     [class]="field.customClass"
-                                    [maxLength]="field.maxLength ? field.maxLength : 100000"
                                     (keyup)="onInputChange($event, field.formControlName, i)"
                                 ></textarea>
                             }
@@ -62,7 +58,7 @@
                                     class="form-control"
                                     [formControlName]="field.formControlName"
                                     [id]="field.formControlName"
-                                    [required]="field.required"
+                                    [required]="field.required ?? false"
                                     [class]="field.customClass"
                                 >
 
@@ -73,12 +69,18 @@
                                     }
 
                                     @for (option of field.options; track option.value) {
-                                        <option [value]="option.value" [disabled]="option.disabled">{{ option.displayValue }}</option>
+                                        <option 
+                                            [disabled]="option.disabled" 
+                                            [value]="option.value"
+                                        >
+                                            {{ option.key }}
+                                        </option>
                                     }
           
                                 </select>
                             }
-                            @case ('multiselect') {
+
+                            <!-- @case ('multiselect') {
                                 <select 
                                     #multiSelect
                                     [formControlName]="field.formControlName"
@@ -110,57 +112,61 @@
                                     }
                         
                                 </select>
-                            }
+                            } -->
+
                             @case ('checkbox') {
-      
-                                @if (field.checkBox && field.checkBox.options && field.checkBox.options.length > 0) { 
 
-                                    @for (box of field.checkBox.options; track box.checkboxValue; let c = $index) { 
-                                        <div class="form-check" [ngClass]="{'form-check-inline': field.checkBox.style === 'inline'}">
-                                            <input 
-                                                class="form-check-input"
-                                                [class]="field.customClass"
-                                                type="checkbox" 
-                                                [formControlName]="field.formControlName"
-                                                [id]="field.formControlName + c"
-                                                [value]="box.checkboxValue"
-                                                [name]="field.formControlName"
-                                                [required]="field.required"
-                                            >
-                                            <label class="form-check-label" [for]="field.formControlName + c">
-                                                {{ box.checkboxValue }}
-                                            </label>
-                                        </div>
-                                    }
+                                @for (option of field.options; track option.value; let c = $index) {
 
+                                    <div class="form-check form-check-inline" [class]="field.customClass">
+                                            
+                                        <input 
+                                            class="form-check-input"
+                                            type="checkbox" 
+                                            [formControlName]="field.formControlName"
+                                            [id]="field.formControlName + c"
+                                            [value]="option.value"
+                                            [name]="field.formControlName"
+                                            [required]="field.required ?? false"
+                                            [disabled]="option.disabled ?? false"
+                                        >
+                                            
+                                        <label class="form-check-label" [for]="field.formControlName + c">
+                                            {{ option.key }}
+                                        </label>
+                                        
+                                    </div>
                                 }
   
                             }
-                            @case ('radioButton') {
 
-                                @if (field.radioButtons && field.radioButtons.options && field.radioButtons.options.length > 0) { 
+                            @case ('radio') {
 
-                                    @for (buttons of field.radioButtons.options; track buttons.checkboxValue; let r = $index) { 
-                                        <div class="form-check" [ngClass]="{'form-check-inline': field.radioButtons.style === 'inline'}">
-                                            <input 
-                                                class="form-check-input"
-                                                [class]="field.customClass"
-                                                type="radio" 
-                                                [formControlName]="field.formControlName"
-                                                [id]="field.formControlName + r"
-                                                [value]="buttons.checkboxValue"
-                                                [name]="field.formControlName"
-                                                [required]="field.required"
-                                            >
-                                            <label class="form-check-label" [for]="field.formControlName + r">
-                                                {{ buttons.checkboxValue }}
-                                            </label>
-                                        </div>
-                                    }
+                                @for (option of field.options; track option.value; let r = $index) { 
+
+                                    <div class="form-check form-check-inline" [class]="field.customClass">
+                                        
+                                        <input 
+                                            class="form-check-input"
+                                            type="radio" 
+                                            [formControlName]="field.formControlName"
+                                            [id]="field.formControlName + r"
+                                            [value]="option.value"
+                                            [name]="field.formControlName"
+                                            [required]="field.required ?? false"
+                                            [disabled]="option.disabled ?? false"
+                                        >
+                                            
+                                        <label class="form-check-label" [for]="field.formControlName + r">
+                                            {{ option.key }}
+                                        </label>
+                                        
+                                    </div>
                                 }
 
                             }
-                            @case ('file') {
+
+                            <!-- @case ('file') {
                                 <div class="custom-file">
                        
                                     <input 
@@ -198,7 +204,7 @@
                                     }
 
                                 </div>
-                            }
+                            } -->
 
                             @default {
                                 <div>Unsupported field type</div>
@@ -213,25 +219,21 @@
 
                     </div>
 
-                    @if (hasError(field.formControlName, field.required ? 'required' : '') && ngForm.submitted) {
-                        <small class="form-text error-field text-muted">
-                            {{ field.requiredErrorMessage ? field.requiredErrorMessage : 'Please enter ' + field.label }}
-                        </small>
-                    }
-
-                    @if (hasError(field.formControlName, field.validation.patternName)) {
-                        <small class="form-text error-field text-muted">
-                            {{ field.validation.message }}
-                        </small>
+                    @for (validation of field.validations; track validation.name) {
+                        @if ((isTouched(field.formControlName)  && hasError(field.formControlName, validation.name))) {
+                            <small class="form-text error-field text-muted">
+                                {{ validation.message }}
+                            </small> <br/>
+                        }
                     }
 
                     @if (field.hint) { 
                         <small class="form-text text-muted">{{ field.hint }}</small>
                     }
 
-                    @if (field.displayMaxLength) { 
+                    @if (field.maxLengthOption && field.maxLengthOption.show) { 
                         <small class="form-text text-muted float-right">
-                            {{ formDetails.formGroup[i].value ? formDetails.formGroup[i].value.length : 0 }} / {{ field.maxLength }}
+                            {{ formGroup.get(field.formControlName)?.value?.length ?? 0 }} / {{ field.maxLengthOption.length }}
                         </small>
                     }
 
@@ -243,9 +245,7 @@
         }
 
     </div>
-    <!-- Bootstrap Form Group Ends -->
 
-    <!-- Button -->
-    <button type="submit" class="btn" [class]="form.style.buttonStyle.class">{{ form.style.buttonStyle.buttonName }}</button>
+    <button type="submit" class="btn" [class]="form.style.button.customClass ?? ''">{{ form.style.button.name }}</button>
     
 </form>

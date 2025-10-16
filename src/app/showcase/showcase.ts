@@ -3,16 +3,16 @@ import { Component } from '@angular/core';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { iExample } from '../example/example.interface';
 import { examples } from '../example/example.content';
-import { NgxDynamicForm } from "ngx-dynamic-form";
-import { NgxDynamicFormAntd } from 'ngx-dynamic-form-antd';
+// import { NgxDynamicForm } from "ngx-dynamic-form";
+// import { NgxDynamicFormAntd } from 'ngx-dynamic-form-antd';
 
 @Component({
   selector: 'app-showcase',
   imports: [
     CommonModule,
     NzDividerModule,
-    NgxDynamicForm,
-    NgxDynamicFormAntd
+    // NgxDynamicForm,
+    // NgxDynamicFormAntd
 ],
   templateUrl: './showcase.html',
   styleUrl: './showcase.scss'

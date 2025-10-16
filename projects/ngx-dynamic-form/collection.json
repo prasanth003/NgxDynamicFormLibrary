@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json.schemastore.org/schematics",
+  "schematics": {
+    "ng-add": {
+      "factory": "./schematics/ng-add/index#ngAdd",
+      "description": "Add ngx-dynamic-form with a selected theme",
+      "schema": "./schematics/ng-add/schema.json"
+    }
+  }
+}

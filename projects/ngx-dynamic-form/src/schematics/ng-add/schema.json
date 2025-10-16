@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "NgxDynamicFormNgAddSchema",
+  "title": "NgxDynamicForm Options",
+  "type": "object",
+  "properties": {
+    "theme": {
+      "type": "string",
+      "description": "Select UI theme",
+      "default": "bootstrap",
+      "enum": ["bootstrap", "material", "antd"]
+    }
+  }
+}

@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:core": "ng build ngx-dynamic-form && tsc -p projects/ngx-dynamic-form/tsconfig.schematics.json && npm run copy:schematics",
+    "copy:schematics": "cp projects/ngx-dynamic-form/src/schematics/ng-add/schema.json dist/ngx-dynamic-form/schematics/ng-add/schema.json",
+    "build:child": "ng build ngx-dynamic-form-bootstrap && ng build ngx-dynamic-form-antd && ng build ngx-dynamic-form-material"
   },
   "prettier": {
     "printWidth": 100,
@@ -31,6 +34,8 @@
     "@angular/material": "20.1.2",
     "@angular/platform-browser": "20.1.2",
     "@angular/router": "20.1.2",
+    "@prasanthsekar003/ngx-dynamic-form": "^1.0.0",
+    "@prasanthsekar003/ngx-dynamic-form-bootstrap": "^1.0.0",
     "@tailwindcss/postcss": "^4.1.13",
     "bootstrap": "^5.3.2",
     "jquery": "^3.6.0",
@@ -54,6 +59,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^20.1.2",
+    "sass-embedded": "^1.93.2",
     "typescript": "~5.8.0"
   }
 }
