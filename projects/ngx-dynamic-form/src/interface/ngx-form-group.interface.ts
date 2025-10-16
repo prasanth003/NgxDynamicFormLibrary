@@ -25,12 +25,25 @@ export interface NgxFormControl {
     disabled?: boolean;
     required?: boolean;
     validations?: NgxFormValidation[];
-    options?: iFormOptions[];
+    options?: NgxFormOptions[];
+    maxLengthOption?: NgxMaxLengthOption;
     column?: number;
     hint?: string;
     prefix?: string;
     suffix?: string;
     customClass?: string;
+}
+
+export interface NgxFormOptions {
+    key: string;
+    value: number | string | unknown;
+    disabled?: boolean;
+    selected?: boolean;
+}
+
+export interface NgxMaxLengthOption {
+    show?: boolean;
+    length: number;
 }
 
 export interface NgxFormValidation {

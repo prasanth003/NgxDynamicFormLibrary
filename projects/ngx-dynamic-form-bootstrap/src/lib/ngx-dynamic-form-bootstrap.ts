@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { AbstractControl, Form, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { from, map } from 'rxjs';
-import { iNgxForm, iNgxFormGroup, validateFile, humanFileSize, ScriptLoaderService } from '@prasanthsekar003/ngx-dynamic-form';
-import { FormEngineService, NgxDynamicForm } from 'ngx-dynamic-form';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormEngineService, NgxDynamicForm, ScriptLoaderService } from 'ngx-dynamic-form';
 
 declare const $: any;
 
@@ -65,8 +63,6 @@ export class NgxDynamicFormBootstrap implements AfterViewInit, OnChanges {
     if (changes['form'] && this.form) {
       if (this.form.formGroup) {
         this.formGroup = this.engine.buildFormGroup(this.form.formGroup);
-        console.log('form group', this.formGroup);
-        // this.formDetails = this.form;
       } else {
         console.warn('Please provide valid form group');
       }
@@ -75,13 +71,11 @@ export class NgxDynamicFormBootstrap implements AfterViewInit, OnChanges {
 
   // throw a error whether form field is valid or invalid
   public hasError = (controlName: string, errorName: string) => {
-    console.log ('has error', controlName, errorName, this.engine.hasError(this.formGroup, controlName, errorName), this.formGroup, this.formGroup.get(controlName));
     return this.engine.hasError(this.formGroup, controlName, errorName);
   }
 
   public isTouched = (controlName: string): boolean => {
-    const ctrl = this.formGroup.get(controlName);
-    return !!(ctrl && (ctrl.dirty || ctrl.touched));
+    return this.engine.isTouched(this.formGroup, controlName);
   }
 
   public onInputChange(event: any, name: string, index: number): void {

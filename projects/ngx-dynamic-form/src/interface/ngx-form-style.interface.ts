@@ -4,6 +4,7 @@ export interface NgxFormStyle {
         customClass?: string;
     };
     inputSize?: 'small' | 'medium' | 'large';
+    radioButtonStyle?: 'inline' | 'stacked';
 }
 
 export interface iNgxFormStyle {

@@ -69,7 +69,7 @@
                                     }
 
                                     @for (option of field.options; track option.value) {
-                                        <option [value]="option.value" [disabled]="option.disabled">{{ option.displayValue }}</option>
+                                        <option [value]="option.value" [disabled]="option.disabled">{{ option.key }}</option>
                                     }
           
                                 </select>
@@ -109,56 +109,80 @@
                                 </select>
                             } -->
 
-                            <!-- @case ('checkbox') {
-      
-                                @if (field.checkBox && field.checkBox.options && field.checkBox.options.length > 0) { 
+                            @case ('checkbox') {
 
-                                    @for (box of field.checkBox.options; track box.checkboxValue; let c = $index) { 
-                                        <div class="form-check" [ngClass]="{'form-check-inline': field.checkBox.style === 'inline'}">
-                                            <input 
-                                                class="form-check-input"
-                                                [class]="field.customClass"
-                                                type="checkbox" 
-                                                [formControlName]="field.formControlName"
-                                                [id]="field.formControlName + c"
-                                                [value]="box.checkboxValue"
-                                                [name]="field.formControlName"
-                                                [required]="field.required"
-                                            >
-                                            <label class="form-check-label" [for]="field.formControlName + c">
-                                                {{ box.checkboxValue }}
-                                            </label>
-                                        </div>
-                                    }
+                                @for (option of field.options; track option.value; let c = $index) {
 
+                                    <div class="form-check form-check-inline" [class]="field.customClass">
+                                            
+                                        <input 
+                                            class="form-check-input"
+                                            type="checkbox" 
+                                            [formControlName]="field.formControlName"
+                                            [id]="field.formControlName + c"
+                                            [value]="option.value"
+                                            [name]="field.formControlName"
+                                            [required]="field.required ?? false"
+                                        >
+                                            
+                                        <label class="form-check-label" [for]="field.formControlName + c">
+                                            {{ option.key }}
+                                        </label>
+                                        
+                                    </div>
                                 }
   
-                            } -->
+                            }
 
-                            <!-- @case ('radioButton') {
+                            @case ('radio') {
 
-                                @if (field.radioButtons && field.radioButtons.options && field.radioButtons.options.length > 0) { 
+                                @for (option of field.options; track option.value; let r = $index) { 
 
-                                    @for (buttons of field.radioButtons.options; track buttons.checkboxValue; let r = $index) { 
-                                        <div class="form-check" [ngClass]="{'form-check-inline': field.radioButtons.style === 'inline'}">
-                                            <input 
-                                                class="form-check-input"
-                                                [class]="field.customClass"
-                                                type="radio" 
-                                                [formControlName]="field.formControlName"
-                                                [id]="field.formControlName + r"
-                                                [value]="buttons.checkboxValue"
-                                                [name]="field.formControlName"
-                                                [required]="field.required"
-                                            >
-                                            <label class="form-check-label" [for]="field.formControlName + r">
-                                                {{ buttons.checkboxValue }}
-                                            </label>
-                                        </div>
-                                    }
+                                    <div class="form-check form-check-inline" [class]="field.customClass">
+                                        
+                                        <input 
+                                            class="form-check-input"
+                                            type="radio" 
+                                            [formControlName]="field.formControlName"
+                                            [id]="field.formControlName + r"
+                                            [value]="option.value"
+                                            [name]="field.formControlName"
+                                            [required]="field.required ?? false"
+                                        >
+                                            
+                                        <label class="form-check-label" [for]="field.formControlName + r">
+                                            {{ option.key }}
+                                        </label>
+                                        
+                                    </div>
                                 }
 
-                            } -->
+                            }
+
+                            @case ('date') {
+
+                                @for (option of field.options; track option.value; let r = $index) { 
+
+                                    <div class="form-check form-check-inline" [class]="field.customClass">
+                                        
+                                        <input 
+                                            class="form-check-input"
+                                            type="radio" 
+                                            [formControlName]="field.formControlName"
+                                            [id]="field.formControlName + r"
+                                            [value]="option.value"
+                                            [name]="field.formControlName"
+                                            [required]="field.required ?? false"
+                                        >
+                                            
+                                        <label class="form-check-label" [for]="field.formControlName + r">
+                                            {{ option.key }}
+                                        </label>
+                                        
+                                    </div>
+                                }
+
+                            }
 
                             <!-- @case ('file') {
                                 <div class="custom-file">
@@ -221,28 +245,16 @@
                         }
 
                     }
-                    
-                    <!-- @if (hasError(field.formControlName, field.required ? 'required' : '') && ngForm.submitted) {
-                        <small class="form-text error-field text-muted">
-                            {{ field. ? field.requiredErrorMessage : 'Please enter ' + field.label }}
-                        </small>
-                    }
-
-                    @if (hasError(field.formControlName, field.validation.patternName)) {
-                        <small class="form-text error-field text-muted">
-                            {{ field.validation.message }}
-                        </small>
-                    } -->
 
                     @if (field.hint) { 
                         <small class="form-text text-muted">{{ field.hint }}</small>
                     }
 
-                    <!-- @if (field.displayMaxLength) { 
+                    @if (field.maxLengthOption && field.maxLengthOption.show) { 
                         <small class="form-text text-muted float-right">
-                            {{ formDetails.formGroup[i].value ? formDetails.formGroup[i].value.length : 0 }} / {{ field.maxLength }}
+                            {{ formGroup.get(field.formControlName)?.value?.length ?? 0 }} / {{ field.maxLengthOption.length }}
                         </small>
-                    } -->
+                    }
 
 
                 </div>

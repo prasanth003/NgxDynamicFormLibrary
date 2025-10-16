@@ -50,6 +50,17 @@ export class FormEngineService {
     }
 
     /**
+     * Check if a form control is touched
+     * @param formGroup 
+     * @param controlName 
+     * @returns 
+    */
+    public isTouched = (formGroup: FormGroup, controlName: string): boolean => {
+        const ctrl = formGroup.get(controlName);
+        return !!(ctrl && (ctrl.dirty || ctrl.touched));
+    }
+
+    /**
      *  Get validators for a form field 
      * @param field 
      * @returns 

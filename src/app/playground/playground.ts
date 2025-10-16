@@ -39,12 +39,25 @@ export class Playground {
       {
         formControlName: 'firstName',
         label: 'First Name',
-        fieldType: 'input',
-        inputType: 'text',
+        fieldType: 'checkbox',
         required: true,
         placeholder: 'Enter your first name',
         value: '',
         disabled: false,
+        options: [
+          {
+            key: 'option1',
+            value: 'Option 1'
+          },
+          {
+            key: 'option2',
+            value: 'Option 2'
+          },
+          {
+            key: 'option3',
+            value: 'Option 3'
+          }
+        ],
         validations: [
           {
             name: 'required',
@@ -69,8 +82,7 @@ export class Playground {
             value: 10,
             message: 'First name cannot be more than 10 characters long'
           }
-        ],
-        hint: 'This is your given name'
+        ]
       }
     ],
     style: {
