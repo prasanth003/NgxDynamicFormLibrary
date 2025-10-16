@@ -69,7 +69,12 @@
                                     }
 
                                     @for (option of field.options; track option.value) {
-                                        <option [value]="option.value" [disabled]="option.disabled">{{ option.key }}</option>
+                                        <option 
+                                            [disabled]="option.disabled" 
+                                            [value]="option.value"
+                                        >
+                                            {{ option.key }}
+                                        </option>
                                     }
           
                                 </select>
@@ -123,6 +128,7 @@
                                             [value]="option.value"
                                             [name]="field.formControlName"
                                             [required]="field.required ?? false"
+                                            [disabled]="option.disabled ?? false"
                                         >
                                             
                                         <label class="form-check-label" [for]="field.formControlName + c">
@@ -148,31 +154,7 @@
                                             [value]="option.value"
                                             [name]="field.formControlName"
                                             [required]="field.required ?? false"
-                                        >
-                                            
-                                        <label class="form-check-label" [for]="field.formControlName + r">
-                                            {{ option.key }}
-                                        </label>
-                                        
-                                    </div>
-                                }
-
-                            }
-
-                            @case ('date') {
-
-                                @for (option of field.options; track option.value; let r = $index) { 
-
-                                    <div class="form-check form-check-inline" [class]="field.customClass">
-                                        
-                                        <input 
-                                            class="form-check-input"
-                                            type="radio" 
-                                            [formControlName]="field.formControlName"
-                                            [id]="field.formControlName + r"
-                                            [value]="option.value"
-                                            [name]="field.formControlName"
-                                            [required]="field.required ?? false"
+                                            [disabled]="option.disabled ?? false"
                                         >
                                             
                                         <label class="form-check-label" [for]="field.formControlName + r">
@@ -243,7 +225,6 @@
                                 {{ validation.message }}
                             </small> <br/>
                         }
-
                     }
 
                     @if (field.hint) { 

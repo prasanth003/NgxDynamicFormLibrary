@@ -1,7 +1,7 @@
 import { Component, computed, effect, Input, signal } from '@angular/core';
 import { examples } from './example.content';
 import { iExample } from './example.interface';
-import { iNgxForm } from 'ngx-dynamic-form';
+import { NgxDynamicForm } from 'ngx-dynamic-form';
 import { CommonModule } from '@angular/common';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -54,12 +54,12 @@ export class Example {
     }, { allowSignalWrites: true }  );
   }
 
-  public getCode(form: iNgxForm): string {
+  public getCode(form: NgxDynamicForm): string {
     return JSON.stringify(form, null, 4);
   }
 
-  public getSubjectCode(form: iNgxForm): Observable<iNgxForm> { 
-    return new Observable<iNgxForm>(observer => {
+  public getSubjectCode(form: NgxDynamicForm): Observable<NgxDynamicForm> { 
+    return new Observable<NgxDynamicForm>(observer => {
       observer.next(form);
       observer.complete();
     });

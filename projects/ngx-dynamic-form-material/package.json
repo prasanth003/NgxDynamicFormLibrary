@@ -1,6 +1,6 @@
 {
   "name": "@prasanthsekar003/ngx-dynamic-form-material",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Prasanth Sekar",
   "description": "Dynamic form library for Angular — generate forms from JSON schema.",
   "license": "MIT",
@@ -15,7 +15,8 @@
   },
   "peerDependencies": {
    "@angular/common": "20.1.2",
-    "@angular/core": "^20.2.0"
+    "@angular/core": "^20.1.2",
+    "@angular/material": "20.1.2"
   },
   "dependencies": {
     "tslib": "^2.3.0"

@@ -1,15 +1,19 @@
 import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { iNgxForm, NgxDynamicForm, SampleForm } from 'ngx-dynamic-form';
+import { NgxDynamicForm } from 'ngx-dynamic-form';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { NgxDynamicFormBootstrap } from 'ngx-dynamic-form-bootstrap';
+import { NgxDynamicFormAntd } from 'ngx-dynamic-form-antd';
+import { NgxDynamicFormMaterial } from 'ngx-dynamic-form-material';
 
 @Component({
   selector: 'app-playground',
   imports: [
     MonacoEditorModule,
     FormsModule,
-    NgxDynamicFormBootstrap
+    NgxDynamicFormBootstrap,
+    NgxDynamicFormAntd,
+    NgxDynamicFormMaterial
   ],
   templateUrl: './playground.html',
   styleUrl: './playground.scss'
@@ -39,8 +43,9 @@ export class Playground {
       {
         formControlName: 'firstName',
         label: 'First Name',
-        fieldType: 'checkbox',
+        fieldType: 'input',
         required: true,
+        column: 12,
         placeholder: 'Enter your first name',
         value: '',
         disabled: false,

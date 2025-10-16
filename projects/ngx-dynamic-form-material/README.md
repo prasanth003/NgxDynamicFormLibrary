@@ -1,202 +1,258 @@
-# 🧩 @prasanthsekar003/ngx-dynamic-form
+# 🚀 Ngx Dynamic Form Library
 
-> **Dynamic Form Engine for Angular** — Build fully configurable, themeable, and schema-driven forms from JSON without writing repetitive template code.
-
----
-
-## 🚀 Why Use ngx-dynamic-form?
-
-Traditional Angular forms require developers to manually create input fields, validation, and layouts.  
-**ngx-dynamic-form** automates this by allowing you to define entire forms in JSON — including validations, file uploads, and conditional rendering — while maintaining consistent UI and theming across your app.
-
-With a **plugin-based architecture**, you can plug in your favorite UI library:
-
-- 🎨 **Material** — Angular Material-based components  
-- 🧱 **Bootstrap** — Bootstrap 5-based components  
-- 💠 **Ant Design (NG-ZORRO)** — Enterprise-grade UI components
+The **Ngx Dynamic Form Library** provides a flexible, configuration-driven way to generate **Reactive Forms dynamically** in Angular.  
+It supports multiple UI libraries — **Bootstrap**, **Ant Design (NG-ZORRO)**, and **Angular Material** — all using a single JSON configuration.
 
 ---
 
-## 🏗️ Package Structure
+## 📦 Packages
 
-| Package | Description |
-|----------|--------------|
-| `@prasanthsekar003/ngx-dynamic-form` | **Core Engine** — Form builder logic, models, validation, file handling |
-| `@prasanthsekar003/ngx-dynamic-form-material` | Material Design theme |
-| `@prasanthsekar003/ngx-dynamic-form-bootstrap` | Bootstrap 5 theme |
-| `@prasanthsekar003/ngx-dynamic-form-antd` | NG-ZORRO (Ant Design) theme |
+| Library | Description |
+|----------|-------------|
+| `@prasanthsekar003/ngx-dynamic-form-bootstrap` | Dynamic form rendered using Bootstrap styles |
+| `@prasanthsekar003/ngx-dynamic-form-antd` | Dynamic form rendered using NG-ZORRO (Ant Design) components |
+| `@prasanthsekar003/ngx-dynamic-form-material` | Dynamic form rendered using Angular Material components |
+
+All libraries share the same **core schema** and are theme-compatible.
 
 ---
 
-## 📦 Installation
-
-Install the **core package** first:
+## ⚙️ Installation
 
 ```bash
-npm install @prasanthsekar003/ngx-dynamic-form
-```
-
-Then choose **one** UI theme package based on your project:
-
-```bash
-# Material Design
-npm install @prasanthsekar003/ngx-dynamic-form-material
-
-# OR Bootstrap
 npm install @prasanthsekar003/ngx-dynamic-form-bootstrap
-
-# OR Ant Design (NG-ZORRO)
+# or
 npm install @prasanthsekar003/ngx-dynamic-form-antd
-```
-
-> 📝 **Note:** You only need **one** theme package per project.  
-> The rest are optional to avoid unnecessary dependencies.
-
----
-
-## ⚙️ Theme Registration
-
-After installing your preferred theme, **register it once** in your `app.config.ts` or `app.module.ts`.
-
-### Example (Material Theme)
-```ts
-import { provideDynamicFormTheme } from '@prasanthsekar003/ngx-dynamic-form';
-import { DynamicFormMaterialModule } from '@prasanthsekar003/ngx-dynamic-form-material';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideDynamicFormTheme({
-      theme: 'material',
-      module: DynamicFormMaterialModule
-    })
-  ]
-};
-```
-
-### Example (Bootstrap Theme)
-```ts
-import { provideDynamicFormTheme } from '@prasanthsekar003/ngx-dynamic-form';
-import { NgxDynamicFormBootstrap } from '@prasanthsekar003/ngx-dynamic-form-bootstrap';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideDynamicFormTheme({
-      theme: 'bootstrap',
-      module: NgxDynamicFormBootstrap
-    })
-  ]
-};
-```
-
-### Example (Ant Design Theme)
-```ts
-import { provideDynamicFormTheme } from '@prasanthsekar003/ngx-dynamic-form';
-import { DynamicFormAntdModule } from '@prasanthsekar003/ngx-dynamic-form-antd';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideDynamicFormTheme({
-      theme: 'antd',
-      module: DynamicFormAntdModule
-    })
-  ]
-};
+# or
+npm install @prasanthsekar003/ngx-dynamic-form-material
 ```
 
 ---
 
-## 🧱 Basic Usage
+## 🧱 Architecture Overview
 
-### Define a JSON Form Schema
+The library follows a **modular, scalable, and theme-agnostic** architecture.
+
+- **Core Engine** → Creates Angular `FormGroup` dynamically based on configuration.  
+- **UI Adapters** → Theme-specific implementations (`bootstrap`, `antd`, `material`).  
+- **Reactive Validation** → Supports Angular’s built-in validators and custom logic.  
+- **Dynamic Layout** → Uses column-based grid layouts for responsive rendering.  
+- **Unified Schema** → JSON schema drives both structure and validations.
+
+---
+
+## 🧩 Interface Definitions
+
+### **NgxFormControl**
+
 ```ts
-formConfig: iNgxForm = {
-  formGroup: [
+export interface NgxFormControl {
+    formControlName: string;
+    label: string;
+    fieldType: NgxFormFieldType;
+    column: number;
+    inputType?: NgxInputType;
+    placeholder?: string;
+    value?: any;
+    disabled?: boolean;
+    required?: boolean;
+    validations?: NgxFormValidation[];
+    options?: NgxFormOptions[];
+    maxLengthOption?: NgxMaxLengthOption;
+    hint?: string;
+    prefix?: string;
+    suffix?: string;
+    customClass?: string;
+}
+```
+
+---
+
+### **NgxFormFieldType**
+
+```ts
+export type NgxFormFieldType =
+  | 'input'
+  | 'select'
+  | 'textarea'
+  | 'checkbox'
+  | 'radio'
+  | 'file'
+  | 'date'
+  | 'dateRange'
+  | 'autocomplete';
+```
+
+---
+
+### **NgxInputType**
+
+```ts
+export type NgxInputType = 'text' | 'number' | 'password';
+```
+
+---
+
+### **ValidationType & NgxFormValidation**
+
+```ts
+export type ValidationType =
+  | 'required'
+  | 'pattern'
+  | 'min'
+  | 'max'
+  | 'minLength'
+  | 'maxLength'
+  | 'custom';
+
+export interface NgxFormValidation {
+  type: ValidationType;
+  pattern?: RegExp | string;
+  value?: number;
+  name: string;
+  message: string;
+}
+```
+
+---
+
+### **NgxFormOptions**
+
+```ts
+export interface NgxFormOptions {
+  key: string;
+  value: number | string | any;
+  disabled?: boolean;
+  selected?: boolean;
+}
+```
+
+---
+
+### **NgxMaxLengthOption**
+
+```ts
+export interface NgxMaxLengthOption {
+  show?: boolean;
+  length: number;
+}
+```
+
+---
+
+## 🧠 Example Form Configuration
+
+```json
+{
+  "formGroup": [
     {
-      label: 'Full Name',
-      type: 'text',
-      formControlName: 'fullName',
-      required: true,
-      validation: { pattern: '^[a-zA-Z ]+$', message: 'Only alphabets allowed' }
-    },
-    {
-      label: 'Email Address',
-      type: 'email',
-      formControlName: 'email',
-      required: true
-    },
-    {
-      label: 'Profile Picture',
-      type: 'file',
-      formControlName: 'profilePic',
-      fileTypeValidation: { allowedType: ['jpg', 'png'], maxFileSize: 2048000 }
+      "formControlName": "firstName",
+      "label": "First Name",
+      "fieldType": "input",
+      "required": true,
+      "column": 12,
+      "placeholder": "Enter your first name",
+      "value": "",
+      "disabled": false,
+      "validations": [
+        {
+          "name": "required",
+          "type": "required",
+          "message": "First name is required"
+        },
+        {
+          "name": "string",
+          "type": "pattern",
+          "pattern": "^[a-zA-Z]+$",
+          "message": "First name can only contain letters"
+        },
+        {
+          "name": "minLength",
+          "type": "minLength",
+          "value": 2,
+          "message": "First name must be at least 2 characters long"
+        },
+        {
+          "name": "maxLength",
+          "type": "maxLength",
+          "value": 10,
+          "message": "First name cannot be more than 10 characters long"
+        }
+      ]
     }
-  ]
-};
+  ],
+  "style": {
+    "button": {
+      "name": "Submit",
+      "customClass": "btn-primary"
+    }
+  }
+}
 ```
 
-### Add Dynamic Form Component
+---
+
+## 🧩 Template Usage
+
 ```html
-<ngx-dynamic-form [form]="formConfig"></ngx-dynamic-form>
+<ngx-dynamic-form-bootstrap [form]="form"></ngx-dynamic-form-bootstrap>
+<ngx-dynamic-form-antd [form]="form"></ngx-dynamic-form-antd>
+<ngx-dynamic-form-material [form]="form"></ngx-dynamic-form-material>
 ```
 
-The component automatically:
-- Generates form fields
-- Applies validation rules
-- Handles file uploads
-- Emits form state and value changes
+---
+
+## 🎨 Theme Rendering Notes
+
+| Theme | UI Framework | Notes |
+|--------|---------------|-------|
+| **Bootstrap** | Uses Bootstrap 5 form classes | Grid-based responsive layout |
+| **Ant Design** | Uses NG-ZORRO components | Requires Nz modules |
+| **Material** | Uses Angular Material v20+ | Requires global Material theme SCSS |
 
 ---
 
-## 🧩 Features
+## 🧪 Validation Handling
 
-✅ **Schema-driven:** Build forms directly from JSON  
-✅ **Multi-theme support:** Switch between Material, Bootstrap, and Ant Design  
-✅ **Reactive Forms:** Fully integrates with Angular’s `FormGroup` and validators  
-✅ **Custom Validators:** Add pattern, length, or custom functions  
-✅ **File Upload Support:** Handles file type and size validation  
-✅ **Reusable Modules:** Perfect for enterprise dashboards and Micro-Frontend apps  
-✅ **Lightweight & Modular:** Only installs the selected theme dependency  
+- Supports Angular built-in validators (`required`, `pattern`, `min`, `max`, etc.)  
+- Allows custom validators via `"type": "custom"`  
+- Dynamic validation messages based on control state  
+- Supports async and conditional validators
 
 ---
 
-## 🧠 Architecture Overview
+## 📚 Example Integration
 
-```text
-@prasanthsekar003/ngx-dynamic-form
-│
-├── core/
-│   ├── form-engine.ts
-│   ├── validators/
-│   ├── models/
-│   └── services/
-│
-└── themes/
-    ├── material/
-    ├── bootstrap/
-    └── antd/
+```ts
+import { Component } from '@angular/core';
+import formData from './form.json';
+
+@Component({
+  selector: 'app-root',
+  template: `<ngx-dynamic-form-material [form]="form"></ngx-dynamic-form-material>`
+})
+export class AppComponent {
+  form = formData;
+}
 ```
 
-Each theme implements the same form interface, enabling interchangeable UI rendering while sharing core logic.
+---
+
+## 💡 Handling Different Field Types
+
+| Field Type | Description |
+|-------------|-------------|
+| `input` | Text input field |
+| `select` | Dropdown list |
+| `radio` | Radio button group |
+| `checkbox` | Checkbox or multi-select |
+| `date` | Date picker |
+| `autocomplete` | Autocomplete text input |
+
+> ⚠️ `mat-radio-group` or `nz-radio-group` should **not be wrapped** inside `<mat-form-field>`.
 
 ---
 
-## ⚡ Roadmap
+## 🧾 License
 
-- [ ] Add Tailwind CSS theme support  
-- [ ] Form preview builder for designers  
-- [ ] Drag-and-drop form designer  
-- [ ] JSON-to-Form visual editor  
-
----
-
-## 🧑‍💻 Author
-
-**Prasanth Sekar**  
-Senior Frontend Developer — Berlin, Germany  
-[LinkedIn](https://www.linkedin.com/in/prasanth-sekar-572446126/) • [GitHub](https://github.com/prasanth003)
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** — see [LICENSE](./LICENSE) for details.
+**MIT License** © [Prasanth Sekar](https://prasanthsekar.info)

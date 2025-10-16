@@ -1,4 +1,4 @@
-<form #ngForm="ngForm" nz-form [formGroup]="dynamicFormGroup" (ngSubmit)="submit()">
+<form #ngForm="ngForm" nz-form [formGroup]="formGroup" (ngSubmit)="submit()">
 
 
     <div nz-row nzGutter="8">
@@ -9,8 +9,9 @@
 
             <nz-form-item>
 
-                <nz-form-label [nzSpan]="24" [nzFor]="field.formControlName" [nzRequired]="field.required">{{
-                    field.label }}</nz-form-label>
+                <nz-form-label [nzSpan]="24" [nzFor]="field.formControlName" [nzRequired]="field.required">
+                    {{ field.label }}
+                </nz-form-label>
 
                 <nz-form-control [nzSpan]="24" [nzErrorTip]="errorMessage">
 
@@ -21,7 +22,7 @@
                             <nz-input-group 
                                 [nzPrefix]="prefix" 
                                 [nzSuffix]="suffix" 
-                                [nzStatus]="hasError(field.formControlName, field.required ? 'required' : '') && hasError(field.formControlName, field.validation.patternName) ? 'error' : ''"
+                                [nzStatus]="getErrorState(field) ? 'error' : ''"
                             >
 
                                 <input 
@@ -30,38 +31,40 @@
                                     [formControlName]="field.formControlName" 
                                     [type]="field.inputType" 
                                     [id]="field.formControlName"
-                                    [required]="field.required" 
+                                    [required]="field.required ?? false" 
                                     [class]="field.customClass"
-                                    [maxLength]="field.maxLength ? field.maxLength : 100000"
-                                    (keyup)="onInputChange($event, field.formControlName, i)" 
-                                    [min]="field.minRange"
-                                    [max]="field.maxRange" 
+                                    [maxLength]="field?.maxLengthOption?.length ? field?.maxLengthOption?.length : 524288"
                                 />
 
                             </nz-input-group>
 
                         } 
+
                         @case ('select') {
 
                             <nz-select  
                                 [formControlName]="field.formControlName"
                                 [id]="field.formControlName" 
-                                [required]="field.required" 
+                                [required]="field.required ?? false" 
                                 [class]="field.customClass"
                                 [nzPlaceHolder]="field?.placeholder ?? ''"
-                                (ngModelChange)="onSelectionChange($event, field.formControlName)" 
                                 [nzShowSearch]="true"
                                 [nzAllowClear]="true" 
                                 style="width: 100%;"
                             >
 
                                 @for (option of field.options; track option.value) {
-                                    <nz-option [nzLabel]="option.displayValue" [nzValue]="option.value"></nz-option>
+                                    <nz-option 
+                                        [nzDisabled]="option.disabled" 
+                                        [nzLabel]="option.key" 
+                                        [nzValue]="option.value"
+                                    ></nz-option>
                                 }
 
                             </nz-select>
 
                         }
+
                         @case ('textarea') {
 
                             <textarea 
@@ -69,15 +72,66 @@
                                 [placeholder]="field.placeholder"
                                 [formControlName]="field.formControlName" 
                                 [id]="field.formControlName"
-                                [required]="field.required" 
+                                [required]="field.required ?? false" 
                                 [class]="field.customClass"
-                                [maxLength]="field.maxLength ? field.maxLength : 100000"
-                                (keyup)="onInputChange($event, field.formControlName, i)"
+                                [maxLength]="field?.maxLengthOption?.length ? field?.maxLengthOption?.length : 524288"
                                 [nzAutosize]="{ minRows: 2, maxRows: 6 }"
                             ></textarea>
 
                         }
-                        @case ('multiselect') {
+
+                        @case ('radio') {
+
+                            <nz-radio-group 
+                                [formControlName]="field.formControlName" 
+                                [id]="field.formControlName" 
+                                [required]="field.required ?? false" 
+                                [class]="field.customClass"
+                            >
+
+                               @if (form.style.radioButtonStyle === 'stacked') {
+                                
+                                    @for (option of field.options; track option.value) {
+                                        <label 
+                                            nz-radio-button
+                                            [nzValue]="option.value" 
+                                            [nzDisabled]="option.disabled"
+                                        >
+                                            {{ option.key }}
+                                        </label>   
+                                    }
+
+                                } @else {
+
+                                    @for (option of field.options; track option.value) {
+                                        <label 
+                                            nz-radio 
+                                            [nzValue]="option.value" 
+                                            [nzDisabled]="option.disabled"
+                                        >
+                                            {{ option.key }}
+                                        </label>   
+                                    }
+
+                                }
+
+                            </nz-radio-group>
+
+                        }
+
+                        @case ('checkbox') {
+
+                            <nz-checkbox-group 
+                                [nzOptions]="getCheckboxOptions(field.options)" 
+                                [formControlName]="field.formControlName" 
+                                [id]="field.formControlName" 
+                                [required]="field.required ?? false" 
+                                [class]="field.customClass"
+                            />
+                            
+                        }
+                        
+                        <!-- @case ('multiselect') {
                             <nz-select 
                                 [formControlName]="field.formControlName"
                                 [ngModel]="field && field.value ? field.value: []" 
@@ -97,7 +151,7 @@
                                 }
 
                             </nz-select>
-                        }
+                        } -->
 
                     }
 
@@ -113,12 +167,10 @@
 
                     <ng-template #errorMessage>
 
-                        @if (hasError(field.formControlName, field.required ? 'required' : '') && ngForm.submitted) {
-                        {{ field.requiredErrorMessage ? field.requiredErrorMessage : 'Please enter ' + field.label }}
-                        }
-
-                        @if (hasError(field.formControlName, field.validation.patternName)) {
-                        {{ field.validation.message }}
+                        @for (validation of field.validations; track validation.name) {
+                            @if ((isTouched(field.formControlName)  && hasError(field.formControlName, validation.name))) {
+                                {{ validation.message }} <br />
+                            }
                         }
 
                     </ng-template>
@@ -136,8 +188,8 @@
 
     </div>
 
-    <button type="submit" nz-button nzType="primary" [class]="form.style.buttonStyle.class">
-        {{ form.style.buttonStyle.buttonName }}
+    <button type="submit" nz-button nzType="primary" [class]="form.style.button.customClass">
+        {{ form.style.button.name }}
     </button>
 
 </form>

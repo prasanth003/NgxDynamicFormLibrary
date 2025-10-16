@@ -1,6 +1,6 @@
-import { SampleForm } from "ngx-dynamic-form";
 import { iExample } from "./example.interface";
 
+const SampleForm = undefined as unknown as iExample['form'];
 
 export const examples: iExample[] = [
     {

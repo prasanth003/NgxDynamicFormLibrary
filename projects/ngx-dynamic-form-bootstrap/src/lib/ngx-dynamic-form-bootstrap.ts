@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormEngineService, NgxDynamicForm, ScriptLoaderService } from 'ngx-dynamic-form';
 
@@ -16,7 +16,7 @@ declare const $: any;
   styleUrl: './ngx-dynamic-form-bootstrap.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgxDynamicFormBootstrap implements AfterViewInit, OnChanges {
+export class NgxDynamicFormBootstrap implements AfterViewInit, OnChanges, OnDestroy {
 
   @ViewChild('multiSelect') public selectRef!: ElementRef;
 
@@ -101,6 +101,10 @@ export class NgxDynamicFormBootstrap implements AfterViewInit, OnChanges {
     let form = document.getElementsByClassName('needs-validation')[0] as HTMLFormElement;
     console.log('form', form, this.formGroup.value);
     form.classList.add('was-validated');
+  }
+
+  public ngOnDestroy(): void {
+    this.formGroup.reset();
   }
 
 }

@@ -1,0 +1,95 @@
+<form #ngForm="ngForm" nz-form [formGroup]="formGroup" (ngSubmit)="submit()">
+    <div class="row">
+        @for (field of form.formGroup; track field.formControlName; let i = $index) {
+            <div class="col-md-{{ field.column ?? 12 }}" [formGroup]="formGroup">
+                @if (field.fieldType !== 'checkbox' && field.fieldType !== 'radio') {
+                    <mat-form-field class="field">
+                        <mat-label>{{ field.label }}</mat-label>
+                        @switch (field.fieldType) {
+                            @case ('input') {
+                                <input
+                                    matInput
+                                    [placeholder]="field.placeholder ?? ''"
+                                    [value]="field.value"
+                                    [formControlName]="field.formControlName"
+                                    [type]="field.inputType ?? 'text'"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                />
+                            }
+                            @case ('select') {
+                                <mat-select
+                                    [formControlName]="field.formControlName"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    [placeholder]="field.placeholder ?? ''"
+                                >
+                                    @for (option of field.options; track option.value) {
+                                        <mat-option [disabled]="option.disabled" [value]="option.value">
+                                            {{ option.key }}
+                                        </mat-option>
+                                    }
+                                </mat-select>
+                            }
+                            @case ('textarea') {
+                                <textarea
+                                    matInput
+                                    [placeholder]="field.placeholder ?? ''"
+                                    [value]="field.value"
+                                    [formControlName]="field.formControlName"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    [rows]="4"
+                                ></textarea>
+                            }
+                        }
+                    </mat-form-field>
+                } @else {
+                    @switch (field.fieldType) {
+                        @case ('radio') {
+                            <mat-radio-group
+                                [formControlName]="field.formControlName"
+                                [id]="field.formControlName"
+                                [required]="field.required ?? false"
+                                [class]="field.customClass"
+                            >
+                                @for (option of field.options; track option.value) {
+                                    <mat-radio-button [disabled]="option.disabled" [value]="option.value">
+                                        {{ option.key }}
+                                    </mat-radio-button>
+                                }
+                            </mat-radio-group>
+                        }
+                        @case ('checkbox') {
+                            @for (option of field.options; track option.value) {
+                                <mat-checkbox
+                                    [formControlName]="field.formControlName"
+                                    [id]="field.formControlName + '_' + option.value"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    [disabled]="option.disabled ?? false"
+                                    [value]="option.value"
+                                >
+                                    {{ option.key }}
+                                </mat-checkbox>
+                            }
+                        }
+                    }
+                }
+                @for (validation of field.validations; track validation.name) {
+                    @if ((isTouched(field.formControlName) && hasError(field.formControlName, validation.name))) {
+                        <mat-error>{{ validation.message }}</mat-error>
+                    }
+                }
+            </div>
+        }
+    </div>
+
+    <button type="submit" mat-button [class]="form.style.button.customClass" style="margin-top: 15px;">
+        {{ form.style.button.name }}
+    </button>
+
+</form>

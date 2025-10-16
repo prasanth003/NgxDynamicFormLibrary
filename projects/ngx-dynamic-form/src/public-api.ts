@@ -1,5 +1,3 @@
-export * from './assets/sample.form';
-
 /** Helpers */
 export * from './helpers/filesizeconverter';
 export * from './helpers/fileValidator';

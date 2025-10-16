@@ -1,8 +1,8 @@
-import { iNgxForm } from "ngx-dynamic-form";
+import { NgxDynamicForm } from "ngx-dynamic-form";
 
 export interface iExample {
     name: string;
     description: string;
-    form: iNgxForm;
+    form: NgxDynamicForm;
     formType: 'bootstrap' | 'material' | 'ant-design';
 }

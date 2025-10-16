@@ -1,6 +1,5 @@
 import { Provider, Type } from '@angular/core';
 
-
 export interface ThemeWidgetMap {
   input?: Type<any>;
   select?: Type<any>;
