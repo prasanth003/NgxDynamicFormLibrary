@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormEngineService, NgxDynamicForm, ScriptLoaderService } from 'ngx-dynamic-form';
+import { DynamicFormChangeEvent, FormEngineService, NgxDynamicForm, ScriptLoaderService } from 'ngx-dynamic-form';
 
 declare const $: any;
 
@@ -23,7 +23,7 @@ export class NgxDynamicFormBootstrap implements AfterViewInit, OnChanges, OnDest
   @Input() public form!: NgxDynamicForm;
 
   @Output() public customSubmit: EventEmitter<any> = new EventEmitter();
-  @Output() public formChange: EventEmitter<any> = new EventEmitter();
+  @Output() public formChange: EventEmitter<DynamicFormChangeEvent> = new EventEmitter();
   @Output() public valueChange: EventEmitter<any> = new EventEmitter();
 
   public formGroup: FormGroup = new FormGroup({});
@@ -88,19 +88,31 @@ export class NgxDynamicFormBootstrap implements AfterViewInit, OnChanges, OnDest
       value: event.target.value,
       index
     });
-    this.formChange.emit(this.formGroup.value);
+    this.formChange.emit({
+      raw: this.formGroup,
+      json: this.formGroup.value,
+      status: this.formGroup.status
+    });
   }
 
   public onSelectionChange(event: any): void {
     this.valueChange.emit(event);
-    this.formChange.emit(this.formGroup.value);
+    this.formChange.emit({
+      raw: this.formGroup,
+      json: this.formGroup.value,
+      status: this.formGroup.status
+    });
   }
 
 
   // on file select or change
   public onFileChange(event: any, index: number, field: any): void {
     this.filesToUpload = this.engine.handleFileSelection(event, field, this.filesToUpload);
-    this.formChange.emit(this.formGroup.value);
+    this.formChange.emit({
+      raw: this.formGroup,
+      json: this.formGroup.value,
+      status: this.formGroup.status
+    });
   }
 
   // on file delete 

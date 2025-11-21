@@ -4,5 +4,5 @@ export interface iExample {
     name: string;
     description: string;
     form: NgxDynamicForm;
-    formType: 'bootstrap' | 'material' | 'ant-design';
+    formType: 'bootstrap' | 'material' | 'antd';
 }

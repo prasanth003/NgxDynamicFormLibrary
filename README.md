@@ -143,12 +143,26 @@ public onSubmit(formData: any): void {
     console.log('Form Submitted:', formData);
 }
 
-public onFormChange(formData: any): void {
-    console.log('Form Changed:', formData);
+public onFormChange(event: DynamicFormChangeEvent): void {
+    console.log('Raw Data:', event.raw);
+    console.log('JSON Data:', event.json);
+    console.log('Form Status:', event.status);
 }
 
 public onValueChange(event: any): void {
     console.log('Value Changed:', event);
+}
+```
+
+### Event Interfaces
+
+#### DynamicFormChangeEvent
+
+```typescript
+export interface DynamicFormChangeEvent<T = any> {
+    raw: FormGroup; // Angular FormGroup instance
+    json: T;        // Form value (JSON)
+    status: 'VALID' | 'INVALID' | 'PENDING' | 'DISABLED'; // Form validation status
 }
 ```
 
@@ -158,18 +172,28 @@ public onValueChange(event: any): void {
 
 | Field Type | Description |
 |------------|-------------|
-| `input` | Standard input (text, number, email, password, etc.) |
+| `input` | Standard input (text, number, password, etc.) |
 | `textarea` | Text area for multi-line input |
 | `select` | Dropdown selection |
 | `checkbox` | Checkbox input |
 | `radio` | Radio button group |
 | `file` | File upload input |
 | `date` | Date picker |
+| `dateRange` | Date range picker |
 | `time` | Time picker |
 | `datetime-local` | Date and time picker |
+| `month` | Month picker |
+| `week` | Week picker |
+| `autocomplete` | Autocomplete input |
 | `color` | Color picker |
 | `range` | Range slider |
+| `slider` | Slider input |
 | `switch` | Toggle switch |
+| `editor` | Rich text editor |
+| `tel` | Telephone input |
+| `url` | URL input |
+| `email` | Email input |
+| `search` | Search input |
 | `custom` | Custom template support |
 
 ### Custom Template Example

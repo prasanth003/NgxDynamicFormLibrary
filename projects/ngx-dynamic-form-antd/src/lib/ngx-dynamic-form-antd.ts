@@ -18,6 +18,11 @@ import { NzCheckboxModule, NzCheckboxOption } from 'ng-zorro-antd/checkbox';
 
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { DynamicFormChangeEvent } from 'ngx-dynamic-form';
+
 @Component({
   selector: 'ngx-dynamic-form-antd',
   imports: [
@@ -36,7 +41,10 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
     NzTimePickerModule,
     NzUploadModule,
     NzGridModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzDatePickerModule,
+    NzSliderModule,
+    NzAutocompleteModule
   ],
   templateUrl: './ngx-dynamic-form-antd.html',
   styleUrl: './ngx-dynamic-form-antd.scss',
@@ -44,19 +52,27 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class NgxDynamicFormAntd implements OnChanges, OnDestroy {
 
-  @Input()  public form!: NgxDynamicForm;
+  @Input() public form!: NgxDynamicForm;
+  @Output() public formChange: EventEmitter<DynamicFormChangeEvent> = new EventEmitter();
 
   public formGroup: FormGroup = new FormGroup({});
 
-  constructor (
+  constructor(
     private engine: FormEngineService
-  ) {}
+  ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
 
     if (changes['form'] && this.form) {
       if (this.form.formGroup) {
         this.formGroup = this.engine.buildFormGroup(this.form.formGroup);
+        this.formGroup.valueChanges.subscribe((val: any) => {
+          this.formChange.emit({
+            raw: this.formGroup,
+            json: val,
+            status: this.formGroup.status
+          });
+        });
       } else {
         console.warn('Please provide valid form group');
       }
@@ -93,7 +109,7 @@ export class NgxDynamicFormAntd implements OnChanges, OnDestroy {
   }
 
   public submit(): void {
-  
+
   }
 
   public ngOnDestroy(): void {
