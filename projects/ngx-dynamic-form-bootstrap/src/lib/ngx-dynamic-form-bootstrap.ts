@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormEngineService, NgxDynamicForm, ScriptLoaderService } from 'ngx-dynamic-form';
 
@@ -21,14 +21,18 @@ export class NgxDynamicFormBootstrap implements AfterViewInit, OnChanges, OnDest
   @ViewChild('multiSelect') public selectRef!: ElementRef;
 
   @Input() public form!: NgxDynamicForm;
-  
+
+  @Output() public customSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() public formChange: EventEmitter<any> = new EventEmitter();
+  @Output() public valueChange: EventEmitter<any> = new EventEmitter();
+
   public formGroup: FormGroup = new FormGroup({});
   public filesToUpload: any[] = [];
 
   // verify
   // public formDetails!: NgxDynamicForm;
 
-  constructor (
+  constructor(
     private scriptLoader: ScriptLoaderService,
     private engine: FormEngineService
   ) { }
@@ -79,28 +83,37 @@ export class NgxDynamicFormBootstrap implements AfterViewInit, OnChanges, OnDest
   }
 
   public onInputChange(event: any, name: string, index: number): void {
-    // if (this.formDetails) this.formDetails.formGroup[index].value = event.target.value;
+    this.valueChange.emit({
+      name,
+      value: event.target.value,
+      index
+    });
+    this.formChange.emit(this.formGroup.value);
   }
 
   public onSelectionChange(event: any): void {
-    // console.log('selected values', event.value);
+    this.valueChange.emit(event);
+    this.formChange.emit(this.formGroup.value);
   }
 
 
   // on file select or change
-  public onFileChange(event: any, index: number): void {
-  
+  public onFileChange(event: any, index: number, field: any): void {
+    this.filesToUpload = this.engine.handleFileSelection(event, field, this.filesToUpload);
+    this.formChange.emit(this.formGroup.value);
   }
 
   // on file delete 
   public deleteFile(index: number): void {
-    // this.filesToUpload.splice(index, 1);
+    this.filesToUpload.splice(index, 1);
   }
 
   public submit(): void {
     let form = document.getElementsByClassName('needs-validation')[0] as HTMLFormElement;
-    console.log('form', form, this.formGroup.value);
     form.classList.add('was-validated');
+    if (this.formGroup.valid) {
+      this.customSubmit.emit(this.formGroup.value);
+    }
   }
 
   public ngOnDestroy(): void {

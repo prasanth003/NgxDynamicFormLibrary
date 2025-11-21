@@ -42,6 +42,149 @@
                                     (keyup)="onInputChange($event, field.formControlName, i)"
                                 >
                             }
+
+                            @case ('color') {
+                                <input
+                                    class="form-control form-control-color" 
+                                    [formControlName]="field.formControlName" 
+                                    type="color"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    (change)="onInputChange($event, field.formControlName, i)"
+                                >
+                            }
+
+                            @case ('range') {
+                                <input
+                                    class="form-range" 
+                                    [formControlName]="field.formControlName" 
+                                    type="range"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    (change)="onInputChange($event, field.formControlName, i)"
+                                >
+                            }
+
+                            @case ('time') {
+                                <input
+                                    class="form-control" 
+                                    [formControlName]="field.formControlName" 
+                                    type="time"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    (change)="onInputChange($event, field.formControlName, i)"
+                                >
+                            }
+
+                            @case ('datetime-local') {
+                                <input
+                                    class="form-control" 
+                                    [formControlName]="field.formControlName" 
+                                    type="datetime-local"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    (change)="onInputChange($event, field.formControlName, i)"
+                                >
+                            }
+
+                            @case ('month') {
+                                <input
+                                    class="form-control" 
+                                    [formControlName]="field.formControlName" 
+                                    type="month"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    (change)="onInputChange($event, field.formControlName, i)"
+                                >
+                            }
+
+                            @case ('week') {
+                                <input
+                                    class="form-control" 
+                                    [formControlName]="field.formControlName" 
+                                    type="week"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    (change)="onInputChange($event, field.formControlName, i)"
+                                >
+                            }
+
+                            @case ('tel') {
+                                <input
+                                    class="form-control" 
+                                    [placeholder]="field.placeholder" 
+                                    [formControlName]="field.formControlName" 
+                                    type="tel"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    (keyup)="onInputChange($event, field.formControlName, i)"
+                                >
+                            }
+
+                            @case ('url') {
+                                <input
+                                    class="form-control" 
+                                    [placeholder]="field.placeholder" 
+                                    [formControlName]="field.formControlName" 
+                                    type="url"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    (keyup)="onInputChange($event, field.formControlName, i)"
+                                >
+                            }
+
+                            @case ('email') {
+                                <input
+                                    class="form-control" 
+                                    [placeholder]="field.placeholder" 
+                                    [formControlName]="field.formControlName" 
+                                    type="email"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    (keyup)="onInputChange($event, field.formControlName, i)"
+                                >
+                            }
+
+                            @case ('search') {
+                                <input
+                                    class="form-control" 
+                                    [placeholder]="field.placeholder" 
+                                    [formControlName]="field.formControlName" 
+                                    type="search"
+                                    [id]="field.formControlName"
+                                    [required]="field.required ?? false"
+                                    [class]="field.customClass"
+                                    (keyup)="onInputChange($event, field.formControlName, i)"
+                                >
+                            }
+
+                            @case ('switch') {
+                                <div class="form-check form-switch" [class]="field.customClass">
+                                    <input 
+                                        class="form-check-input" 
+                                        type="checkbox" 
+                                        role="switch"
+                                        [formControlName]="field.formControlName"
+                                        [id]="field.formControlName"
+                                        [required]="field.required ?? false"
+                                        (change)="onSelectionChange($event)"
+                                    >
+                                    <label class="form-check-label" [for]="field.formControlName">{{ field.placeholder }}</label>
+                                </div>
+                            }
+
+                            @case ('custom') {
+                                <ng-container *ngTemplateOutlet="field.customTemplate; context: { $implicit: formGroup.get(field.formControlName) }"></ng-container>
+                            }
                             @case ('textarea') {
                                 <textarea 
                                     class="form-control"
@@ -166,7 +309,7 @@
 
                             }
 
-                            <!-- @case ('file') {
+                            @case ('file') {
                                 <div class="custom-file">
                        
                                     <input 
@@ -174,10 +317,10 @@
                                         class="custom-file-input"
                                         [formControlName]="field.formControlName" 
                                         [id]="field.formControlName"
-                                        [required]="field.required"
+                                        [required]="field.required ?? false"
                                         [class]="field.customClass"
                                         [accept]="field.fileTypeValidation ? field.fileTypeValidation.allowedType : '*'"
-                                        (change)="onFileChange($event, i)"
+                                        (change)="onFileChange($event, i, field)"
                                         [multiple]="field.multipleFile"
                                     >
                                     
@@ -204,7 +347,7 @@
                                     }
 
                                 </div>
-                            } -->
+                            }
 
                             @default {
                                 <div>Unsupported field type</div>

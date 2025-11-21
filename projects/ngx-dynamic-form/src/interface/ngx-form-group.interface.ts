@@ -9,9 +9,38 @@ export type NgxFormFieldType =
   | 'file'
   | 'date'
   | 'dateRange'
-  | 'autocomplete';
+  | 'autocomplete'
+  | 'color'
+  | 'range'
+  | 'time'
+  | 'datetime-local'
+  | 'month'
+  | 'week'
+  | 'tel'
+  | 'url'
+  | 'email'
+  | 'search'
+  | 'switch'
+  | 'slider'
+  | 'editor'
+  | 'custom';
 
-export type NgxInputType = 'text' | 'number' | 'password';
+export type NgxInputType = 
+    | 'text' 
+    | 'number' 
+    | 'password' 
+    | 'email' 
+    | 'tel' 
+    | 'url' 
+    | 'search' 
+    | 'date' 
+    | 'time' 
+    | 'datetime-local' 
+    | 'month' 
+    | 'week' 
+    | 'color' 
+    | 'range' 
+    | 'hidden';
 
 export type ValidationType = 
     | 'required' 
@@ -39,6 +68,12 @@ export interface NgxFormControl {
     prefix?: string;
     suffix?: string;
     customClass?: string;
+    customTemplate?: any; // TemplateRef<any>
+    multipleFile?: boolean;
+    fileTypeValidation?: {
+        allowedType?: string[];
+        maxFileSize?: number;
+    };
 }
 
 export interface NgxFormOptions {
