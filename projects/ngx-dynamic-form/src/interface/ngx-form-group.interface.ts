@@ -1,25 +1,55 @@
 import { input } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 
 export type NgxFormFieldType =
-  | 'input'
-  | 'select'
-  | 'textarea'
-  | 'checkbox'
-  | 'radio'
-  | 'file'
-  | 'date'
-  | 'dateRange'
-  | 'autocomplete';
+    | 'input'
+    | 'select'
+    | 'textarea'
+    | 'checkbox'
+    | 'radio'
+    | 'file'
+    | 'date'
+    | 'dateRange'
+    | 'autocomplete'
+    | 'color'
+    | 'range'
+    | 'time'
+    | 'datetime-local'
+    | 'month'
+    | 'week'
+    | 'tel'
+    | 'url'
+    | 'email'
+    | 'search'
+    | 'switch'
+    | 'slider'
+    | 'editor'
+    | 'custom';
 
-export type NgxInputType = 'text' | 'number' | 'password';
+export type NgxInputType =
+    | 'text'
+    | 'number'
+    | 'password'
+    | 'email'
+    | 'tel'
+    | 'url'
+    | 'search'
+    | 'date'
+    | 'time'
+    | 'datetime-local'
+    | 'month'
+    | 'week'
+    | 'color'
+    | 'range'
+    | 'hidden';
 
-export type ValidationType = 
-    | 'required' 
-    | 'pattern' 
-    | 'min' 
-    | 'max' 
-    | 'minLength' 
-    | 'maxLength' 
+export type ValidationType =
+    | 'required'
+    | 'pattern'
+    | 'min'
+    | 'max'
+    | 'minLength'
+    | 'maxLength'
     | 'custom';
 
 export interface NgxFormControl {
@@ -39,6 +69,12 @@ export interface NgxFormControl {
     prefix?: string;
     suffix?: string;
     customClass?: string;
+    customTemplate?: any; // TemplateRef<any>
+    multipleFile?: boolean;
+    fileTypeValidation?: {
+        allowedType?: string[];
+        maxFileSize?: number;
+    };
 }
 
 export interface NgxFormOptions {
@@ -59,4 +95,10 @@ export interface NgxFormValidation {
     value?: number;
     name: ValidationType | string;
     message: string;
+}
+
+export interface DynamicFormChangeEvent<T = any> {
+    raw: FormGroup;
+    json: T;
+    status: 'VALID' | 'INVALID' | 'PENDING' | 'DISABLED';
 }

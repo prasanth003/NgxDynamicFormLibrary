@@ -1,0 +1,14 @@
+Trying to require lightningcss-darwin-arm64...
+Failed: Error: dlopen(/Users/prasanthsekar/Documents/Projects/NgxDynamicFormLibrary/node_modules/lightningcss-darwin-arm64/lightningcss.darwin-arm64.node, 0x0001): tried: '/Users/prasanthsekar/Documents/Projects/NgxDynamicFormLibrary/node_modules/lightningcss-darwin-arm64/lightningcss.darwin-arm64.node' (mmap(size=0x760F80) failed with errno=60), '/System/Volumes/Preboot/Cryptexes/OS/Users/prasanthsekar/Documents/Projects/NgxDynamicFormLibrary/node_modules/lightningcss-darwin-arm64/lightningcss.darwin-arm64.node' (no such file), '/Users/prasanthsekar/Documents/Projects/NgxDynamicFormLibrary/node_modules/lightningcss-darwin-arm64/lightningcss.darwin-arm64.node' (mmap(size=0x760F80) failed with errno=60)
+    at Object..node (node:internal/modules/cjs/loader:1734:18)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:219:24)
+    at Module.require (node:internal/modules/cjs/loader:1340:12)
+    at require (node:internal/modules/helpers:138:16)
+    at Object.<anonymous> (/Users/prasanthsekar/Documents/Projects/NgxDynamicFormLibrary/test-lightning.js:3:5)
+    at Module._compile (node:internal/modules/cjs/loader:1565:14)
+    at Object..js (node:internal/modules/cjs/loader:1708:10) {
+  code: 'ERR_DLOPEN_FAILED'
+}

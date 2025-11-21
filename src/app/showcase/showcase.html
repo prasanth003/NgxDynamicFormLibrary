@@ -2,24 +2,27 @@
 
     <h1 class="text-3xl font-bold text-center mb-10">🚀 Showcase Examples</h1>
 
-    @for (example of examples; track example.name) { 
+    @for (example of examples; track example.name) {
 
-        <section class="mb-10">
+    <section class="mb-10">
         <h2 class="text-2xl font-semibold mb-2">{{ example.name }}</h2>
         <p class="text-gray-600 mb-4">{{ example.description }}</p>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            
+
             <div class="bg-white shadow p-6 rounded border max-h-120 overflow-y-auto">
 
                 @if (example.formType === 'bootstrap') {
-                    <!-- <ngx-dynamic-form [form]="example.form"></ngx-dynamic-form> -->
+                <ngx-dynamic-form-bootstrap [form]="example.form"
+                    (formChange)="onFormChange($event)"></ngx-dynamic-form-bootstrap>
                 } @else if (example.formType === 'material') {
-                    <!-- <ngx-dynamic-form type="material" [form]="example.form"></ngx-dynamic-form> -->
-                } @else if (example.formType === 'ant-design') {
-                    <!-- <ngx-dynamic-form-antd [form]="example.form"></ngx-dynamic-form-antd> -->
+                <ngx-dynamic-form-material [form]="example.form"
+                    (formChange)="onFormChange($event)"></ngx-dynamic-form-material>
+                } @else if (example.formType === 'antd') {
+                <ngx-dynamic-form-antd [form]="example.form"
+                    (formChange)="onFormChange($event)"></ngx-dynamic-form-antd>
                 } @else {
-                    <p>Unsupported form type: {{ example.formType }}</p>
+                <p>Unsupported form type: {{ example.formType }}</p>
                 }
 
             </div>

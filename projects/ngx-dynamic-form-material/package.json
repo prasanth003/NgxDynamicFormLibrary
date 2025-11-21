@@ -1,10 +1,15 @@
 {
   "name": "@prasanthsekar003/ngx-dynamic-form-material",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Prasanth Sekar",
   "description": "Dynamic form library for Angular — generate forms from JSON schema.",
   "license": "MIT",
-  "keywords": ["angular", "forms", "dynamic-form", "form-builder"],
+  "keywords": [
+    "angular",
+    "forms",
+    "dynamic-form",
+    "form-builder"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/prasanth003/NgxDynamicFormLibrary.git"
@@ -14,7 +19,7 @@
     "url": "https://github.com/prasanth003/NgxDynamicFormLibrary/issues"
   },
   "peerDependencies": {
-   "@angular/common": "20.1.2",
+    "@angular/common": "20.1.2",
     "@angular/core": "^20.1.2",
     "@angular/material": "20.1.2"
   },

@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgxFormControl } from '../public-api';
 import { namedValidator } from '../helpers/name-validator';
+import { from } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { humanFileSize } from '../helpers/filesizeconverter';
+import { validateFile } from '../helpers/fileValidator';
 
 @Injectable({ providedIn: 'root' })
 export class FormEngineService {
@@ -129,42 +133,42 @@ export class FormEngineService {
         };
     }
 
-    // public handleFileSelection(event: any, formField: NgxFormControl, filesToUpload: any[]): any[] {
-    //     const fileList: FileList = event.target.files;
-    //     const observable = from(fileList).pipe(
-    //         map((file: File) => {
-    //             if (!validateFile(file.name, formField.fileTypeValidation?.allowedType)) {
-    //                 throw new Error('Invalid file type');
-    //             }
-    //             return file;
-    //         })
-    //     );
+    public handleFileSelection(event: any, formField: NgxFormControl, filesToUpload: any[]): any[] {
+        const fileList: FileList = event.target.files;
+        const observable = from(fileList).pipe(
+            map((file: File) => {
+                if (!validateFile(file.name, formField.fileTypeValidation?.allowedType?.join(','))) {
+                    throw new Error('Invalid file type');
+                }
+                return file;
+            })
+        );
 
-    //     observable.subscribe({
-    //         next: (file) => {
-    //             const maxSize = formField.fileTypeValidation?.maxFileSize;
-    //             if (maxSize && file.size > maxSize) {
-    //                 console.warn('File too large');
-    //                 return;
-    //             }
-    //             this.addFile(filesToUpload, file, formField.multipleFile);
-    //         },
-    //         error: (err) => console.error(err)
-    //     });
+        observable.subscribe({
+            next: (file) => {
+                const maxSize = formField.fileTypeValidation?.maxFileSize;
+                if (maxSize && file.size > maxSize) {
+                    console.warn('File too large');
+                    return;
+                }
+                this.addFile(filesToUpload, file, formField.multipleFile);
+            },
+            error: (err) => console.error(err)
+        });
 
-    //     return filesToUpload;
-    // }
+        return filesToUpload;
+    }
 
-    // private addFile(filesToUpload: any[], file: File, multiple?: boolean): void {
-    //     const fileData = {
-    //         file,
-    //         fileName: file.name,
-    //         fileSize: humanFileSize(file.size),
-    //         fileType: file.type
-    //     };
+    private addFile(filesToUpload: any[], file: File, multiple?: boolean): void {
+        const fileData = {
+            file,
+            fileName: file.name,
+            fileSize: humanFileSize(file.size),
+            fileType: file.type
+        };
 
-    //     if (multiple) filesToUpload.push(fileData);
-    //     else filesToUpload.splice(0, filesToUpload.length, fileData);
-    // }
+        if (multiple) filesToUpload.push(fileData);
+        else filesToUpload.splice(0, filesToUpload.length, fileData);
+    }
 
 }

@@ -17,121 +17,148 @@
 
                     @switch (field.fieldType) {
 
-                        @case ('input') {
+                    @case ('input') {
 
-                            <nz-input-group 
-                                [nzPrefix]="prefix" 
-                                [nzSuffix]="suffix" 
-                                [nzStatus]="getErrorState(field) ? 'error' : ''"
-                            >
+                    <nz-input-group [nzPrefix]="prefix" [nzSuffix]="suffix"
+                        [nzStatus]="getErrorState(field) ? 'error' : ''">
 
-                                <input 
-                                    nz-input 
-                                    [placeholder]="field.placeholder"
-                                    [formControlName]="field.formControlName" 
-                                    [type]="field.inputType" 
-                                    [id]="field.formControlName"
-                                    [required]="field.required ?? false" 
-                                    [class]="field.customClass"
-                                    [maxLength]="field?.maxLengthOption?.length ? field?.maxLengthOption?.length : 524288"
-                                />
+                        <input nz-input [placeholder]="field.placeholder" [formControlName]="field.formControlName"
+                            [type]="field.inputType" [id]="field.formControlName" [required]="field.required ?? false"
+                            [class]="field.customClass"
+                            [maxLength]="field?.maxLengthOption?.length ? field?.maxLengthOption?.length : 524288" />
 
-                            </nz-input-group>
+                    </nz-input-group>
 
-                        } 
+                    }
 
-                        @case ('select') {
+                    @case ('select') {
 
-                            <nz-select  
-                                [formControlName]="field.formControlName"
-                                [id]="field.formControlName" 
-                                [required]="field.required ?? false" 
-                                [class]="field.customClass"
-                                [nzPlaceHolder]="field?.placeholder ?? ''"
-                                [nzShowSearch]="true"
-                                [nzAllowClear]="true" 
-                                style="width: 100%;"
-                            >
+                    <nz-select [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [required]="field.required ?? false" [class]="field.customClass"
+                        [nzPlaceHolder]="field?.placeholder ?? ''" [nzShowSearch]="true" [nzAllowClear]="true"
+                        style="width: 100%;">
 
-                                @for (option of field.options; track option.value) {
-                                    <nz-option 
-                                        [nzDisabled]="option.disabled" 
-                                        [nzLabel]="option.key" 
-                                        [nzValue]="option.value"
-                                    ></nz-option>
-                                }
+                        @for (option of field.options; track option.value) {
+                        <nz-option [nzDisabled]="option.disabled" [nzLabel]="option.key"
+                            [nzValue]="option.value"></nz-option>
+                        }
 
-                            </nz-select>
+                    </nz-select>
+
+                    }
+
+                    @case ('textarea') {
+
+                    <textarea nz-input [placeholder]="field.placeholder" [formControlName]="field.formControlName"
+                        [id]="field.formControlName" [required]="field.required ?? false" [class]="field.customClass"
+                        [maxLength]="field?.maxLengthOption?.length ? field?.maxLengthOption?.length : 524288"
+                        [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+
+                    }
+
+                    @case ('radio') {
+
+                    <nz-radio-group [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [required]="field.required ?? false" [class]="field.customClass">
+
+                        @if (form.style.radioButtonStyle === 'stacked') {
+
+                        @for (option of field.options; track option.value) {
+                        <label nz-radio-button [nzValue]="option.value" [nzDisabled]="option.disabled">
+                            {{ option.key }}
+                        </label>
+                        }
+
+                        } @else {
+
+                        @for (option of field.options; track option.value) {
+                        <label nz-radio [nzValue]="option.value" [nzDisabled]="option.disabled">
+                            {{ option.key }}
+                        </label>
+                        }
 
                         }
 
-                        @case ('textarea') {
+                    </nz-radio-group>
 
-                            <textarea 
-                                nz-input 
-                                [placeholder]="field.placeholder"
-                                [formControlName]="field.formControlName" 
-                                [id]="field.formControlName"
-                                [required]="field.required ?? false" 
-                                [class]="field.customClass"
-                                [maxLength]="field?.maxLengthOption?.length ? field?.maxLengthOption?.length : 524288"
-                                [nzAutosize]="{ minRows: 2, maxRows: 6 }"
-                            ></textarea>
+                    }
 
+                    @case ('checkbox') {
+
+                    <nz-checkbox-group [nzOptions]="getCheckboxOptions(field.options)"
+                        [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [required]="field.required ?? false" [class]="field.customClass" />
+
+                    }
+
+                    @case ('date') {
+                    <nz-date-picker [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [nzPlaceHolder]="field.placeholder ?? ''" [class]="field.customClass"
+                        style="width: 100%;"></nz-date-picker>
+                    }
+
+                    @case ('datetime-local') {
+                    <nz-date-picker [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [nzShowTime]="true" [nzPlaceHolder]="field.placeholder ?? ''" [class]="field.customClass"
+                        style="width: 100%;"></nz-date-picker>
+                    }
+
+                    @case ('time') {
+                    <nz-time-picker [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [nzPlaceHolder]="field.placeholder ?? ''" [class]="field.customClass"
+                        style="width: 100%;"></nz-time-picker>
+                    }
+
+                    @case ('month') {
+                    <nz-date-picker [formControlName]="field.formControlName" [id]="field.formControlName"
+                        nzMode="month" [nzPlaceHolder]="field.placeholder ?? ''" [class]="field.customClass"
+                        style="width: 100%;"></nz-date-picker>
+                    }
+
+                    @case ('week') {
+                    <nz-date-picker [formControlName]="field.formControlName" [id]="field.formControlName" nzMode="week"
+                        [nzPlaceHolder]="field.placeholder ?? ''" [class]="field.customClass"
+                        style="width: 100%;"></nz-date-picker>
+                    }
+
+                    @case ('switch') {
+                    <nz-switch [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [class]="field.customClass"></nz-switch>
+                    }
+
+                    @case ('slider') {
+                    <nz-slider [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [class]="field.customClass"></nz-slider>
+                    }
+
+                    @case ('range') {
+                    <nz-slider [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [class]="field.customClass"></nz-slider>
+                    }
+
+                    @case ('autocomplete') {
+                    <input nz-input [formControlName]="field.formControlName" [nzAutocomplete]="auto"
+                        [placeholder]="field.placeholder" [class]="field.customClass" />
+                    <nz-autocomplete #auto>
+                        @for (option of field.options; track option.value) {
+                        <nz-auto-option [nzValue]="option.value" [nzLabel]="option.key">
+                            {{ option.key }}
+                        </nz-auto-option>
                         }
+                    </nz-autocomplete>
+                    }
 
-                        @case ('radio') {
+                    @case ('file') {
+                    <input type="file" [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [class]="field.customClass" />
+                    }
 
-                            <nz-radio-group 
-                                [formControlName]="field.formControlName" 
-                                [id]="field.formControlName" 
-                                [required]="field.required ?? false" 
-                                [class]="field.customClass"
-                            >
+                    @case ('color') {
+                    <input type="color" [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [class]="field.customClass" style="height: 32px; width: 100%;" />
+                    }
 
-                               @if (form.style.radioButtonStyle === 'stacked') {
-                                
-                                    @for (option of field.options; track option.value) {
-                                        <label 
-                                            nz-radio-button
-                                            [nzValue]="option.value" 
-                                            [nzDisabled]="option.disabled"
-                                        >
-                                            {{ option.key }}
-                                        </label>   
-                                    }
-
-                                } @else {
-
-                                    @for (option of field.options; track option.value) {
-                                        <label 
-                                            nz-radio 
-                                            [nzValue]="option.value" 
-                                            [nzDisabled]="option.disabled"
-                                        >
-                                            {{ option.key }}
-                                        </label>   
-                                    }
-
-                                }
-
-                            </nz-radio-group>
-
-                        }
-
-                        @case ('checkbox') {
-
-                            <nz-checkbox-group 
-                                [nzOptions]="getCheckboxOptions(field.options)" 
-                                [formControlName]="field.formControlName" 
-                                [id]="field.formControlName" 
-                                [required]="field.required ?? false" 
-                                [class]="field.customClass"
-                            />
-                            
-                        }
-                        
-                        <!-- @case ('multiselect') {
+                    <!-- @case ('multiselect') {
                             <nz-select 
                                 [formControlName]="field.formControlName"
                                 [ngModel]="field && field.value ? field.value: []" 
@@ -168,14 +195,14 @@
                     <ng-template #errorMessage>
 
                         @for (validation of field.validations; track validation.name) {
-                            @if ((isTouched(field.formControlName)  && hasError(field.formControlName, validation.name))) {
-                                {{ validation.message }} <br />
-                            }
+                        @if ((isTouched(field.formControlName) && hasError(field.formControlName, validation.name))) {
+                        {{ validation.message }} <br />
+                        }
                         }
 
                     </ng-template>
 
-                    
+
 
                 </nz-form-control>
 
@@ -193,6 +220,3 @@
     </button>
 
 </form>
-
-
-

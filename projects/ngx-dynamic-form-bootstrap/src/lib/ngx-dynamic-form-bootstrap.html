@@ -1,86 +1,163 @@
 <form #ngForm="ngForm" [formGroup]="formGroup" class="needs-validation" (ngSubmit)="submit()">
-    
+
     <div class="row">
 
-        @for (field of form.formGroup; track field.formControlName; let i = $index) { 
+        @for (field of form.formGroup; track field.formControlName; let i = $index) {
 
-             <div class="col-md-{{ field.column }}">
+        <div class="col-md-{{ field.column }}">
 
-                <div class="form-group">
+            <div class="form-group">
 
-                    @if (field.label) {
-                        <label [for]="field.formControlName">
-                            
-                            {{ field.label }} 
+                @if (field.label) {
+                <label [for]="field.formControlName">
 
-                            @if (field.required) {
-                                <span style="color: #dc3545;">*</span>
-                            }
+                    {{ field.label }}
 
-                        </label>
+                    @if (field.required) {
+                    <span style="color: #dc3545;">*</span>
                     }
 
-                    <div class="input-group w-100">
+                </label>
+                }
 
-                        @if (field.prefix) {
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> {{ field.prefix }} </span>
-                            </div>
+                <div class="input-group w-100">
+
+                    @if (field.prefix) {
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> {{ field.prefix }} </span>
+                    </div>
+                    }
+
+                    @switch (field.fieldType) {
+
+                    @case ('input') {
+                    <input class="form-control" [placeholder]="field.placeholder"
+                        [formControlName]="field.formControlName" [type]="field.inputType ?? 'text'"
+                        [id]="field.formControlName" [required]="field.required ?? false" [class]="field.customClass"
+                        (keyup)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('color') {
+                    <input class="form-control form-control-color" [formControlName]="field.formControlName"
+                        type="color" [id]="field.formControlName" [required]="field.required ?? false"
+                        [class]="field.customClass" (change)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('range') {
+                    <input class="form-range" [formControlName]="field.formControlName" type="range"
+                        [id]="field.formControlName" [required]="field.required ?? false" [class]="field.customClass"
+                        (change)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('time') {
+                    <input class="form-control" [formControlName]="field.formControlName" type="time"
+                        [id]="field.formControlName" [required]="field.required ?? false" [class]="field.customClass"
+                        (change)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('datetime-local') {
+                    <input class="form-control" [formControlName]="field.formControlName" type="datetime-local"
+                        [id]="field.formControlName" [required]="field.required ?? false" [class]="field.customClass"
+                        (change)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('month') {
+                    <input class="form-control" [formControlName]="field.formControlName" type="month"
+                        [id]="field.formControlName" [required]="field.required ?? false" [class]="field.customClass"
+                        (change)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('date') {
+                    <input class="form-control" [formControlName]="field.formControlName" type="date"
+                        [id]="field.formControlName" [required]="field.required ?? false" [class]="field.customClass"
+                        (change)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('autocomplete') {
+                    <input class="form-control" [formControlName]="field.formControlName"
+                        [attr.list]="field.formControlName + 'list'" [id]="field.formControlName"
+                        [required]="field.required ?? false" [class]="field.customClass"
+                        (keyup)="onInputChange($event, field.formControlName, i)">
+                    <datalist [id]="field.formControlName + 'list'">
+                        @for (option of field.options; track option.value) {
+                        <option [value]="option.key"></option>
+                        }
+                    </datalist>
+                    }
+
+                    @case ('week') {
+                    <input class="form-control" [formControlName]="field.formControlName" type="week"
+                        [id]="field.formControlName" [required]="field.required ?? false" [class]="field.customClass"
+                        (change)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('tel') {
+                    <input class="form-control" [placeholder]="field.placeholder"
+                        [formControlName]="field.formControlName" type="tel" [id]="field.formControlName"
+                        [required]="field.required ?? false" [class]="field.customClass"
+                        (keyup)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('url') {
+                    <input class="form-control" [placeholder]="field.placeholder"
+                        [formControlName]="field.formControlName" type="url" [id]="field.formControlName"
+                        [required]="field.required ?? false" [class]="field.customClass"
+                        (keyup)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('email') {
+                    <input class="form-control" [placeholder]="field.placeholder"
+                        [formControlName]="field.formControlName" type="email" [id]="field.formControlName"
+                        [required]="field.required ?? false" [class]="field.customClass"
+                        (keyup)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('search') {
+                    <input class="form-control" [placeholder]="field.placeholder"
+                        [formControlName]="field.formControlName" type="search" [id]="field.formControlName"
+                        [required]="field.required ?? false" [class]="field.customClass"
+                        (keyup)="onInputChange($event, field.formControlName, i)">
+                    }
+
+                    @case ('switch') {
+                    <div class="form-check form-switch" [class]="field.customClass">
+                        <input class="form-check-input" type="checkbox" role="switch"
+                            [formControlName]="field.formControlName" [id]="field.formControlName"
+                            [required]="field.required ?? false" (change)="onSelectionChange($event)">
+                        <label class="form-check-label" [for]="field.formControlName">{{ field.placeholder }}</label>
+                    </div>
+                    }
+
+                    @case ('custom') {
+                    <ng-container
+                        *ngTemplateOutlet="field.customTemplate; context: { $implicit: formGroup.get(field.formControlName) }"></ng-container>
+                    }
+                    @case ('textarea') {
+                    <textarea class="form-control" [placeholder]="field.placeholder"
+                        [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [required]="field.required ?? false" [class]="field.customClass"
+                        (keyup)="onInputChange($event, field.formControlName, i)"></textarea>
+                    }
+                    @case ('select') {
+                    <select class="form-control" [formControlName]="field.formControlName" [id]="field.formControlName"
+                        [required]="field.required ?? false" [class]="field.customClass">
+
+                        @if (field.placeholder) {
+                        <option selected disabled value="">
+                            {{ field.placeholder }}
+                        </option>
                         }
 
-                        @switch (field.fieldType) {
+                        @for (option of field.options; track option.value) {
+                        <option [disabled]="option.disabled" [value]="option.value">
+                            {{ option.key }}
+                        </option>
+                        }
 
-                            @case ('input') {
-                                <input
-                                    class="form-control" 
-                                    [placeholder]="field.placeholder" 
-                                    [formControlName]="field.formControlName" 
-                                    [type]="field.inputType ?? 'text'"
-                                    [id]="field.formControlName"
-                                    [required]="field.required ?? false"
-                                    [class]="field.customClass"
-                                    (keyup)="onInputChange($event, field.formControlName, i)"
-                                >
-                            }
-                            @case ('textarea') {
-                                <textarea 
-                                    class="form-control"
-                                    [placeholder]="field.placeholder" 
-                                    [formControlName]="field.formControlName"
-                                    [id]="field.formControlName"
-                                    [required]="field.required ?? false"
-                                    [class]="field.customClass"
-                                    (keyup)="onInputChange($event, field.formControlName, i)"
-                                ></textarea>
-                            }
-                            @case ('select') {
-                                <select 
-                                    class="form-control"
-                                    [formControlName]="field.formControlName"
-                                    [id]="field.formControlName"
-                                    [required]="field.required ?? false"
-                                    [class]="field.customClass"
-                                >
+                    </select>
+                    }
 
-                                    @if (field.placeholder) {
-                                        <option selected disabled value="">
-                                            {{ field.placeholder }}
-                                        </option>
-                                    }
-
-                                    @for (option of field.options; track option.value) {
-                                        <option 
-                                            [disabled]="option.disabled" 
-                                            [value]="option.value"
-                                        >
-                                            {{ option.key }}
-                                        </option>
-                                    }
-          
-                                </select>
-                            }
-
-                            <!-- @case ('multiselect') {
+                    <!-- @case ('multiselect') {
                                 <select 
                                     #multiSelect
                                     [formControlName]="field.formControlName"
@@ -114,138 +191,119 @@
                                 </select>
                             } -->
 
-                            @case ('checkbox') {
+                    @case ('checkbox') {
 
-                                @for (option of field.options; track option.value; let c = $index) {
+                    @for (option of field.options; track option.value; let c = $index) {
 
-                                    <div class="form-check form-check-inline" [class]="field.customClass">
-                                            
-                                        <input 
-                                            class="form-check-input"
-                                            type="checkbox" 
-                                            [formControlName]="field.formControlName"
-                                            [id]="field.formControlName + c"
-                                            [value]="option.value"
-                                            [name]="field.formControlName"
-                                            [required]="field.required ?? false"
-                                            [disabled]="option.disabled ?? false"
-                                        >
-                                            
-                                        <label class="form-check-label" [for]="field.formControlName + c">
-                                            {{ option.key }}
-                                        </label>
-                                        
-                                    </div>
-                                }
-  
-                            }
+                    <div class="form-check form-check-inline" [class]="field.customClass">
 
-                            @case ('radio') {
+                        <input class="form-check-input" type="checkbox" [formControlName]="field.formControlName"
+                            [id]="field.formControlName + c" [value]="option.value" [name]="field.formControlName"
+                            [required]="field.required ?? false" [disabled]="option.disabled ?? false">
 
-                                @for (option of field.options; track option.value; let r = $index) { 
+                        <label class="form-check-label" [for]="field.formControlName + c">
+                            {{ option.key }}
+                        </label>
 
-                                    <div class="form-check form-check-inline" [class]="field.customClass">
-                                        
-                                        <input 
-                                            class="form-check-input"
-                                            type="radio" 
-                                            [formControlName]="field.formControlName"
-                                            [id]="field.formControlName + r"
-                                            [value]="option.value"
-                                            [name]="field.formControlName"
-                                            [required]="field.required ?? false"
-                                            [disabled]="option.disabled ?? false"
-                                        >
-                                            
-                                        <label class="form-check-label" [for]="field.formControlName + r">
-                                            {{ option.key }}
-                                        </label>
-                                        
-                                    </div>
-                                }
+                    </div>
+                    }
 
-                            }
+                    }
 
-                            <!-- @case ('file') {
-                                <div class="custom-file">
-                       
-                                    <input 
-                                        type="file" 
-                                        class="custom-file-input"
-                                        [formControlName]="field.formControlName" 
-                                        [id]="field.formControlName"
-                                        [required]="field.required"
-                                        [class]="field.customClass"
-                                        [accept]="field.fileTypeValidation ? field.fileTypeValidation.allowedType : '*'"
-                                        (change)="onFileChange($event, i)"
-                                        [multiple]="field.multipleFile"
-                                    >
-                                    
-                                    <label class="custom-file-label" [for]="field.formControlName">{{ field.placeholder }}</label>
+                    @case ('radio') {
 
-                                    @if (filesToUpload.length > 0) { 
-                                        @for (file of filesToUpload; track file.fileName; let index = $index) { 
+                    @for (option of field.options; track option.value; let r = $index) {
 
-                                            <div class="file-layout">
-                                                <div class="file-details">
-                                                    <div class="file-name">{{ file.fileName }}</div>
-                                                    <div class="file-stats">
-                                                        <span class="value">{{ file.fileSize }}</span>
-                                                        <div class="dot"></div>
-                                                        <span class="value">{{ file.fileType }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="file-action">
-                                                    <button class="btn delete-btn" (click)="deleteFile(index)">Delete</button>
-                                                </div>
-                                            </div>
+                    <div class="form-check form-check-inline" [class]="field.customClass">
 
-                                        }
-                                    }
+                        <input class="form-check-input" type="radio" [formControlName]="field.formControlName"
+                            [id]="field.formControlName + r" [value]="option.value" [name]="field.formControlName"
+                            [required]="field.required ?? false" [disabled]="option.disabled ?? false">
 
+                        <label class="form-check-label" [for]="field.formControlName + r">
+                            {{ option.key }}
+                        </label>
+
+                    </div>
+                    }
+
+                    }
+
+                    @case ('file') {
+                    <div class="custom-file">
+
+                        <input type="file" class="custom-file-input" [formControlName]="field.formControlName"
+                            [id]="field.formControlName" [required]="field.required ?? false"
+                            [class]="field.customClass"
+                            [accept]="field.fileTypeValidation ? field.fileTypeValidation.allowedType : '*'"
+                            (change)="onFileChange($event, i, field)" [multiple]="field.multipleFile">
+
+                        <label class="custom-file-label" [for]="field.formControlName">{{ field.placeholder }}</label>
+
+                        @if (filesToUpload.length > 0) {
+                        @for (file of filesToUpload; track file.fileName; let index = $index) {
+
+                        <div class="file-layout">
+                            <div class="file-details">
+                                <div class="file-name">{{ file.fileName }}</div>
+                                <div class="file-stats">
+                                    <span class="value">{{ file.fileSize }}</span>
+                                    <div class="dot"></div>
+                                    <span class="value">{{ file.fileType }}</span>
                                 </div>
-                            } -->
-
-                            @default {
-                                <div>Unsupported field type</div>
-                            }
-                        }
-
-                        @if (field.suffix) { 
-                            <div class="input-group-append">
-                                <span class="input-group-text"> {{ field.suffix }} </span>
                             </div>
+                            <div class="file-action">
+                                <button class="btn delete-btn" (click)="deleteFile(index)">Delete</button>
+                            </div>
+                        </div>
+
+                        }
                         }
 
                     </div>
-
-                    @for (validation of field.validations; track validation.name) {
-                        @if ((isTouched(field.formControlName)  && hasError(field.formControlName, validation.name))) {
-                            <small class="form-text error-field text-muted">
-                                {{ validation.message }}
-                            </small> <br/>
-                        }
                     }
 
-                    @if (field.hint) { 
-                        <small class="form-text text-muted">{{ field.hint }}</small>
+                    @default {
+                    <div>Unsupported field type</div>
+                    }
                     }
 
-                    @if (field.maxLengthOption && field.maxLengthOption.show) { 
-                        <small class="form-text text-muted float-right">
-                            {{ formGroup.get(field.formControlName)?.value?.length ?? 0 }} / {{ field.maxLengthOption.length }}
-                        </small>
+                    @if (field.suffix) {
+                    <div class="input-group-append">
+                        <span class="input-group-text"> {{ field.suffix }} </span>
+                    </div>
                     }
-
 
                 </div>
 
-             </div>
+                @for (validation of field.validations; track validation.name) {
+                @if ((isTouched(field.formControlName) && hasError(field.formControlName, validation.name))) {
+                <small class="form-text error-field text-muted">
+                    {{ validation.message }}
+                </small> <br />
+                }
+                }
+
+                @if (field.hint) {
+                <small class="form-text text-muted">{{ field.hint }}</small>
+                }
+
+                @if (field.maxLengthOption && field.maxLengthOption.show) {
+                <small class="form-text text-muted float-right">
+                    {{ formGroup.get(field.formControlName)?.value?.length ?? 0 }} / {{ field.maxLengthOption.length }}
+                </small>
+                }
+
+
+            </div>
+
+        </div>
 
         }
 
     </div>
 
-    <button type="submit" class="btn" [class]="form.style.button.customClass ?? ''">{{ form.style.button.name }}</button>
-    
+    <button type="submit" class="btn" [class]="form.style.button.customClass ?? ''">{{ form.style.button.name
+        }}</button>
+
 </form>
