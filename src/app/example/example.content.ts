@@ -1,6 +1,6 @@
 import { iExample } from "./example.interface";
 
-import { NgxDynamicForm } from "ngx-dynamic-form";
+import { NgxDynamicForm } from "@ngx-dynamic-form/ngx-dynamic-form";
 
 const SampleForm: NgxDynamicForm = {
     style: {

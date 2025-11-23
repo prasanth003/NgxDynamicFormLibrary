@@ -1,10 +1,10 @@
 import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgxDynamicForm } from 'ngx-dynamic-form';
+import { NgxDynamicForm } from '@ngx-dynamic-form/ngx-dynamic-form';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
-import { NgxDynamicFormBootstrap } from 'ngx-dynamic-form-bootstrap';
-import { NgxDynamicFormAntd } from 'ngx-dynamic-form-antd';
-import { NgxDynamicFormMaterial } from 'ngx-dynamic-form-material';
+import { NgxDynamicFormBootstrap } from '@ngx-dynamic-form/ngx-dynamic-form-bootstrap';
+import { NgxDynamicFormAntd } from '@ngx-dynamic-form/ngx-dynamic-form-antd';
+import { NgxDynamicFormMaterial } from '@ngx-dynamic-form/ngx-dynamic-form-material';
 
 @Component({
   selector: 'app-playground',
@@ -21,8 +21,8 @@ import { NgxDynamicFormMaterial } from 'ngx-dynamic-form-material';
 export class Playground {
 
   public editorOptions = {
-    theme: 'vs-dark', 
-    language: 'html', 
+    theme: 'vs-dark',
+    language: 'html',
     automaticLayout: true,
     autoIndent: 'full',
     readOnly: true,
@@ -37,7 +37,7 @@ export class Playground {
   }
 
   public guideHeight: number = 400;
-  
+
   public form: NgxDynamicForm = {
     formGroup: [
       {
@@ -97,7 +97,7 @@ export class Playground {
       }
     }
   };
-  
+
   public formInString: string = JSON.stringify(this.form, null, 4);
 
   @HostListener('window:resize')
@@ -108,7 +108,7 @@ export class Playground {
     this.guideHeight = availableHeight;
   }
 
-  constructor() { 
+  constructor() {
     this.onResize();
   }
 

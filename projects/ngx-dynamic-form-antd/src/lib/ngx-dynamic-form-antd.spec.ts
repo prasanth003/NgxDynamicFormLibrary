@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgxDynamicFormAntd } from './ngx-dynamic-form-antd';
+import { NgxDynamicForm } from '@ngx-dynamic-form/ngx-dynamic-form';
 
 describe('NgxDynamicFormAntd', () => {
   let component: NgxDynamicFormAntd;
@@ -10,7 +11,7 @@ describe('NgxDynamicFormAntd', () => {
     await TestBed.configureTestingModule({
       imports: [NgxDynamicFormAntd]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(NgxDynamicFormAntd);
     component = fixture.componentInstance;

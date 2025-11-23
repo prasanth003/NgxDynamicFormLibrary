@@ -1,7 +1,7 @@
 import { Component, computed, effect, Input, signal } from '@angular/core';
 import { examples } from './example.content';
 import { iExample } from './example.interface';
-import { NgxDynamicForm } from 'ngx-dynamic-form';
+import { NgxDynamicForm } from '@ngx-dynamic-form/ngx-dynamic-form';
 import { CommonModule } from '@angular/common';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -30,8 +30,8 @@ export class Example {
   public c = computed(() => this.a() + this.b());
 
   public editorOptions = {
-    theme: 'vs-dark', 
-    language: 'html', 
+    theme: 'vs-dark',
+    language: 'html',
     automaticLayout: true,
     autoIndent: 'full',
     readOnly: true,
@@ -44,21 +44,21 @@ export class Example {
     scrollBeyondLastLine: false,
     roundedSelection: false
   }
-  
+
   constructor() {
     console.log(this.c());
     this.a.set(2);
 
     effect(() => {
       console.log(`Effect: ${this.c()}`);
-    }, { allowSignalWrites: true }  );
+    }, { allowSignalWrites: true });
   }
 
   public getCode(form: NgxDynamicForm): string {
     return JSON.stringify(form, null, 4);
   }
 
-  public getSubjectCode(form: NgxDynamicForm): Observable<NgxDynamicForm> { 
+  public getSubjectCode(form: NgxDynamicForm): Observable<NgxDynamicForm> {
     return new Observable<NgxDynamicForm>(observer => {
       observer.next(form);
       observer.complete();

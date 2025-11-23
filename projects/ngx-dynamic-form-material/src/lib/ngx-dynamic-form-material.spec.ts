@@ -1,6 +1,8 @@
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgxDynamicFormMaterial } from './ngx-dynamic-form-material';
+import { NgxDynamicForm } from '@ngx-dynamic-form/ngx-dynamic-form';
 
 describe('NgxDynamicFormMaterial', () => {
   let component: NgxDynamicFormMaterial;
@@ -10,7 +12,7 @@ describe('NgxDynamicFormMaterial', () => {
     await TestBed.configureTestingModule({
       imports: [NgxDynamicFormMaterial]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(NgxDynamicFormMaterial);
     component = fixture.componentInstance;

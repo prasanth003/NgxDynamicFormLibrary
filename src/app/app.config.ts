@@ -9,7 +9,7 @@ import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
-import { provideDynamicFormTheme } from 'ngx-dynamic-form';
+import { provideDynamicFormTheme } from '@ngx-dynamic-form/ngx-dynamic-form';
 
 registerLocaleData(en);
 

@@ -9,15 +9,16 @@ export class PackageLoaderService {
             switch (theme) {
                 // case 'material': {
                 //     // This path is the NPM package name
-                //     const mod = await import('@prasanthsekar003/ngx-dynamic-form-material');
+                //     const mod = await import('@ngx-dynamic-form/ngx-dynamic-form-material');
                 //     return mod.default ?? this.fail('material');
                 // }
                 case 'bootstrap': {
-                    const mod: any = await import('@prasanthsekar003/ngx-dynamic-form-bootstrap');
+                    // @ts-ignore
+                    const mod: any = await import('@ngx-dynamic-form/ngx-dynamic-form-bootstrap');
                     return mod.default ?? mod.THEME_PLUGIN ?? mod.registerTheme?.() ?? this.fail('bootstrap');
                 }
                 // case 'antd': {
-                //     const mod = await import('@prasanthsekar003/ngx-dynamic-form-antd');
+                //     const mod = await import('@ngx-dynamic-form/ngx-dynamic-form-antd');
                 //     return mod.default ?? this.fail('antd');
                 // }
                 default:

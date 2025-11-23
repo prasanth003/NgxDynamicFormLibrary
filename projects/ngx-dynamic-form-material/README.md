@@ -9,9 +9,9 @@ It supports multiple UI libraries — **Bootstrap**, **Ant Design (NG-ZORRO)**, 
 
 | Library | Description |
 |----------|-------------|
-| `@prasanthsekar003/ngx-dynamic-form-bootstrap` | Bootstrap-styled dynamic form |
-| `@prasanthsekar003/ngx-dynamic-form-antd` | Ant Design dynamic form (NG-ZORRO) |
-| `@prasanthsekar003/ngx-dynamic-form-material` | Angular Material dynamic form |
+| `@ngx-dynamic-form/ngx-dynamic-form-bootstrap` | Bootstrap-styled dynamic form |
+| `@ngx-dynamic-form/ngx-dynamic-form-antd` | Ant Design dynamic form (NG-ZORRO) |
+| `@ngx-dynamic-form/ngx-dynamic-form-material` | Angular Material dynamic form |
 
 Each library consumes the same **form configuration object** and renders the UI according to the selected theme.
 
@@ -20,11 +20,11 @@ Each library consumes the same **form configuration object** and renders the UI 
 ## ⚙️ Installation
 
 ```bash
-npm install @prasanthsekar003/ngx-dynamic-form-bootstrap
+npm install @ngx-dynamic-form/ngx-dynamic-form-bootstrap
 # or
-npm install @prasanthsekar003/ngx-dynamic-form-antd
+npm install @ngx-dynamic-form/ngx-dynamic-form-antd
 # or
-npm install @prasanthsekar003/ngx-dynamic-form-material
+npm install @ngx-dynamic-form/ngx-dynamic-form-material
 ```
 
 ## 📖 Usage
@@ -34,7 +34,7 @@ npm install @prasanthsekar003/ngx-dynamic-form-material
 Import the specific module for your UI library in your `app.component.ts` or feature module.
 
 ```typescript
-import { NgxDynamicFormBootstrap } from '@prasanthsekar003/ngx-dynamic-form-bootstrap';
+import { NgxDynamicFormBootstrap } from '@ngx-dynamic-form/ngx-dynamic-form-bootstrap';
 
 @Component({
   selector: 'app-root',

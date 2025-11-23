@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DynamicFormChangeEvent, FormEngineService, NgxDynamicForm, ScriptLoaderService } from 'ngx-dynamic-form';
+import { DynamicFormChangeEvent, FormEngineService, NgxDynamicForm, ScriptLoaderService } from '@ngx-dynamic-form/ngx-dynamic-form';
 
 declare const $: any;
 

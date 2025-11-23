@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DynamicFormChangeEvent, FormEngineService, NgxDynamicForm, NgxFormControl } from 'ngx-dynamic-form';
+import { DynamicFormChangeEvent, FormEngineService, NgxDynamicForm } from '@ngx-dynamic-form/ngx-dynamic-form';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';

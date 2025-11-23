@@ -8,9 +8,9 @@ interface Schema {
 export function ngAdd(options: Schema): Rule {
   return (tree: Tree, context: SchematicContext) => {
     const themePackageMap = {
-      bootstrap: '@prasanthsekar003/ngx-dynamic-form-bootstrap',
-      material: '@prasanthsekar003/ngx-dynamic-form-material',
-      antd: '@prasanthsekar003/ngx-dynamic-form-antd'
+      bootstrap: '@ngx-dynamic-form/ngx-dynamic-form-bootstrap',
+      material: '@ngx-dynamic-form/ngx-dynamic-form-material',
+      antd: '@ngx-dynamic-form/ngx-dynamic-form-antd'
     };
 
     const pkgPath = '/package.json';
@@ -19,7 +19,7 @@ export function ngAdd(options: Schema): Rule {
       : { dependencies: {} };
 
     // Ensure core dependency is added
-    pkg.dependencies['@prasanthsekar003/ngx-dynamic-form'] = '^1.0.0';
+    pkg.dependencies['@ngx-dynamic-form/ngx-dynamic-form'] = '^1.0.0';
     // Add selected theme
     pkg.dependencies[themePackageMap[options.theme]] = '^1.0.0';
 
@@ -29,7 +29,7 @@ export function ngAdd(options: Schema): Rule {
     context.addTask(new NodePackageInstallTask());
 
     context.logger.info('');
-    context.logger.info(`🎨 Installed @prasanthsekar003/ngx-dynamic-form with ${options.theme} theme.`);
+    context.logger.info(`🎨 Installed @ngx-dynamic-form/ngx-dynamic-form with ${options.theme} theme.`);
     context.logger.info(`➡️  Add provideDynamicFormTheme({ theme: "${options.theme}" }) to your app config.`);
     context.logger.info('');
     return tree;

@@ -1,4 +1,4 @@
-import { ThemePlugin } from 'ngx-dynamic-form';
+import { ThemePlugin } from '@ngx-dynamic-form/ngx-dynamic-form';
 import { NgxDynamicFormBootstrap } from './ngx-dynamic-form-bootstrap';
 
 // The plugin definition the core library can dynamically import

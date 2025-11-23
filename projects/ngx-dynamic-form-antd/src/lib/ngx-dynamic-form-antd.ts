@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, OnDestroy, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NgxDynamicForm, FormEngineService, NgxFormControl, NgxFormOptions } from 'ngx-dynamic-form';
+
 import { differenceInCalendarDays } from 'date-fns';
 import { CommonModule } from '@angular/common';
 
@@ -21,7 +21,7 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
-import { DynamicFormChangeEvent } from 'ngx-dynamic-form';
+import { DynamicFormChangeEvent, FormEngineService, NgxDynamicForm, NgxFormControl, NgxFormOptions } from '@ngx-dynamic-form/ngx-dynamic-form';
 
 @Component({
   selector: 'ngx-dynamic-form-antd',

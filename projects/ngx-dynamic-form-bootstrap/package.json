@@ -1,6 +1,6 @@
 {
-  "name": "@prasanthsekar003/ngx-dynamic-form-bootstrap",
-  "version": "2.0.1",
+  "name": "@ngx-dynamic-form/ngx-dynamic-form-bootstrap",
+  "version": "1.0.1",
   "author": "Prasanth Sekar",
   "description": "Dynamic form library for Angular — generate forms from JSON schema.",
   "license": "MIT",
@@ -26,6 +26,9 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "sideEffects": false,
   "devDependencies": {

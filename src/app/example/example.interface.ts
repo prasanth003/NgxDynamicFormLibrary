@@ -1,4 +1,4 @@
-import { NgxDynamicForm } from "ngx-dynamic-form";
+import { NgxDynamicForm } from "@ngx-dynamic-form/ngx-dynamic-form";
 
 export interface iExample {
     name: string;
